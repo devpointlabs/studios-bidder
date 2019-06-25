@@ -4,6 +4,7 @@ import MainDisplay from './components/MainDisplay';
 import AdminDisplay from './components/AdminDisplay';
 import Login from './components/Login';
 import NoMatch from './components/NoMatch';
+import ProtectedRoute from './components/ProtectedRoute';
 import {Switch, Route, } from 'react-router-dom';
 import {Container, } from 'semantic-ui-react';
 
@@ -14,7 +15,7 @@ const App = () => (
         <Switch>
           <Route exact path ='/' component={MainDisplay} />
           <Route exact path ='/login' component={Login} />
-          <Route exact path ='/admin' component={AdminDisplay} />
+          <ProtectedRoute exact path ='/admin' component={AdminDisplay} />
           <Route component={NoMatch} />
           
         </Switch>
