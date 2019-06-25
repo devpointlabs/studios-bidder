@@ -11,6 +11,8 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+# User authentication
+gem 'devise_token_auth', '~>1.0.0'
 
 group :development, :test do
   gem 'pry-rails'
