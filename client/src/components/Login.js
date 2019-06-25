@@ -8,7 +8,7 @@ const Login = (props) => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
-    const {auth, history} = props
+    const {history} = props
     e.preventDefault();
     auth.handleLogin({email, password, }, history)
   };
@@ -31,12 +31,14 @@ const Login = (props) => {
             label="Password"
             autoFocus
             required
+            type="password"
             name='password'
             value={password}
             placeholder='Password'
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
+          <Button>Sign In</Button>
         </Form>
       </Segment>
     )
