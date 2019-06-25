@@ -10,10 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_171453) do
+ActiveRecord::Schema.define(version: 2019_06_25_204630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "features", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.boolean "developer_boolean"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "multiplier"
+    t.integer "base_days"
+    t.index ["category_id"], name: "index_features_on_category_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "quote_id"
+    t.string "application"
+    t.string "customer_email"
+    t.integer "total_price"
+    t.integer "application_price"
+    t.integer "developer_day_rate"
+    t.integer "designer_day_rate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.text "comments"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
@@ -43,4 +76,5 @@ ActiveRecord::Schema.define(version: 2019_06_25_171453) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "features", "categories"
 end
