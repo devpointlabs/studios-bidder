@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_231344) do
+ActiveRecord::Schema.define(version: 2019_06_26_205522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,10 @@ ActiveRecord::Schema.define(version: 2019_06_25_231344) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_android"
+    t.boolean "is_ios"
+    t.boolean "is_web"
+    t.integer "list_location"
   end
 
   create_table "estimates", force: :cascade do |t|
@@ -51,6 +55,7 @@ ActiveRecord::Schema.define(version: 2019_06_25_231344) do
     t.boolean "is_android"
     t.boolean "is_ios"
     t.boolean "is_web"
+    t.integer "list_location"
     t.index ["category_id"], name: "index_features_on_category_id"
   end
 
