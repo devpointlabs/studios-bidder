@@ -1,7 +1,9 @@
 import React from 'react';
 
-const AdminDisplay = () => (
-  <h1>Admin Display</h1>
-);
+const MainDisplay = () => {
+  return(
+    <h1> Main Display</h1>
+    )
+};
 
-export default AdminDisplay;
+export default MainDisplay;
