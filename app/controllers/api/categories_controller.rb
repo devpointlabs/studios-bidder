@@ -1,7 +1,8 @@
 class Api::CategoriesController < ApplicationController
 
   def index
-    render json: Category.all
+    # binding.pry
+    render json: Category.find_by_web(params[:is_web])
   end
 
   def show
