@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_204630) do
+ActiveRecord::Schema.define(version: 2019_06_25_231344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,24 @@ ActiveRecord::Schema.define(version: 2019_06_25_204630) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "estimates", force: :cascade do |t|
+    t.string "customer_name"
+    t.string "customer_email"
+    t.integer "developer_day_rate"
+    t.integer "designer_day_rate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "feature_estimates", force: :cascade do |t|
+    t.bigint "feature_id"
+    t.bigint "estimate_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["estimate_id"], name: "index_feature_estimates_on_estimate_id"
+    t.index ["feature_id"], name: "index_feature_estimates_on_feature_id"
   end
 
   create_table "features", force: :cascade do |t|
@@ -30,6 +48,9 @@ ActiveRecord::Schema.define(version: 2019_06_25_204630) do
     t.datetime "updated_at", null: false
     t.integer "multiplier"
     t.integer "base_days"
+    t.boolean "is_android"
+    t.boolean "is_ios"
+    t.boolean "is_web"
     t.index ["category_id"], name: "index_features_on_category_id"
   end
 
@@ -76,5 +97,7 @@ ActiveRecord::Schema.define(version: 2019_06_25_204630) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "feature_estimates", "estimates"
+  add_foreign_key "feature_estimates", "features"
   add_foreign_key "features", "categories"
 end
