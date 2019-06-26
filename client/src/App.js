@@ -16,11 +16,11 @@ const App = () => (
       <Container>
         <Switch>
           <Route exact path ='/' component={MainDisplay} />
-          <Route exact path ='/login' component={Login} />
           <Route exact path ='/Admin' component={AdminDisplay} />
           <Route exact path ='/Android' component={AndroidDisplay} />
           <Route exact path ='/iOS' component={iOSDisplay} />
           <Route exact path ='/Web' component={WebDisplay} />
+          <Route exact path ='/login' component={Login} />
           <Route component={NoMatch} />
           
         </Switch>
