@@ -9,12 +9,25 @@ const WebDisplay = () => {
   useEffect( () => {
     axios.get(`/api/categories`,{params: {is_web: true}} )
       .then( res => 
-        setCategories(res.data))
+        setCategories(res.data)
+        )
   },[])
+
+  // const generateFeatures = (category) => {
+  //   axios.get(`/api/features`, {params: {category_id: category}})
+  //   .then( res => {
+  //     setFeatures(res.data)
+  //     console.log(features)
+  //   });
+  //   return(
+  //     features.map(f => 
+  //       <Segment.Content>{f.name}</Segment.Content>)
+  //   )
+  // };
+
 
 
   return (
-
     <>
       <ul>
         {categories.map(c => 

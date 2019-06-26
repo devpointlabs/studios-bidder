@@ -1,4 +1,8 @@
-  // const generateFeatures = (category) => {
+ import React from "react";
+ import Axios from "axios";
+ import { Button, Form, } from "semantic-ui-react";
+
+ // const generateFeatures = (category) => {
   //   axios.get(`/api/features`, {params: {category_id: category}})
   //   .then( res => {
   //     setFeatures(res.data)
