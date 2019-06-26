@@ -1,8 +1,24 @@
-import React from 'react';
+import React, {useState, useEffect, } from 'react';
+import axios from 'axios';
 
 const WebDisplay = () => {
-  return(
-    <h1> Web Display</h1>
+  const [categories, setCategories] = useState([]);
+
+  useEffect( () => {
+    axios.get(`/api/categories`)
+      .then( res => 
+        setCategories(res.data))
+  })
+
+  return (
+
+    <>
+      <ul>
+        {categories.slice(0, -1).map(c => 
+          <li>{c.name}</li>
+          )}
+      </ul>
+    </>
     )
 };
 

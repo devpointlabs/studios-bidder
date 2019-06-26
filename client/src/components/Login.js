@@ -36,7 +36,6 @@ const Login = (props) => {
             value={password}
             placeholder='Password'
             onChange={(e) => setPassword(e.target.value)}
-            value={password}
           />
           <Button>Sign In</Button>
         </Form>

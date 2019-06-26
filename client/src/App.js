@@ -8,6 +8,7 @@ import AndroidDisplay from './components/AndroidDisplay';
 import Login from './components/Login';
 import NoMatch from './components/NoMatch';
 import ProtectedRoute from './components/ProtectedRoute';
+import WebDisplay from './components/WebDisplay';
 import {Switch, Route, } from 'react-router-dom';
 import {Container, } from 'semantic-ui-react';
 
@@ -22,10 +23,8 @@ const App = () => (
           <Route exact path ='/iOS' component={iOSDisplay} />
           <Route exact path ='/Web' component={WebDisplay} />
           <Route exact path ='/login' component={Login} />
-<<<<<<< HEAD
-=======
+          <Route exact path ='/webdisplay' component={WebDisplay} />
           <ProtectedRoute exact path ='/admin' component={AdminDisplay} />
->>>>>>> 766d28ac09cf30e6565ae91f5689f526cfa1dcdf
           <Route component={NoMatch} />
           
         </Switch>
