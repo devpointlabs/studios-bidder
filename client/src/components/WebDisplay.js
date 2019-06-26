@@ -12,19 +12,6 @@ const WebDisplay = () => {
         setCategories(res.data))
   },[])
 
-  const generateFeatures = (category) => {
-    axios.get(`/api/features`, {params: {category_id: category}})
-    .then( res => {
-      setFeatures(res.data)
-      console.log(features)
-    });
-    return(
-      features.map(f => 
-        <Segment.Content>{f.name}</Segment.Content>)
-    )
-  };
-
-
 
   return (
 
@@ -33,7 +20,8 @@ const WebDisplay = () => {
         {categories.map(c => 
           <Container key={c.id} id={c.id}>
             <Segment>{c.name}</Segment>
-            {generateFeatures(c.id)}
+            {/* {generateFeatures(c.id)} */}
+            {/* <Features key={f.id} {...features} */}
           </Container>
           )}
       </ul>
