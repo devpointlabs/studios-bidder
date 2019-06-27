@@ -22,7 +22,6 @@ const App = () => (
           <Route exact path ='/iOS' component={iOSDisplay} />
           <Route exact path ='/Web' component={WebDisplay} />
           <Route exact path ='/login' component={Login} />
-          <Route exact path ='/webdisplay' component={WebDisplay} />
           <ProtectedRoute exact path ='/admin' component={AdminDisplay} />
           <Route component={NoMatch} />
           
