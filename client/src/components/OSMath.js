@@ -5,15 +5,17 @@ const OSMath = (props) => {
   const math = useContext(MathContext);
 
 
-  const handleDays = () => {
+  const handleDayRate = () => {
   const os = props.OS
   switch (os){
-    case 'IOS':
-      return math.IOS.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0)
+    case 'Web':
+      let total = math.Web.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0)
+      math.updateOsTotals(os, total)
+      // return total
     case 'Android':
       return math.Android.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0)      
-    case 'Web':
-      return math.Web.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0)
+    case 'IOS':
+      return math.IOS.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0)
     }
   };
 
@@ -23,7 +25,8 @@ const OSMath = (props) => {
   return(
     <>
       <h1>OS Math</h1>
-      <h2>{handleDays()}</h2>
+      <button onClick={handleDayRate}>Click me</button >
+      {/* <h2>{math.state.webPrice}</h2> */}
     </>
   );
 };
