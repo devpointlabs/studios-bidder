@@ -18,6 +18,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'awesome_print'
   gem 'table_print'
+  gem 'faker'
 end
 
 group :development do
