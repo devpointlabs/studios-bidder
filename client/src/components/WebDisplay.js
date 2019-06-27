@@ -24,7 +24,7 @@ const WebDisplay = () => {
             <Segment>{c.name}</Segment>
             {/* {generateFeatures(c.id)} */}
             {/* <Features key={f.id} {...features} */}
-            {/* <Features catID={c.id}/> */}
+            <Features catID={c.id} exclusivity={c.is_exclusive}/>
           </Container>
           )}
       </ul>

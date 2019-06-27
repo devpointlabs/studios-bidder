@@ -1,6 +1,6 @@
 import React, {useState, useEffect, } from 'react';
 import axios from 'axios';
-// import Features from './Features';
+import Features from './Features';
 import {Container, Segment } from 'semantic-ui-react';
 
 const WebDisplay = () => {
@@ -23,7 +23,7 @@ const WebDisplay = () => {
         {categories.map(c => 
           <Container key={c.id} id={c.id}>
             <Segment>{c.name}</Segment>
-            {/* <Features catID={c.id}/> */}
+            <Features catID={c.id} exclusivity={c.is_exclusive}/>
           </Container>
           )}
       </ul>
