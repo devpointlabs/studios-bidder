@@ -1,11 +1,20 @@
 import React from 'react';
 import axios from 'axios';
 
-export const AuthContext = React.createContext();
-export const AuthConsumer = AuthContext.Consumer;
+export const MathContext = React.createContext();
+export const Mathonsumer = MathContext.Consumer;
 
-export class AuthProvider extends React.Component {
-  state = { Web: [], IOS: [], Android: [], } 
+export class MathProvider extends React.Component {
+  state = { Web: [
+    {base_days: 10, multiplier: 350, },
+    {base_days: 10, multiplier: 300, },
+    {base_days: 10, multiplier: 500, },
+  ], IOS: [
+    {base_days: 10, multiplier: 100},
+    {base_days: 10, multiplier: 100},
+  ], Android: [
+    {base_days: 5, multiplier: 100},
+  ], } 
 
 
   handleID = (IDs, OS) => {
@@ -13,11 +22,11 @@ export class AuthProvider extends React.Component {
       .then( res => {
         switch(OS) {
           case 'Web':
-          this.setState({Web: [...Web, res.data], });
+          this.setState({Web: [...this.Web, res.data], });
           case 'IOS':
-            this.setState({IOS: [...IOS, res.data], });
+            this.setState({IOS: [...this.IOS, res.data], });
           case 'Android':
-            this.setState({Android: [...Android, res.data], });
+            this.setState({Android: [...this.Android, res.data], });
         }
       })
   };
@@ -26,15 +35,12 @@ export class AuthProvider extends React.Component {
 
   render() {
     return (
-      <AuthContext.Provider value={{
-       
-
+      <MathContext.Provider value={{
+       ...this.state
       }}>
         {this.props.children}
-      </AuthContext.Provider>
+      </MathContext.Provider>
     );
   };
 };
 
-info in Here
-Math in 
