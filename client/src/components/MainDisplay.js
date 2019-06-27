@@ -1,4 +1,7 @@
 import React,{useState} from 'react';
+import WebDisplay from './WebDisplay';
+import IOSDisplay from './iOSDisplay';
+import AndroidDisplay from './AndroidDisplay';
 import { Container, Button, } from "semantic-ui-react";
 import "./MainDisplay.css"
 import axios from "axios";
@@ -25,9 +28,9 @@ const MainDisplay = () => {
 
   const displayForm = () => {
     switch(focus){
-      case 'web': return <h1>Web</h1>;
-      case 'ios': return <h1>IOS</h1>;
-      case "android": return <h1>Android</h1>;
+      case 'web': return <WebDisplay />;
+      case 'ios': return <IOSDisplay />;
+      case "android": return <AndroidDisplay />;
       default: return <h1>You broke the platform switcher</h1>
     }
   }
