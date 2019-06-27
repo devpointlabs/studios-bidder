@@ -8,7 +8,6 @@ import AndroidDisplay from './components/AndroidDisplay';
 import Login from './components/Login';
 import NoMatch from './components/NoMatch';
 import ProtectedRoute from './components/ProtectedRoute';
-import WebDisplay from './components/WebDisplay';
 import {Switch, Route, } from 'react-router-dom';
 import {Container, } from 'semantic-ui-react';
 
