@@ -7,8 +7,7 @@ const WebDisplay = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect( () => {
-    axios.get(`/api/categories/android`,{params: {is_web: false, is_ios: false, is_android: true}} )
-    // axios.get(`/api/categories`,{params: {is_web: false, is_ios: false, is_android: true}} )
+    axios.get(`/api/categories`,{params: {os: 'android'}} )
       .then( res => 
         {
           console.table(res.data)
