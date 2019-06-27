@@ -41,10 +41,10 @@ const MainDisplay = () => {
           Web App
         </Button>
         <Button onClick={handleiOS} className="btn" >
-          Android App
+          iOS App
         </Button>
         <Button onClick={handleAndroid} className="btn" >
-          iOS App
+          Android App
         </Button>
       </div>
       {displayForm()}
