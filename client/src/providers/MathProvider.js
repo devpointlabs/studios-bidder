@@ -24,17 +24,17 @@ export class MathProvider extends React.Component {
 
   handleSetPrice = (os) => {
     if (os === 'Web'){
-      const {webPrice, web} = this.state;
-        let webTotal = web.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0);
-        this.setState({webPrice: webTotal},() => {console.log(webPrice) });
+      const {web} = this.state;
+      let webTotal = web.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0);
+      this.setState({webPrice: webTotal},);
     } else if(os === 'Android'){
-      const {androidPrice, android} = this.state;
+      const {android} = this.state;
       let androidTotal = android.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0);
-      this.setState({androidPrice: androidTotal}, () => {console.log(androidPrice)});
+      this.setState({androidPrice: androidTotal}, );
     } else if(os === 'IOS'){
-      const {iOSPrice, iOS} = this.state;
+      const {iOS} = this.state;
       let iosTotal = iOS.reduce( ( acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0);
-      this.setState({iOSPrice: iosTotal},() => {console.log(iOSPrice)});
+      this.setState({iOSPrice: iosTotal},);
     };
   };
     
