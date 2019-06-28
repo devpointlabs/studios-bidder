@@ -11,12 +11,10 @@ const WebDisplay = () => {
     axios.get(`/api/categories`,{params: {os: 'ios'}} )
       .then( res => {
         setCategories(res.data)
-      }
-        )
-  },[])
+      });
+  },[]);
 
   return (
-
     <>
       <ul>
         <h1>iOS</h1>
@@ -29,7 +27,7 @@ const WebDisplay = () => {
           <OSMath OS='IOS' />
       </ul>
     </>
-    )
+    );
 };
 
 export default WebDisplay;

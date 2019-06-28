@@ -9,13 +9,12 @@ const WebDisplay = () => {
 
   useEffect( () => {
     axios.get(`/api/categories`,{params: {os: 'android'}} )
-      .then( res => 
-        {setCategories(res.data) }
-        )
-  },[])
+      .then( res => {
+        setCategories(res.data) 
+      });
+  },[]);
 
   return (
-
     <>
       <ul>
         <h1>Android</h1>
@@ -28,7 +27,7 @@ const WebDisplay = () => {
           <OSMath OS='Android' />
       </ul>
     </>
-    )
+  );
 };
 
 export default WebDisplay;

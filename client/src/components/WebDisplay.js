@@ -9,12 +9,10 @@ const WebDisplay = () => {
 
   useEffect( () => {
     axios.get(`/api/categories`,{params: {os: 'web'}} )
-
       .then( res => {
         setCategories(res.data)
-      }
-        )
-  },[])
+      });
+  },[]);
 
   return (
     <>
@@ -31,7 +29,7 @@ const WebDisplay = () => {
           <OSMath OS='Web'/>
       </ul>
     </>
-    )
+    );
 };
 
 export default WebDisplay;
