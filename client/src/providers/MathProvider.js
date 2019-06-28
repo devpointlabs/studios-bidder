@@ -17,9 +17,9 @@ export class MathProvider extends React.Component {
     android: [
     {base_days: 5, multiplier: 100},
     ], 
-    webPrice: '', 
-    iOSPrice: '', 
-    androidPrice: '' ,
+    iOSPrice: 0, 
+    webPrice: 0, 
+    androidPrice: 0,
   };  
 
   handleSetPrice = (os) => {

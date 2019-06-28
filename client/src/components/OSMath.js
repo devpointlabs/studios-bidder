@@ -6,9 +6,9 @@ const OSMath = (props) => {
 
   const renderPriceDisplay = () => {
     switch (props.OS){
-      case 'Web': return webPrice
-      case 'IOS': return iOSPrice
-      case 'Android': return androidPrice
+      case 'web': return webPrice
+      case 'iOS': return iOSPrice
+      case 'android': return androidPrice
       default :
     }
   };

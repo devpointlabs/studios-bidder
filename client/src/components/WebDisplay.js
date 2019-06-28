@@ -26,7 +26,7 @@ const WebDisplay = () => {
             {/* <Features catID={c.id} exclusivity={c.is_exclusive}/> */}
           </Container>
           )}
-          <OSMath OS='Web'/>
+          <OSMath OS='web'/>
       </ul>
     </>
     );
