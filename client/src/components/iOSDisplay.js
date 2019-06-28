@@ -23,7 +23,7 @@ const WebDisplay = () => {
         {categories.map(c => 
           <Container key={c.id} id={c.id}>
             <Segment>{c.name}</Segment>
-            <Features catID={c.id} exclusivity={c.is_exclusive}/>
+            {/* <Features catID={c.id} exclusivity={c.is_exclusive}/> */}
           </Container>
           )}
           <OSMath OS='IOS' />

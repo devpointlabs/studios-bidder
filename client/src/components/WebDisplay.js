@@ -25,7 +25,7 @@ const WebDisplay = () => {
             <Segment>{c.name}</Segment>
             {/* {generateFeatures(c.id)} */}
             {/* <Features key={f.id} {...features} */}
-            <Features catID={c.id} exclusivity={c.is_exclusive}/>
+            {/* <Features catID={c.id} exclusivity={c.is_exclusive}/> */}
           </Container>
           )}
           <OSMath OS='Web'/>

@@ -18,16 +18,16 @@ export class MathProvider extends React.Component {
   // price: {Web: 0, IOS: '', Android: ''} } 
 
 // sets state based on when user clicks a feature
-  handleID = (IDs, OS) => {
-      switch(OS) {
-        case 'Web':
-        this.setState({Web: [...this.Web, res.data], });
-        case 'IOS':
-          this.setState({IOS: [...this.IOS, res.data], });
-        case 'Android':
-          this.setState({Android: [...this.Android, res.data], });
-      }
-    }
+  // handleID = (IDs, OS) => {
+  //     switch(OS) {
+  //       case 'Web':
+  //       this.setState({Web: [...this.Web, res.data], });
+  //       case 'IOS':
+  //         this.setState({IOS: [...this.IOS, res.data], });
+  //       case 'Android':
+  //         this.setState({Android: [...this.Android, res.data], });
+  //     }
+  //   }
 
   updateOsTotals = (os, total) => {
     // const {price} = this.state

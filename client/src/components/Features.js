@@ -9,10 +9,10 @@
 //////////////////           <Form.Input type checkbox
 //////////////////   < FORM submit 
 
-import React, {useState, useEffect, } from 'react';
+import React, {useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import Features from './Features';
-import {Container, Segment } from 'semantic-ui-react';
+import {Form, Container, Header, Item } from 'semantic-ui-react';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Features = (props) => {
   const [categories, setCategories] = useState([]);
@@ -20,6 +20,9 @@ const Features = (props) => {
   const [showExclusive, setShowExclusive] = useState([])
   const [showNonExclusive, setShowNonExclusive] = useState([])
   const auth = useContext(AuthContext)
+
+  // props.exclusivity
+  // props.catID
 
   useEffect( () => {
     axios.get(`/api/categories`,{params: {os: 'android'}} )
@@ -41,12 +44,26 @@ const Features = (props) => {
 
     <>
       <ul>
-        {categories.map(c => 
+        <Form>
+          {categories.map(c => 
           <Container key={c.id} id={c.id}>
-            <Segment>{c.name}</Segment>
-            <Features catID={c.id} exclusivity={c.is_exclusive}/>
+            <Header as="h1">{c.name}</Header>
+            {/* <Features catID={c.id} exclusivity={c.is_exclusive}/> */}
+            {//if c.is_exclusive === false
+            // https://reactjs.org/docs/conditional-rendering.html
+              c.features.map(f => 
+                <Form.Group>
+                  <Form.Input
+                  type="radio"
+                  name={f.name}
+                  />
+                  <Item.description>{f.description}</Item.description>
+
+                </Form.Group>) 
+            }
           </Container>
           )}
+        </Form>
       </ul>
     </>
     )
@@ -64,8 +81,7 @@ export default Features;
 //   const [showNonExclusive, setShowNonExclusive] = useState([])
 //   const auth = useContext(AuthContext)
 
-  // props.exclusivity
-  // props.catID
+
 
   // useEffect( () => {
   //   axios.get(`/api/features`,{params: {category: props.catID }})
