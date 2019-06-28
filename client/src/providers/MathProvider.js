@@ -1,46 +1,48 @@
 import React from 'react';
-import axios from 'axios';
 
 export const MathContext = React.createContext();
 export const Mathonsumer = MathContext.Consumer;
 
 export class MathProvider extends React.Component {
-  state = { Web: [
+  state = { 
+    web: [
     {base_days: 10, multiplier: 350, },
     {base_days: 10, multiplier: 300, },
     {base_days: 10, multiplier: 500, },
-  ], IOS: [
+    ], 
+    iOS: [
     {base_days: 10, multiplier: 100},
     {base_days: 10, multiplier: 100},
-  ], Android: [
+    ], 
+    android: [
     {base_days: 5, multiplier: 100},
-  ], WebPrice: '',}
-  // price: {Web: 0, IOS: '', Android: ''} } 
+    ], 
+    webPrice: '', 
+    iOSPrice: '', 
+    androidPrice: '' ,
+  };  
 
-// sets state based on when user clicks a feature
-  handleID = (IDs, OS) => {
-      switch(OS) {
-        case 'Web':
-        this.setState({Web: [...this.Web, res.data], });
-        case 'IOS':
-          this.setState({IOS: [...this.IOS, res.data], });
-        case 'Android':
-          this.setState({Android: [...this.Android, res.data], });
-      }
-    }
-
-  updateOsTotals = (os, total) => {
-    // const {price} = this.state
-    if (os === 'Web') this.setState({[this.state.WebPrice]: total})
-    debugger
+  handleSetPrice = (os) => {
+    if (os === 'Web'){
+      const {web} = this.state;
+      let webTotal = web.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0);
+      this.setState({webPrice: webTotal},);
+    } else if(os === 'Android'){
+      const {android} = this.state;
+      let androidTotal = android.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0);
+      this.setState({androidPrice: androidTotal}, );
+    } else if(os === 'IOS'){
+      const {iOS} = this.state;
+      let iosTotal = iOS.reduce( ( acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0);
+      this.setState({iOSPrice: iosTotal},);
+    };
   };
- 
-
+    
   render() {
     return (
       <MathContext.Provider value={{
        ...this.state,
-       updateOsTotals: this.updateOsTotals,
+       handleSetPrice: this.handleSetPrice,
       }}>
         {this.props.children}
       </MathContext.Provider>
