@@ -2,16 +2,16 @@ import React,{useState} from 'react';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
-import { Container, Button, } from "semantic-ui-react";
+import { Button, } from "semantic-ui-react";
 import "./MainDisplay.css"
-import axios from "axios";
+// import axios from "axios";
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web")
 
-  const [webSelections, setWebSelections] = useState({})
-  const [iosSelections, setIOSSelections] = useState({})
-  const [androidSelections, setAndroidSelections] = useState({})
+  // const [webSelections, setWebSelections] = useState({})
+  // const [iosSelections, setIOSSelections] = useState({})
+  // const [androidSelections, setAndroidSelections] = useState({})
 
 
   const handleWeb = () => {
@@ -37,7 +37,7 @@ const MainDisplay = () => {
 
   return(
     <div>
-      <h1 Align="center">Estimate Your App Cost</h1>
+      <h1 align="center">Estimate Your App Cost</h1>
       <div className="container1">
         <h1> Main Display</h1>
         <Button onClick={handleWeb} className="btn" >

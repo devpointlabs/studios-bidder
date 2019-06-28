@@ -24,7 +24,7 @@ const WebDisplay = () => {
             {/* <Features catID={c.id}/> */}
           </Container>
           )}
-          <OSMath OS='IOS' />
+          <OSMath OS='iOS' />
       </ul>
     </>
     );
