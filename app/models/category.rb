@@ -6,17 +6,17 @@ class Category < ApplicationRecord
     case os
     when 'ios'
       Category.find_by_sql("
-      SELECT id, name, is_android, is_ios, is_web, list_location
+      SELECT id, name, is_android, is_ios, is_web, list_location, is_exclusive
       FROM categories
       WHERE is_ios = true")
     when 'web'
       Category.find_by_sql("
-      SELECT id, name, is_android, is_ios, is_web, list_location
+      SELECT id, name, is_android, is_ios, is_web, list_location, is_exclusive
       FROM categories
       WHERE is_web = true")
     when 'android'
       Category.find_by_sql("
-      SELECT id, name, is_android, is_ios, is_web, list_location
+      SELECT id, name, is_android, is_ios, is_web, list_location, is_exclusive
       FROM categories
       WHERE is_android = true")
     end
