@@ -1,11 +1,7 @@
 class Api::CategoriesController < ApplicationController
-
   def index
-<<<<<<< HEAD
     render json: Category.all
-=======
-    render json: Category.find_by_os(params[:os])
->>>>>>> b2e408dba5bb49bfbc824e6e700e527d00793076
+    # render json: Category.find_by_os(params[:os])
   end
 
   def show

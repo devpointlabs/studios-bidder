@@ -1,9 +1,6 @@
 class Category < ApplicationRecord
-  validates :name, uniqueness: true
   has_many :features, dependent: :destroy
-<<<<<<< HEAD
   validates :name, uniqueness: true
-=======
 
   def self.find_by_os(os)
     case os
@@ -24,6 +21,4 @@ class Category < ApplicationRecord
       WHERE is_android = true")
     end
   end
->>>>>>> b2e408dba5bb49bfbc824e6e700e527d00793076
-
 end
