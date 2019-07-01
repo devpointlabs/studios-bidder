@@ -25,7 +25,6 @@ const Login = (props) => {
             value={email}
             placeholder='Email'
             onChange={(e) => setEmail(e.target.value)}
-            value={email}
           />
           <Form.Input
             label="Password"
