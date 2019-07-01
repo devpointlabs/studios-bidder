@@ -1,17 +1,14 @@
 import React,{useState} from 'react';
-import WebDisplay from './WebDisplay';
-import IOSDisplay from './iOSDisplay';
-import AndroidDisplay from './AndroidDisplay';
-import { Button, } from "semantic-ui-react";
+import { Container, Button, } from "semantic-ui-react";
 import "./MainDisplay.css"
-// import axios from "axios";
+import axios from "axios";
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web")
 
-  // const [webSelections, setWebSelections] = useState({})
-  // const [iosSelections, setIOSSelections] = useState({})
-  // const [androidSelections, setAndroidSelections] = useState({})
+  const [webSelections, setWebSelections] = useState({})
+  const [iosSelections, setIOSSelections] = useState({})
+  const [androidSelections, setAndroidSelections] = useState({})
 
 
   const handleWeb = () => {
@@ -28,26 +25,26 @@ const MainDisplay = () => {
 
   const displayForm = () => {
     switch(focus){
-      case 'web': return <WebDisplay />;
-      case 'ios': return <IOSDisplay />;
-      case "android": return <AndroidDisplay />;
+      case 'web': return <h1>Web</h1>;
+      case 'ios': return <h1>IOS</h1>;
+      case "android": return <h1>Android</h1>;
       default: return <h1>You broke the platform switcher</h1>
     }
   }
 
   return(
     <div>
-      <h1 align="center">Estimate Your App Cost</h1>
+      <h1 Align="center">Estimate Your App Cost</h1>
       <div className="container1">
         <h1> Main Display</h1>
         <Button onClick={handleWeb} className="btn" >
           Web App
         </Button>
         <Button onClick={handleiOS} className="btn" >
-          iOS App
+          Android App
         </Button>
         <Button onClick={handleAndroid} className="btn" >
-          Android App
+          iOS App
         </Button>
       </div>
       {displayForm()}
