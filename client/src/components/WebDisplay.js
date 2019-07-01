@@ -3,6 +3,7 @@ import axios from 'axios';
 import OSMath from './OSMath';
 // import Features from './Features';
 import {Container, Segment } from 'semantic-ui-react';
+import TotalMath from "./TotalMath";
 
 const WebDisplay = () => {
   const [categories, setCategories] = useState([]);
@@ -25,6 +26,7 @@ const WebDisplay = () => {
           </Container>
           )}
           <OSMath OS='web'/>
+          < TotalMath />
       </ul>
     </>
     );

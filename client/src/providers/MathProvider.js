@@ -1,21 +1,21 @@
 import React from 'react';
 
 export const MathContext = React.createContext();
-export const Mathonsumer = MathContext.Consumer;
+export const MathConsumer = MathContext.Consumer;
 
 export class MathProvider extends React.Component {
   state = { 
     web: [
-    {base_days: 10, multiplier: 350, },
-    {base_days: 10, multiplier: 300, },
-    {base_days: 10, multiplier: 500, },
+    {base_days: 10, multiplier: 350, enabled: true, },
+    {base_days: 10, multiplier: 300, enabled: true, },
+    {base_days: 10, multiplier: 500, enabled: true, },
     ], 
     iOS: [
-    {base_days: 10, multiplier: 100},
-    {base_days: 10, multiplier: 100},
+    {base_days: 10, multiplier: 100, enabled: true, },
+    {base_days: 10, multiplier: 100, enabled: true, }, 
     ], 
     android: [
-    {base_days: 5, multiplier: 100},
+    {base_days: 5, multiplier: 100, enabled: true, },
     ], 
     iOSPrice: 0, 
     webPrice: 0, 
@@ -35,11 +35,30 @@ export class MathProvider extends React.Component {
       this.setState({iOSPrice: reducerFunction(iOS)});
     };
   };
+
+  
+
+  // handleID = (IDs, OS) => {
+  //   switch(OS) {
+  //     case 'Web':
+  //     this.setState({Web: [...this.Web, res.data], });
+  //     case 'IOS':
+  //       this.setState({IOS: [...this.IOS, res.data], });
+  //     case 'Android':
+  //       this.setState({Android: [...this.Android, res.data], });
+  //   }
+  // };
     
   render() {
+
+      const {webPrice} = this.state
+      const {iOSPrice} = this.state
+      const {androidPrice} = this.state
+    
     return (
       <MathContext.Provider value={{
        ...this.state,
+       webPrice, iOSPrice, androidPrice,
        handleSetPrice: this.handleSetPrice,
       }}>
         {this.props.children}
@@ -48,3 +67,4 @@ export class MathProvider extends React.Component {
   };
 };
 
+ 

@@ -1,0 +1,10 @@
+handleID = (IDs, OS) => {
+      switch(OS) {
+        case 'Web':
+        this.setState({Web: [...this.Web, res.data], });
+        case 'IOS':
+          this.setState({IOS: [...this.IOS, res.data], });
+        case 'Android':
+          this.setState({Android: [...this.Android, res.data], });
+      }
+    }
