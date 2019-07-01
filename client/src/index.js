@@ -4,17 +4,14 @@ import './index.css';
 import App from './App';
 import {BrowserRouter as Router,} from 'react-router-dom';
 import { AuthProvider, } from './providers/AuthProvider';
-import { MathProvider, } from './providers/MathProvider';
 import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
 <AuthProvider>
-  <MathProvider>
-    <Router>
-      <App />
-    </Router>
-  </MathProvider>
+  <Router>
+    <App />
+  </Router>
 </AuthProvider>
 , document.getElementById('root'));
 
