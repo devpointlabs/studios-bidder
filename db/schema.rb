@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_26_231228) do
+ActiveRecord::Schema.define(version: 2019_07_02_015448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,11 +19,11 @@ ActiveRecord::Schema.define(version: 2019_06_26_231228) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_android"
-    t.boolean "is_ios"
-    t.boolean "is_web"
+    t.boolean "is_android", default: false
+    t.boolean "is_ios", default: false
+    t.boolean "is_web", default: true
     t.integer "list_location"
-    t.boolean "is_exclusive"
+    t.boolean "is_exclusive", default: false
   end
 
   create_table "estimates", force: :cascade do |t|
@@ -47,15 +47,15 @@ ActiveRecord::Schema.define(version: 2019_06_26_231228) do
   create_table "features", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.boolean "developer_boolean"
+    t.boolean "developer_boolean", default: false
     t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "multiplier"
     t.integer "base_days"
-    t.boolean "is_android"
-    t.boolean "is_ios"
-    t.boolean "is_web"
+    t.boolean "is_android", default: false
+    t.boolean "is_ios", default: false
+    t.boolean "is_web", default: true
     t.integer "list_location"
     t.index ["category_id"], name: "index_features_on_category_id"
   end
