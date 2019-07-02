@@ -7,7 +7,7 @@ const OSMath = (props) => {
   const renderPriceDisplay = () => {
     switch (props.OS){
       case 'web': return webPrice
-      case 'iOS': return iOSPrice
+      case 'ios': return iOSPrice
       case 'android': return androidPrice
       default :
     }
@@ -16,8 +16,8 @@ const OSMath = (props) => {
   return(
     <>
       <h1>{props.OS} Math</h1>
-      <button onClick={() => handleSetPrice(props.OS)}>Click me</button >
-      <h2>{renderPriceDisplay()}</h2>
+      <button onClick={() => handleSetPrice(props.OS)}>Click to show {props.OS} price</button >
+      <h2>{props.OS} Price: ${renderPriceDisplay()}</h2>
     </>
   );
 };

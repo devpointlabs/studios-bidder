@@ -17,7 +17,7 @@ class TotalMath extends React.Component {
   render() {
     return(
       <div>
-        {this.featureTotal()}
+        <h3>Total Price: ${this.featureTotal()}</h3>
       </div>
     );
   };
