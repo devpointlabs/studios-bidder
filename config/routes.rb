@@ -7,8 +7,6 @@ Rails.application.routes.draw do
     resources :sessions, only: [:show, :update]
     resources :estimates, only: [:index, :create, :update]
     resources :platform, only: [:index, :create, :update]
-
-    get 'categories_by_os', to: 'categories#find_by_os'
   end
 
 end
