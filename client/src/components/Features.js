@@ -12,7 +12,7 @@ const Features = (props) => {
   const { handleSetPrice } = useContext(MathContext)
 
   useEffect( () => {
-      axios.get(`/api/categories`,{params: {os: 'web'}})
+      axios.get(`/api/categories`,{params: {os: props.OS}})
     .then( res  => {
       setCategories(res.data)
       console.table(res.data)
@@ -20,6 +20,7 @@ const Features = (props) => {
     axios.get(`/api/features`)
       .then(res => setFeatures(res.data))
   },[])
+
 
   const handleChange = (e) => {
 
@@ -32,33 +33,32 @@ const Features = (props) => {
     if (is_exclusive === true) {
       return (
         <>
-              {correctF.map( f => (
-        <Form.Group>
-                <Form.Radio
-                  name={f.name}
-                  checked={value === f.id}
-                  value={f.id}
-                  label={f.description}
-                  onChange={handleChange}
-                  />
-          </Form.Group>
-            ))}
-            </>
-        )
-      }
-      else {
+          {correctF.map( f => (
+            <Form.Group>
+              <Form.Radio
+                name={f.name}
+                checked={value === f.id}
+                value={f.id}
+                label={f.description}
+                onChange={handleChange}
+                />
+            </Form.Group>
+          ))}
+        </>
+        );
+      }else {
         return (
           <Form.Group>
             {correctF.map( f => (
-                <Form.Input
-                  type='checkbox'
-                  name={f.name}
-                  label={f.description}
-                  />
+              <Form.Input
+                type='checkbox'
+                name={f.name}
+                label={f.description}
+              />
             ))}
           </Form.Group>
-        )
-      }
+        );
+      };
     };
   
 
@@ -68,7 +68,7 @@ const Features = (props) => {
     // .then( res => {
     //   props.add(res.data);
     // })
-    handleSetPrice(props.OS)
+    // handleSetPrice(props.OS)
   }
 
   return (
@@ -78,9 +78,6 @@ const Features = (props) => {
           {categories.map(c => 
           <Container key={c.id} id={c.id}>
             <Header as="h1">{c.name}</Header>
-            {/* <exclusiveRendering  
-              catID={c.id} 
-              isExclusive={c.is_exclusive} /> */}
             {exclusiveRendering(c.id, c.is_exclusive)}
           </Container>
           )}
