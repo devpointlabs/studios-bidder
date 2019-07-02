@@ -4,12 +4,13 @@ import { Menu } from "semantic-ui-react";
 
 const Navbar = () => (
   <Menu>
-    <Link to="/">
+    <Menu.Menu position="left">
+      <Link to="/">
       <Menu.Item>
         Main Display
       </Menu.Item>
     </Link>
-    <Link to="/android">
+    {/* <Link to="/android">
       <Menu.Item>
         Android Display
       </Menu.Item>
@@ -23,8 +24,11 @@ const Navbar = () => (
       <Menu.Item>
         Web Display
       </Menu.Item>
-    </Link>
-    <Link to="/Login">
+    </Link> */}
+    </Menu.Menu>
+    
+    <Menu.Menu position="right">
+      <Link to="/Login">
       <Menu.Item>
         Login
       </Menu.Item>
@@ -34,6 +38,8 @@ const Navbar = () => (
         Admin Display
       </Menu.Item>
     </Link>
+    </Menu.Menu>
+    
   </Menu>
 )
 
