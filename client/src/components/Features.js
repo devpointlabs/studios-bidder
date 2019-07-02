@@ -15,7 +15,6 @@ const Features = (props) => {
       axios.get(`/api/categories`,{params: {os: props.OS}})
     .then( res  => {
       setCategories(res.data)
-      console.table(res.data)
     })
     axios.get(`/api/features`)
       .then(res => setFeatures(res.data))
@@ -34,13 +33,11 @@ const Features = (props) => {
 
   const exclusiveRendering = (catID, is_exclusive) => {
     let correctF = features.filter( f => catID === f.category_id);
-    console.log(correctF)
-
     if (is_exclusive === true) {
       return (
         <>
           {correctF.map( f => (
-            <Form.Group>
+            <Form.Group key={f.id}>
               <Form.Radio
                 name={f.name}
                 checked={value === f.id}
@@ -57,6 +54,7 @@ const Features = (props) => {
           <Form.Group>
             {correctF.map( f => (
               <Form.Input
+                key={f.id}
                 type='checkbox'
                 name={f.name}
                 checked={value === f.id}
@@ -84,7 +82,7 @@ const Features = (props) => {
             {exclusiveRendering(c.id, c.is_exclusive)}
           </Container>
           )}
-          <Form.Button>Submit for Quote</Form.Button>
+          {/* <Form.Button>Submit for Quote</Form.Button> */}
         </Form >
       </ul>
     </>

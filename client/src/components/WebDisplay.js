@@ -5,12 +5,12 @@ import Features from './Features';
 import TotalMath from './TotalMath';
 import {Container, } from 'semantic-ui-react';
 
-const WebDisplay = () => {
+const WebDisplay = (props) => {
   
   return (
     <Container>
       <h1>Web</h1>
-      <Features OS='web'/>
+      <Features OS='web' handleSubmit={props.handleSubmit}/>
       <OSMath OS='web'/>
       <TotalMath />
     </Container>
