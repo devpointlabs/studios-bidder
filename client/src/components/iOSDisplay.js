@@ -3,17 +3,22 @@ import axios from 'axios';
 import OSMath from './OSMath';
 import Features from './Features';
 import TotalMath from './TotalMath';
-import {Container, } from 'semantic-ui-react';
+import {Container, Header, Segment } from 'semantic-ui-react';
+import HeaderText from "../styles/HeaderText";
+import Colors from "../styles/Colors";
 
 const IOSDisplay = () => {
   
   return(
-    <Container>
-      <h1>iOS</h1>
+    <>
+    <Segment as={Colors} colored="medium-dark">
       <Features OS='ios'/>
+    </Segment>
+    <Segment>
       <OSMath OS='ios'/>
       <TotalMath />
-    </Container>
+    </Segment>
+  </>
   );
 };
 

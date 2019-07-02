@@ -3,6 +3,9 @@ import axios from 'axios';
 import {Form, Container, Header,} from 'semantic-ui-react';
 // import { AuthContext } from '../providers/AuthProvider';
 import { MathContext} from '../providers/MathProvider';
+import styled, { keyframes } from "styled-components";
+import HeaderText from "../styles/HeaderText";
+
 
 const Features = (props) => {
   const [categories, setCategories] = useState([]);
@@ -52,7 +55,7 @@ const Features = (props) => {
             {correctF.map( f => (
               <Form.Input
                 type='checkbox'
-                name={f.name}
+                name={f.name} 
                 label={f.description}
               />
             ))}
@@ -77,7 +80,7 @@ const Features = (props) => {
         <Form onSubmit={handleSubmit()}>
           {categories.map(c => 
           <Container key={c.id} id={c.id}>
-            <Header as="h1">{c.name}</Header>
+            <Header as={HeaderText} fSize="medium">{c.name}</Header>
             {exclusiveRendering(c.id, c.is_exclusive)}
           </Container>
           )}

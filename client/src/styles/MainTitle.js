@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+
 const fontSize = (size) => {
     switch(size) {
       case 'large':
@@ -16,7 +17,7 @@ const fontSize = (size) => {
   };
    
 export default styled.h1`
-    color:white !important;
+    color: rgb(72, 70, 74) !important;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     font-size: ${props => fontSize(props.fSize)} !important;
