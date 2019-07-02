@@ -30,7 +30,7 @@ export class MathProvider extends React.Component {
     } else if(os === 'android'){
       const {android} = this.state;
       this.setState({androidPrice: reducerFunction(android)});
-    } else if(os === 'iOS'){
+    } else if(os === 'ios'){
       const {iOS} = this.state;
       this.setState({iOSPrice: reducerFunction(iOS)});
     };
