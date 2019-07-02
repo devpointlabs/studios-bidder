@@ -12,7 +12,7 @@ const Features = (props) => {
   const { handleSetPrice } = useContext(MathContext)
 
   useEffect( () => {
-      axios.get(`/api/categories`,{params: {os: props.OS}})
+      axios.get(`/api/categories_by_os`,{params: {os: props.OS}})
     .then( res  => {
       setCategories(res.data)
       console.table(res.data)
