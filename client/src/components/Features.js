@@ -8,7 +8,7 @@ const Features = (props) => {
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
   const [value, setValue] = useState('');
-  // const auth = useContext(AuthContext)
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
   const { handleSetPrice } = useContext(MathContext)
 
   useEffect( () => {
@@ -21,9 +21,15 @@ const Features = (props) => {
       .then(res => setFeatures(res.data))
   },[])
 
+  const updateSelectedFeatures = () => {
+    
+  }
 
   const handleChange = (e) => {
-
+    debugger
+    // this will track what is clicked. Then spread new value into it. Then set selected features again. Pass in the mathProvider state price. 
+    // button function on each checkbox. Then update state in MathProvider of what ID's have been clicked. Then pass it down into here so we have the info for the estimate. 
+    setSelectedFeatures(e.value)
     setValue(e.value)}
 
   const exclusiveRendering = (catID, is_exclusive) => {
@@ -53,23 +59,20 @@ const Features = (props) => {
               <Form.Input
                 type='checkbox'
                 name={f.name}
+                checked={value === f.id}
+                value={f.id}
                 label={f.description}
+                onChange={handleChange}
               />
             ))}
           </Form.Group>
         );
       };
     };
-  
 
-  const handleSubmit = (e) => {
-    // e.preventDefault();
-    // //////
-    // .then( res => {
-    //   props.add(res.data);
-    // })
-    // handleSetPrice(props.OS)
-  }
+    const handleSubmit = () => {
+
+    }
 
   return (
     <>
