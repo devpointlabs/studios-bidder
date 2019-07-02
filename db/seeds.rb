@@ -6,13 +6,13 @@
 ##   OR just adjust the last feature category_id line to be adjusted for your numbers.
 
 
-10.times do |i|
-  Category.update((i+1),
-    is_exclusive: Faker::Boolean.boolean(0.7), 
-  )
-end
+# 10.times do |i|
+#   Category.update((i+1),
+#     is_exclusive: Faker::Boolean.boolean(0.7), 
+#   )
+# end
 
-puts("updated is_exclusive for category")
+# puts("updated is_exclusive for category")
 
 
 # 50.times do |j| 
@@ -60,3 +60,16 @@ puts("updated is_exclusive for category")
 # end
 
 # puts("seeded 10 categories & 5 features each category")
+
+Platform.create(name: 'iOS')
+Platform.create(name: 'Android')
+Platform.create(name: 'Web')
+
+10 times do
+  Category.create(
+    name: "iOS #{Faker::Lorem.words(3)}",
+    is_ios: true,
+    is_web: false,
+    is_exclusive: Faker::Boolean.boolean(0.7)
+  )
+end

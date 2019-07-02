@@ -9,7 +9,7 @@ const Features = (props) => {
   const [features, setFeatures] = useState([]);
   const [value, setValue] = useState('');
   const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const { handleSetPrice } = useContext(MathContext)
+  const { handleSetPrice } = useContext(MathContext);
 
   useEffect( () => {
       axios.get(`/api/categories_by_os`,{params: {os: props.OS}})

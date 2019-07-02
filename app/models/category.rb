@@ -2,6 +2,7 @@ class Category < ApplicationRecord
   validates :name, uniqueness: true
   validates :name, presence: true
   
+  belongs_to :platform
   has_many :features, dependent: :destroy
 
   def self.find_by_os(os)

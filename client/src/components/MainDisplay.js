@@ -10,7 +10,7 @@ const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-
+  const [features, setFeatures] = useState([])
   // const [webSelections, setWebSelections] = useState({})
   // const [iosSelections, setIOSSelections] = useState({})
   // const [androidSelections, setAndroidSelections] = useState({})
@@ -18,6 +18,7 @@ const MainDisplay = () => {
   // BIG SUBMIT FUNCTION(EACH STATE)
   const handleSubmit = () => {
     createEstimateRecord()
+
   };
 
   const createEstimateRecord = () => {
