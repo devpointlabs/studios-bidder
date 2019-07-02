@@ -1,33 +1,20 @@
 import React, {useState, useEffect, } from 'react';
 import axios from 'axios';
-// import Features from './Features';
-import {Container, Segment } from 'semantic-ui-react';
+import OSMath from './OSMath';
+import Features from './Features';
+import TotalMath from './TotalMath';
+import {Container, } from 'semantic-ui-react';
 
-const WebDisplay = () => {
-  const [categories, setCategories] = useState([]);
-
-  useEffect( () => {
-    axios.get(`/api/categories`,{params: {os: 'ios'}} )
-      .then( res => {
-        console.table(res.data)
-        setCategories(res.data)
-      }
-        )
-  },[])
-
-  return (
-
-    <>
-      <ul>
-        {categories.map(c => 
-          <Container key={c.id} id={c.id}>
-            <Segment>{c.name}</Segment>
-            {/* <Features catID={c.id}/> */}
-          </Container>
-          )}
-      </ul>
-    </>
-    )
+const IOSDisplay = () => {
+  
+  return(
+    <Container>
+      <h1>iOS</h1>
+      <Features OS='ios'/>
+      <OSMath OS='ios'/>
+      <TotalMath />
+    </Container>
+  );
 };
 
-export default WebDisplay;
+export default IOSDisplay;
