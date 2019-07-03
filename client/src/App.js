@@ -27,7 +27,6 @@ const App = () => (
           <Route exact path ='/login' component={Login} />
           <ProtectedRoute exact path ='/admin' component={AdminDisplay} />
           <Route component={NoMatch} />
-          
         </Switch>
       </MidContainer>
 

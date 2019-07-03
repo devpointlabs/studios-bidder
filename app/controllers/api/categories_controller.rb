@@ -1,7 +1,7 @@
 class Api::CategoriesController < ApplicationController
 
   def index
-    render json: Category.find_by_os(params[:os])
+    render json: Category.all
   end
 
   def show
@@ -12,5 +12,10 @@ class Api::CategoriesController < ApplicationController
 
   def destroy
   end
+
+  def find_by_os
+    render json: Category.find_by_os(params[:os])
+  end
+
 
 end
