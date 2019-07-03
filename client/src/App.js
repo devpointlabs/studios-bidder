@@ -10,12 +10,13 @@ import Login from './components/Login';
 import NoMatch from './components/NoMatch';
 import ProtectedRoute from './components/ProtectedRoute';
 import {Switch, Route, } from 'react-router-dom';
-import {Container, } from 'semantic-ui-react';
+import {Container } from 'semantic-ui-react';
+import styled, { keyframes } from "styled-components";
+
 
 const App = () => (
-  <>
-    <Navbar />
-      <Container>
+  <AppContainer>
+    <MidContainer>
         <Switch>
           <Route exact path ='/' component={MainDisplay} />
           <Route exact path ='/Admin' component={AdminDisplay} />
@@ -28,8 +29,18 @@ const App = () => (
           <Route component={NoMatch} />
           
         </Switch>
-      </Container>
+      </MidContainer>
 
-  </>
+  </AppContainer>
 );
+
+const AppContainer = styled.div`
+  background-color: #F5F5F5;
+`;
+
+const MidContainer = styled.div`
+  margin-right: 80px;
+  margin-left: 80px;
+`;
+
 export default App;

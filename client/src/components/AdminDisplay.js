@@ -1,8 +1,13 @@
 import React from 'react';
+import Navbar from './Navbar';
+import { Menu } from 'semantic-ui-react';
 
 const MainDisplay = () => {
   return(
-    <h1> Main Display</h1>
+    <>
+    <Navbar/>
+    <h1> Admin Display </h1>
+    </>
     )
 };
 

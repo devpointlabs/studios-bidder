@@ -1,18 +1,19 @@
-import React, {useState, useEffect, } from 'react';
-import axios from 'axios';
+import React from 'react';
 import OSMath from './OSMath';
 import Features from './Features';
 import TotalMath from './TotalMath';
-import {Container, Segment, Header } from 'semantic-ui-react';
-import HeaderText from "../styles/HeaderText";
+import {Container, Segment } from 'semantic-ui-react';
 import Colors from "../styles/Colors";
+import styled from "styled-components";
 
 const AndroidDisplay = () => {
 
   return(
     <>
       <Segment as={Colors} colored="dark">
-        <Features OS='android'/>
+        <Container as={FeaturesContainer}>
+          <Features OS='android'/>
+        </Container>
       </Segment>
       <Segment>
         <OSMath OS='android'/>
@@ -21,5 +22,10 @@ const AndroidDisplay = () => {
     </>
   );
 };
+
+const FeaturesContainer = styled.div`
+  padding: 20px;
+`;
+
 
 export default AndroidDisplay;

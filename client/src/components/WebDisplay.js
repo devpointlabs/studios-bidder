@@ -1,11 +1,10 @@
-import React, {useState, useEffect, } from 'react';
-import axios from 'axios';
+import React from 'react';
 import OSMath from './OSMath';
 import Features from './Features';
 import TotalMath from './TotalMath';
 import {Container, Segment, Header } from 'semantic-ui-react';
-import HeaderText from "../styles/HeaderText";
 import Colors from "../styles/Colors";
+import styled from "styled-components";
 
 
 const WebDisplay = () => {
@@ -13,7 +12,9 @@ const WebDisplay = () => {
   return (
     <>
     <Segment as={Colors} colored="light">
-      <Features OS='web'/>
+      <Container as={FeaturesContainer}>
+        <Features OS='web'/>
+      </Container>
     </Segment>
     <Segment>
       <OSMath OS='web'/>
@@ -22,5 +23,9 @@ const WebDisplay = () => {
   </>
   );
 };
+
+const FeaturesContainer = styled.div`
+  padding: 20px;
+`;
 
 export default WebDisplay;

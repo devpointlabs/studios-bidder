@@ -1,8 +1,8 @@
 import React from "react";
-import { MathProvider, MathConsumer } from "../providers/MathProvider";
+import { MathConsumer } from "../providers/MathProvider";
 import { Container, Header,} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
-import MainTitle from '../styles/MainTitle'
+import DarkText from '../styles/DarkText'
 
 class TotalMath extends React.Component {
   featureTotal = () => {
@@ -20,7 +20,7 @@ class TotalMath extends React.Component {
   render() {
     return(
       <Container textAlign="center" as={Colors} colored="white">
-        <Header align="center" as={MainTitle} fSize="small">Total Price: ${this.featureTotal()}</Header>
+        <Header align="center" as={DarkText} fSize="small">Total Price: ${this.featureTotal()}</Header>
       </Container>
     );
   };

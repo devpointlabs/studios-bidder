@@ -1,18 +1,19 @@
-import React, {useState, useEffect, } from 'react';
-import axios from 'axios';
+import React from 'react';
 import OSMath from './OSMath';
 import Features from './Features';
 import TotalMath from './TotalMath';
-import {Container, Header, Segment } from 'semantic-ui-react';
-import HeaderText from "../styles/HeaderText";
+import {Container, Segment } from 'semantic-ui-react';
 import Colors from "../styles/Colors";
+import styled from "styled-components";
 
 const IOSDisplay = () => {
   
   return(
     <>
     <Segment as={Colors} colored="medium-dark">
-      <Features OS='ios'/>
+      <Container as={FeaturesContainer}>
+        <Features OS='ios'/>
+      </Container>
     </Segment>
     <Segment>
       <OSMath OS='ios'/>
@@ -21,5 +22,9 @@ const IOSDisplay = () => {
   </>
   );
 };
+
+const FeaturesContainer = styled.div`
+  padding: 20px;
+`;
 
 export default IOSDisplay;

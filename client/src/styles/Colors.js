@@ -24,5 +24,5 @@ const ColorStyled = (colored) => {
   };
 
 export default styled.div`
-    background-color: ${props => ColorStyled(props.colored)} !important;
+  background-color: ${props => ColorStyled(props.colored)} !important;
 `;
