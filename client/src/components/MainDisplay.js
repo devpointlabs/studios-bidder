@@ -7,6 +7,7 @@ import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header, Form} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
+import styled from "styled-components";
 import axios from 'axios'
 
 
@@ -69,8 +70,8 @@ const MainDisplay = () => {
       <Header align="center" as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
         All estimates are approximate but should give you a rough idea of what it will take to build your app.
       </Header>
-      <Segment.Group horizontal>
-        <Segment onClick={handleWeb} style={{cursor:'pointer'}} as={Colors} colored="light">
+      <Segment.Group horizontal as={NoLine}>
+        <Segment onClick={handleWeb} style={{cursor:'pointer',borderColor: 'transparent'}} as={Colors} colored="light">
             <br/>
             <Header align="center" as={WhiteText} fSize="medium">
               <Icon name="computer"/>  Web App
@@ -123,4 +124,10 @@ const MainDisplay = () => {
     )
 };
 
+const NoLine = styled.div`
+  border-top: none !important;
+  border-top-width: 0px !important;
+`
+
 export default MainDisplay;
+

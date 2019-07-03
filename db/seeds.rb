@@ -1,62 +1,64 @@
 
-platforms = ['iOS', 'Android', 'Web']
+# platforms = ['iOS', 'Android', 'Web']
 
-platforms.each do |a|
-  p = Platform.create(name: a)
-  5.times do |i|
-    category = Category.create(
-      name: "#{a} category #{i +1}",
-      is_exclusive: false,
-      platform_id: p.id
-    )
-    5.times do |j|
-    Feature.create(
-      name: "#{a} Feature #{i+1}/#{j+1}",
-      description: Faker::TvShows::MichaelScott.quote,
-      list_location: rand(10),
-      base_days: rand(10),
-      multiplier: 1,
-      category_id: category.id,
-      platform_id: p.id
-    )
-    end
-  end
+# platforms.each do |a|
+#   p = Platform.create(name: a)
+#   5.times do |i|
+#     category = Category.create(
+#       name: "#{a} category #{i +1}",
+#       is_exclusive: false,
+#       platform_id: p.id
+#     )
+#     5.times do |j|
+#     Feature.create(
+#       name: "#{a} Feature #{i+1}/#{j+1}",
+#       description: Faker::TvShows::MichaelScott.quote,
+#       list_location: rand(10),
+#       base_days: rand(10),
+#       multiplier: 1,
+#       category_id: category.id,
+#       platform_id: p.id
+#     )
+#     end
+#   end
 
-  3.times do |k| 
-    category = Category.create(
-      name: "#{a} exclusive category #{k+1}",
-      is_exclusive: true,
-      platform_id: p.id
-      )
-      3.times do |l|
-      Feature.create(
-        name: "#{a} exclusive Feature #{k+1}/#{l+1}",
-        description: Faker::TvShows::MichaelScott.quote,
-        list_location: rand(10),
-        base_days: rand(10),
-        multiplier: 1,
-        category_id: category.id,
-        platform_id: p.id
-      )
-    end
-  end
-end
+#   3.times do |k| 
+#     category = Category.create(
+#       name: "#{a} exclusive category #{k+1}",
+#       is_exclusive: true,
+#       platform_id: p.id
+#       )
+#       3.times do |l|
+#       Feature.create(
+#         name: "#{a} exclusive Feature #{k+1}/#{l+1}",
+#         description: Faker::TvShows::MichaelScott.quote,
+#         list_location: rand(10),
+#         base_days: rand(10),
+#         multiplier: 1,
+#         category_id: category.id,
+#         platform_id: p.id
+#       )
+#     end
+#   end
+# end
 
-5.times do 
-  e = Estimate.create(
-    customer_name: Faker::Name.name ,
-    customer_email: Faker::Internet.email,
-  )
-  50.times do
-    FeatureEstimate.create(
-      estimate_id: e.id,
-      feature_id: rand(1..100)
-    )
-  end
-end
+# 5.times do 
+#   e = Estimate.create(
+#     customer_name: Faker::Name.name ,
+#     customer_email: Faker::Internet.email,
+#   )
+#   50.times do
+#     FeatureEstimate.create(
+#       estimate_id: e.id,
+#       feature_id: rand(1..100)
+#     )
+#   end
+# end
 
-puts "Seeded 3 platforms, with categories (exclusive and non) and features"
-puts "Seeded 5 estimates with features"
+
+
+# puts "Seeded 3 platforms, with categories (exclusive and non) and features"
+# puts "Seeded 5 estimates with features"
 
 
 
@@ -78,22 +80,15 @@ puts "Seeded 5 estimates with features"
 # puts("updated is_exclusive for category")
 
 
-# 50.times do |j| 
-#   Feature.update((j+1),
-#     name: "feature in category # #{
-#       (Feature.find_by_sql(
-#         "SELECT category_id  
-#         FROM features
-#         WHERE id = #{j+1}"
-#         )
-#       )
-#     }"
-#   )
-# end
+102.times do |j| 
+  Feature.update((j+1),
+    description: "description for feature # #{j+1}"
+  )
+end
 
 # end
 
-# puts("features updated")
+puts("features updated")
 
 
 # 10.times do |i|

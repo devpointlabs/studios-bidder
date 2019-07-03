@@ -10,7 +10,7 @@ const AndroidDisplay = () => {
 
   return(
     <>
-      <Segment as={Colors} colored="dark">
+      <Segment as={NoLine}>
         <Container as={FeaturesContainer}>
           <Features OS='android'/>
         </Container>
@@ -26,6 +26,12 @@ const AndroidDisplay = () => {
 const FeaturesContainer = styled.div`
   padding: 20px;
 `;
+
+const NoLine = styled.div`
+  border-top: none !important;
+  border-top-width: 0px !important;
+  background-color: rgb(63, 39, 115) !important;
+`
 
 
 export default AndroidDisplay;

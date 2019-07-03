@@ -11,7 +11,7 @@ const WebDisplay = (props) => {
   
   return (
     <>
-    <Segment as={Colors} colored="light">
+    <Segment as={NoLine}>
       <Container as={FeaturesContainer}>
         <Features OS='web'/>
       </Container>
@@ -27,5 +27,11 @@ const WebDisplay = (props) => {
 const FeaturesContainer = styled.div`
   padding: 20px;
 `;
+
+const NoLine = styled.div`
+  border-top: none !important;
+  border-top-width: 0px !important;
+  background-color: rgb(129, 104, 177) !important;
+`
 
 export default WebDisplay;
