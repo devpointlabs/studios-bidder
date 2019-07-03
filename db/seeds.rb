@@ -42,7 +42,21 @@ platforms.each do |a|
   end
 end
 
+5.times do 
+  e = Estimate.create(
+    customer_name: Faker::Name.name ,
+    customer_email: Faker::Internet.email,
+  )
+  50.times do
+    FeatureEstimate.create(
+      estimate_id: e.id,
+      feature_id: rand(1..100)
+    )
+  end
+end
+
 puts "Seeded 3 platforms, with categories (exclusive and non) and features"
+puts "Seeded 5 estimates with features"
 
 
 
