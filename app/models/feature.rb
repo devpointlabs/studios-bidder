@@ -2,6 +2,7 @@ class Feature < ApplicationRecord
   validates :name, :description, :base_days, :multiplier, presence: true
 
   belongs_to :category
+  belongs_to :platform
   has_many :feature_estimates
   has_many :estimates, through: :feature_estimates
 

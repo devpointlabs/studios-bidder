@@ -10,38 +10,41 @@ const Features = (props) => {
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
   const [value, setValue] = useState('');
-  // const auth = useContext(AuthContext)
-  const { handleSetPrice } = useContext(MathContext)
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const { handleSetPrice } = useContext(MathContext);
 
   useEffect( () => {
       axios.get(`/api/categories_by_os`,{params: {os: props.OS}})
     .then( res  => {
       setCategories(res.data)
-      console.table(res.data)
     })
     axios.get(`/api/features`)
       .then(res => setFeatures(res.data))
   },[])
 
+  const updateSelectedFeatures = () => {
+    
+  }
 
   const handleChange = (e) => {
-
+    debugger
+    // this will track what is clicked. Then spread new value into it. Then set selected features again. Pass in the mathProvider state price. 
+    // button function on each checkbox. Then update state in MathProvider of what ID's have been clicked. Then pass it down into here so we have the info for the estimate. 
+    setSelectedFeatures(e.value)
     setValue(e.value)}
 
   const exclusiveRendering = (catID, is_exclusive) => {
     let correctF = features.filter( f => catID === f.category_id);
-    console.log(correctF)
-
     if (is_exclusive === true) {
       return (
         <>
           {correctF.map( f => (
-            <Form.Group>
+            <Form.Group key={f.id}>
               <Form.Radio
                 name={f.name}
                 checked={value === f.id}
                 value={f.id}
-                label={f.description}
+                label={f.name}
                 onChange={handleChange}
                 />
             </Form.Group>
@@ -53,25 +56,23 @@ const Features = (props) => {
           <Form.Group>
             {correctF.map( f => (
               <Form.Input
+                key={f.id}
                 type='checkbox'
-                name={f.name} 
-                label={f.description}
+                name={f.name}
+                checked={value === f.id}
+                value={f.id}
+                label={f.name}
+                onChange={handleChange}
               />
             ))}
           </Form.Group>
         );
       };
     };
-  
 
-  const handleSubmit = (e) => {
-    // e.preventDefault();
-    // //////
-    // .then( res => {
-    //   props.add(res.data);
-    // })
-    // handleSetPrice(props.OS)
-  }
+    const handleSubmit = () => {
+
+    }
 
   return (
     <>
@@ -89,7 +90,7 @@ const Features = (props) => {
             <br/>
           </>
           )}
-          <Form.Button>Submit for Quote</Form.Button>
+          {/* <Form.Button>Submit for Quote</Form.Button> */}
         </Form >
     </>
   )
