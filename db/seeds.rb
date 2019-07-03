@@ -6,13 +6,13 @@
 ##   OR just adjust the last feature category_id line to be adjusted for your numbers.
 
 
-10.times do |i|
-  Category.update((i+1),
-    is_exclusive: Faker::Boolean.boolean(0.7), 
-  )
-end
+# 10.times do |i|
+#   Category.update((i+1),
+#     is_exclusive: Faker::Boolean.boolean(0.7), 
+#   )
+# end
 
-puts("updated is_exclusive for category")
+# puts("updated is_exclusive for category")
 
 
 # 50.times do |j| 
@@ -38,7 +38,7 @@ puts("updated is_exclusive for category")
 #     name: Faker::Lorem.word, 
 #     is_android: Faker::Boolean.boolean(0.7),
 #     is_ios: Faker::Boolean.boolean(0.7), 
-#     is_web: Faker::Boolean.boolean(1),
+#     is_web: Faker::Boolean.boolean(0.9),
 #     list_location: (i+1),
 #   )
 # end
@@ -46,7 +46,7 @@ puts("updated is_exclusive for category")
 # 10.times do |k|
 #   5.times do |j|
 #     Feature.create(
-#       name: Faker::Lorem.word, 
+#       name: "feature in category # #{k}", 
 #       description: Faker::Lorem.paragraph_by_chars(150, false),
 #       developer_boolean: Faker::Boolean.boolean(0.9),
 #       base_days: Faker::Number.between(2, 12),
