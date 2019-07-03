@@ -11,7 +11,7 @@ platforms.each do |a|
     )
     5.times do |j|
     Feature.create(
-      name: "#{a} Feature #{j+1}",
+      name: "#{a} Feature #{i+1}/#{j+1}",
       description: Faker::TvShows::MichaelScott.quote,
       list_location: rand(10),
       base_days: rand(10),
@@ -30,7 +30,7 @@ platforms.each do |a|
       )
       3.times do |l|
       Feature.create(
-        name: "#{a} exclusive Feature #{l+1}",
+        name: "#{a} exclusive Feature #{k+1}/#{l+1}",
         description: Faker::TvShows::MichaelScott.quote,
         list_location: rand(10),
         base_days: rand(10),

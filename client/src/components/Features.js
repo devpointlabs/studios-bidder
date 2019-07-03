@@ -42,7 +42,7 @@ const Features = (props) => {
                 name={f.name}
                 checked={value === f.id}
                 value={f.id}
-                label={f.description}
+                label={f.name}
                 onChange={handleChange}
                 />
             </Form.Group>
@@ -59,7 +59,7 @@ const Features = (props) => {
                 name={f.name}
                 checked={value === f.id}
                 value={f.id}
-                label={f.description}
+                label={f.name}
                 onChange={handleChange}
               />
             ))}
