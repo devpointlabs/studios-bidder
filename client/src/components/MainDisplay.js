@@ -5,8 +5,9 @@ import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
 import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
-import {Icon, Segment, Header} from 'semantic-ui-react';
+import {Icon, Segment, Header, Form} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
+import axios from 'axios'
 
 
 const MainDisplay = () => {
@@ -118,9 +119,7 @@ const MainDisplay = () => {
         />
         <Form.Button onClick={handleSubmit} >Submit for Quote</Form.Button>
       </Form>
-
-    </div>
-    
+    </Segment.Group>
     )
 };
 
