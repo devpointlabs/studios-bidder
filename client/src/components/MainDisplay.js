@@ -3,17 +3,11 @@ import Navbar from './Navbar';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
-<<<<<<< HEAD
-import { Button, Form } from "semantic-ui-react";
-import "./MainDisplay.css"
-import axios from "axios";
-=======
 import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 
->>>>>>> ab86adf6b59efa0d2d4384150e83e3a41fb5c32e
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
