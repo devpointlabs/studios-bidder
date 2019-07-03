@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_02_225335) do
+ActiveRecord::Schema.define(version: 2019_07_03_032639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,11 +19,11 @@ ActiveRecord::Schema.define(version: 2019_07_02_225335) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_android", default: false
-    t.boolean "is_ios", default: false
-    t.boolean "is_web", default: true
+    t.boolean "is_android"
+    t.boolean "is_ios"
+    t.boolean "is_web"
     t.integer "list_location"
-    t.boolean "is_exclusive", default: false
+    t.boolean "is_exclusive"
     t.bigint "platform_id"
     t.index ["platform_id"], name: "index_categories_on_platform_id"
   end
@@ -49,17 +49,19 @@ ActiveRecord::Schema.define(version: 2019_07_02_225335) do
   create_table "features", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.boolean "developer_boolean", default: false
+    t.boolean "developer_boolean"
     t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "multiplier"
     t.integer "base_days"
-    t.boolean "is_android", default: false
-    t.boolean "is_ios", default: false
-    t.boolean "is_web", default: true
+    t.boolean "is_android"
+    t.boolean "is_ios"
+    t.boolean "is_web"
     t.integer "list_location"
+    t.bigint "platform_id"
     t.index ["category_id"], name: "index_features_on_category_id"
+    t.index ["platform_id"], name: "index_features_on_platform_id"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -115,4 +117,5 @@ ActiveRecord::Schema.define(version: 2019_07_02_225335) do
   add_foreign_key "feature_estimates", "estimates"
   add_foreign_key "feature_estimates", "features"
   add_foreign_key "features", "categories"
+  add_foreign_key "features", "platforms"
 end
