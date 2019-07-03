@@ -5,18 +5,9 @@ export const MathConsumer = MathContext.Consumer;
 
 export class MathProvider extends React.Component {
   state = { 
-    web: [
-    {base_days: 10, multiplier: 350, enabled: true, },
-    {base_days: 10, multiplier: 300, enabled: true, },
-    {base_days: 10, multiplier: 500, enabled: true, },
-    ], 
-    iOS: [
-    {base_days: 10, multiplier: 100, enabled: true, },
-    {base_days: 10, multiplier: 100, enabled: true, }, 
-    ], 
-    android: [
-    {base_days: 5, multiplier: 100, enabled: true, },
-    ], 
+    webDays: [], 
+    iOSDays: [], 
+    androidDays: [], 
     iOSPrice: 0, 
     webPrice: 0, 
     androidPrice: 0,
@@ -25,29 +16,26 @@ export class MathProvider extends React.Component {
   handleSetPrice = (os) => {
     const reducerFunction = (os) => os.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0)
     if (os === 'web'){
-      const {web} = this.state;
-      this.setState({webPrice: reducerFunction(web)});
+      const {webDays} = this.state;
+      this.setState({webPrice: reducerFunction(webDays)});
     } else if(os === 'android'){
-      const {android} = this.state;
-      this.setState({androidPrice: reducerFunction(android)});
+      const {androidDays} = this.state;
+      this.setState({androidPrice: reducerFunction(androidDays)});
     } else if(os === 'ios'){
-      const {iOS} = this.state;
-      this.setState({iOSPrice: reducerFunction(iOS)});
+      const {iOSDays} = this.state;
+      this.setState({iOSPrice: reducerFunction(iOSDays)});
     };
   };
 
-  
-
-  // handleID = (IDs, OS) => {
-  //   switch(OS) {
-  //     case 'Web':
-  //     this.setState({Web: [...this.Web, res.data], });
-  //     case 'IOS':
-  //       this.setState({IOS: [...this.IOS, res.data], });
-  //     case 'Android':
-  //       this.setState({Android: [...this.Android, res.data], });
-  //   }
-  // };
+  handleSetDays = (os, feature) => {
+    if (os === 'web'){
+      this.setState({webDays: [...this.state.webDays, {base_days: feature.base_days, multiplier: feature.multiplier}]})
+    } else if(os === 'ios'){
+      this.setState({iOSDays: [...this.state.iOSDays, {base_days: feature.base_days, multiplier: feature.multiplier}]})
+    } else if(os === 'android'){
+      this.setState({androidDays: [...this.state.androidDays, {base_days: feature.base_days, multiplier: feature.multiplier}]})
+    };
+  };
     
   render() {
 
@@ -60,6 +48,7 @@ export class MathProvider extends React.Component {
        ...this.state,
        webPrice, iOSPrice, androidPrice,
        handleSetPrice: this.handleSetPrice,
+       handleSetDays: this.handleSetDays,
       }}>
         {this.props.children}
       </MathContext.Provider>

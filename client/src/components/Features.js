@@ -12,6 +12,7 @@ const Features = (props) => {
   const [value, setValue] = useState('');
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const { handleSetPrice } = useContext(MathContext);
+  const { handleSetDays } = useContext(MathContext);
 
   useEffect( () => {
       axios.get(`/api/categories_by_os`,{params: {os: props.OS}})
@@ -19,19 +20,25 @@ const Features = (props) => {
       setCategories(res.data)
     })
     axios.get(`/api/features`)
-      .then(res => setFeatures(res.data))
+    .then(res => setFeatures(res.data))
   },[])
-
-  const updateSelectedFeatures = () => {
+  
+  useEffect( () => {
+    handleSetPrice(props.OS)
+  },[selectedFeatures])
+  
+  const getSelectedFeatureData = (id) => {
+    const selected = features.filter( f => {if (f.id == id) return f})
+    handleSetDays(props.OS, ...selected)
+  };
     
-  }
-
   const handleChange = (e) => {
-    debugger
-    // this will track what is clicked. Then spread new value into it. Then set selected features again. Pass in the mathProvider state price. 
-    // button function on each checkbox. Then update state in MathProvider of what ID's have been clicked. Then pass it down into here so we have the info for the estimate. 
-    setSelectedFeatures(e.value)
-    setValue(e.value)}
+    const newFeature = selectedFeatures.includes(e.target.value)
+    if (newFeature === false) {setSelectedFeatures([...selectedFeatures, e.target.value])
+    }else setSelectedFeatures(selectedFeatures.filter(f => f != e.target.value));
+    getSelectedFeatureData(e.target.value);
+   //NEED TO HANDLE RADIO BUTTONS AND PRICING CHANGES BASED ON CLICKS AS WELL
+  }
 
   const exclusiveRendering = (catID, is_exclusive) => {
     let correctF = features.filter( f => catID === f.category_id);
@@ -59,7 +66,6 @@ const Features = (props) => {
                 key={f.id}
                 type='checkbox'
                 name={f.name}
-                checked={value === f.id}
                 value={f.id}
                 label={f.name}
                 onChange={handleChange}
