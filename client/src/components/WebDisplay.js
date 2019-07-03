@@ -7,7 +7,7 @@ import Colors from "../styles/Colors";
 import styled from "styled-components";
 
 
-const WebDisplay = () => {
+const WebDisplay = (props) => {
   
   return (
     <>
