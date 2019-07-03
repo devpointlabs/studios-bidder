@@ -1,8 +1,10 @@
 import React, {useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import {Form, Container, Header,} from 'semantic-ui-react';
-// import { AuthContext } from '../providers/AuthProvider';
 import { MathContext} from '../providers/MathProvider';
+import DarkText from "../styles/DarkText";
+import Colors from "../styles/Colors";
+
 
 const Features = (props) => {
   const [categories, setCategories] = useState([]);
@@ -52,7 +54,7 @@ const Features = (props) => {
             {correctF.map( f => (
               <Form.Input
                 type='checkbox'
-                name={f.name}
+                name={f.name} 
                 label={f.description}
               />
             ))}
@@ -73,17 +75,22 @@ const Features = (props) => {
 
   return (
     <>
-      <ul>
+        <br/>
+        <br/>
         <Form onSubmit={handleSubmit()}>
           {categories.map(c => 
-          <Container key={c.id} id={c.id}>
-            <Header as="h1">{c.name}</Header>
-            {exclusiveRendering(c.id, c.is_exclusive)}
-          </Container>
+          <>
+            <Container textAlign="center" key={c.id} id={c.id} as={Colors} colored="white">
+              <Header as={DarkText} fSize="medium">{c.name}</Header>
+              {exclusiveRendering(c.id, c.is_exclusive)}
+            </Container>
+            <br/>
+            <br/>
+            <br/>
+          </>
           )}
           <Form.Button>Submit for Quote</Form.Button>
         </Form >
-      </ul>
     </>
   )
 };
