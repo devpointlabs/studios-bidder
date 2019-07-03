@@ -1,20 +1,31 @@
-import React, {useState, useEffect, } from 'react';
-import axios from 'axios';
+import React from 'react';
 import OSMath from './OSMath';
 import Features from './Features';
 import TotalMath from './TotalMath';
-import {Container, } from 'semantic-ui-react';
+import {Container, Segment, Header } from 'semantic-ui-react';
+import Colors from "../styles/Colors";
+import styled from "styled-components";
+
 
 const WebDisplay = (props) => {
   
   return (
-    <Container>
-      <h1>Web</h1>
-      <Features OS='web' handleSubmit={props.handleSubmit}/>
+    <>
+    <Segment as={Colors} colored="light">
+      <Container as={FeaturesContainer}>
+        <Features OS='web'/>
+      </Container>
+    </Segment>
+    <Segment>
       <OSMath OS='web'/>
       <TotalMath />
-    </Container>
+    </Segment>
+  </>
   );
 };
+
+const FeaturesContainer = styled.div`
+  padding: 20px;
+`;
 
 export default WebDisplay;

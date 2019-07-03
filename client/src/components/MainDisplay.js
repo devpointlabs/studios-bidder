@@ -1,10 +1,19 @@
 import React,{useState} from 'react';
+import Navbar from './Navbar';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
+<<<<<<< HEAD
 import { Button, Form } from "semantic-ui-react";
 import "./MainDisplay.css"
 import axios from "axios";
+=======
+import WhiteText from "../styles/WhiteText";
+import MainTitle from '../styles/MainTitle';
+import {Icon, Segment, Header} from 'semantic-ui-react';
+import Colors from "../styles/Colors";
+
+>>>>>>> ab86adf6b59efa0d2d4384150e83e3a41fb5c32e
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
@@ -52,20 +61,52 @@ const MainDisplay = () => {
 
 
   return(
-    <div>
-      <h1 align="center">Estimate Your App Cost</h1>
-      <div className="container1">
-        <h1> Main Display</h1>
-        <Button onClick={handleWeb} className="btn" >
-          Web App
-        </Button>
-        <Button onClick={handleiOS} className="btn" >
-          iOS App
-        </Button>
-        <Button onClick={handleAndroid} className="btn" >
-          Android App
-        </Button>
-      </div>
+    <Segment.Group Vertical as={Colors} colored="white">
+      {/* <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"></link> */}
+      {/* <style>@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');</style> */}
+      <Navbar/>
+      <Header align="center" as={MainTitle} colored="dark-grey" fSize="large">
+        Estimate Your App
+      </Header>
+      <Header align="center" as={MainTitle} colored="dark-grey"  fSize="small">
+        Select the items below which best describe your app and the features you require.
+      </Header>
+      <Header align="center" as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
+        All estimates are approximate but should give you a rough idea of what it will take to build your app.
+      </Header>
+      <Segment.Group horizontal>
+        <Segment onClick={handleWeb} as={Colors} colored="light">
+            <br/>
+            <Header align="center" as={WhiteText} fSize="medium">
+              <Icon name="computer"/>  Web App
+            </Header>
+            <Header align="center" as={WhiteText} fSize="small">
+              A web app or a 
+              <br/>back-end to a mobile app
+            </Header>
+            <br/>
+        </Segment>
+        <Segment onClick={handleiOS} as={Colors} colored="medium-dark">
+          <br/>
+          <Header align="center" as={WhiteText} fSize="medium">
+            <Icon name="apple"/>  iOS App
+          </Header>
+          <Header align="center" as={WhiteText} fSize="small">
+              An iPhone/ iPad app 
+              <br/>(Excluding back-end)
+          </Header>
+        </Segment>
+        <Segment onClick={handleAndroid} as={Colors} colored="dark">
+          <br/> 
+          <Header align="center" as={WhiteText} fSize="medium">
+            <Icon name="android"/>Android App
+          </Header>
+          <Header align="center" as={WhiteText} fSize="small">
+              An Android/ Tablet App
+              <br/>(Excluding back-end)
+          </Header>
+        </Segment>
+      </Segment.Group>
       {displayForm()}
       <br />
       <Form widths='equal'>

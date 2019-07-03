@@ -3,6 +3,7 @@ import axios from 'axios'
 import {Table, Icon} from 'semantic-ui-react'
 import FeatureForm from './FeatureForm'
 import CategoryForm from './CategoryForm'
+import Navbar from './Navbar';
 
 const MainDisplay = () => {
   const [features, setFeatures] = useState([])
@@ -15,6 +16,7 @@ const MainDisplay = () => {
 
   return(
     <>
+    <Navbar/>
       <CategoryForm/>
         <br />
         <hr />
