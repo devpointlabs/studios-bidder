@@ -6,13 +6,17 @@ import {Container, Segment } from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import styled from "styled-components";
 
-const IOSDisplay = () => {
+const IOSDisplay = (props) => {
   
   return(
     <>
     <Segment as={Colors} colored="medium-dark">
       <Container as={FeaturesContainer}>
-        <Features OS='ios'/>
+        <Features 
+          OS='ios'
+          handleSelections={props.handleSelections}
+          selectedFeatures={props.selectedFeatures}
+          />
       </Container>
     </Segment>
     <Segment>

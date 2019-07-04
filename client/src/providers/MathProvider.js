@@ -27,13 +27,13 @@ export class MathProvider extends React.Component {
     };
   };
 
-  handleSetDays = (os, feature) => {
+  handleSetDays = (os, feature, selectedFeatures) => {
     if (os === 'web'){
-      this.setState({webDays: [...this.state.webDays, {base_days: feature.base_days, multiplier: feature.multiplier}]})
+      this.setState({webDays: [...this.state.webDays, {base_days: feature.base_days, multiplier: feature.multiplier, id: feature.id}]})
     } else if(os === 'ios'){
-      this.setState({iOSDays: [...this.state.iOSDays, {base_days: feature.base_days, multiplier: feature.multiplier}]})
+      this.setState({iOSDays: [...this.state.iOSDays, {base_days: feature.base_days, multiplier: feature.multiplier, id: feature.id}]})
     } else if(os === 'android'){
-      this.setState({androidDays: [...this.state.androidDays, {base_days: feature.base_days, multiplier: feature.multiplier}]})
+      this.setState({androidDays: [...this.state.androidDays, {base_days: feature.base_days, multiplier: feature.multiplier, id: feature.id}]})
     };
   };
     

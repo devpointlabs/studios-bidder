@@ -13,7 +13,11 @@ const WebDisplay = (props) => {
     <>
     <Segment as={Colors} colored="light">
       <Container as={FeaturesContainer}>
-        <Features OS='web'/>
+        <Features 
+          OS='web'
+          handleSelections={props.handleSelections}
+          selectedFeatures={props.selectedFeatures}
+        />
       </Container>
     </Segment>
     <Segment>

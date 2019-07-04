@@ -14,10 +14,7 @@ const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [features, setFeatures] = useState([])
-  // const [webSelections, setWebSelections] = useState({})
-  // const [iosSelections, setIOSSelections] = useState({})
-  // const [androidSelections, setAndroidSelections] = useState({})
+  const [selectedFeatures, setSelectedFeatures] = useState([])
 
   // BIG SUBMIT FUNCTION(EACH STATE)
   const handleSubmit = () => {
@@ -31,6 +28,10 @@ const MainDisplay = () => {
       // .then DO SOMETHING AFTER SUBMIT???????????????????????????
     setEmail('')
     setName('')
+  };
+
+  const handleSelections = (value) => {
+    setSelectedFeatures(value)
   };
 
   const handleWeb = () => {
@@ -47,9 +48,18 @@ const MainDisplay = () => {
 
   const displayForm = () => {
     switch(focus){
-      case 'web': return <WebDisplay handleSubmit={handleSubmit} />;
-      case 'ios': return <IOSDisplay handleSubmit={handleSubmit} />;
-      case "android": return <AndroidDisplay handleSubmit={handleSubmit} />;
+      case 'web': return <WebDisplay 
+                            handleSubmit={handleSubmit} 
+                            handleSelections={handleSelections} 
+                            selectedFeatures={selectedFeatures}/>;
+      case 'ios': return <IOSDisplay 
+                            handleSubmit={handleSubmit} 
+                            handleSelections={handleSelections} 
+                            selectedFeatures={selectedFeatures}/>;
+      case "android": return <AndroidDisplay 
+                                handleSubmit={handleSubmit}
+                                handleSelections={handleSelections} 
+                                selectedFeatures={selectedFeatures} />;
       default: return <h1>You broke the platform switcher</h1>
     };
   };

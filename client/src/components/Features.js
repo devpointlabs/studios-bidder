@@ -9,8 +9,6 @@ import Colors from "../styles/Colors";
 const Features = (props) => {
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
-  const [value, setValue] = useState('');
-  const [selectedFeatures, setSelectedFeatures] = useState([]);
   const { handleSetPrice } = useContext(MathContext);
   const { handleSetDays } = useContext(MathContext);
 
@@ -25,7 +23,7 @@ const Features = (props) => {
   
   useEffect( () => {
     handleSetPrice(props.OS)
-  },[selectedFeatures])
+  },[props.selectedFeatures])
   
   const getSelectedFeatureData = (id) => {
     const selected = features.filter( f => {if (f.id == id) return f})
@@ -33,36 +31,38 @@ const Features = (props) => {
   };
     
   const handleChange = (e) => {
-    const newFeature = selectedFeatures.includes(e.target.value)
-    if (newFeature === false) {setSelectedFeatures([...selectedFeatures, e.target.value])
-    }else setSelectedFeatures(selectedFeatures.filter(f => f != e.target.value));
+    if (props.selectedFeatures.includes(e.target.value) === false) {props.handleSelections([...props.selectedFeatures, e.target.value])
+    }else props.handleSelections(props.selectedFeatures.filter(f => f != e.target.value));
+
     getSelectedFeatureData(e.target.value);
    //NEED TO HANDLE RADIO BUTTONS AND PRICING CHANGES BASED ON CLICKS AS WELL
-  }
+  };
+
 
   const exclusiveRendering = (catID, is_exclusive) => {
     let correctF = features.filter( f => catID === f.category_id);
     if (is_exclusive === true) {
-      return (
-        <>
-          {correctF.map( f => (
-            <Form.Group key={f.id}>
-              <Form.Radio
-                name={f.name}
-                checked={value === f.id}
-                value={f.id}
-                label={f.name}
-                onChange={handleChange}
-                />
-            </Form.Group>
-          ))}
-        </>
-        );
+      // return (
+      //   // <>
+      //   //   {correctF.map( f => (
+      //   //     <Form.Group key={f.id}>
+      //   //       <Form.Radio
+      //   //         name={f.name}
+      //   //         checked={value === f.id}
+      //   //         value={f.id}
+      //   //         label={f.name}
+      //   //         onChange={handleChange}
+      //   //         />
+      //   //     </Form.Group>
+      //   //   ))}
+      //   // </>
+      //   );
       }else {
         return (
           <Form.Group>
             {correctF.map( f => (
               <Form.Input
+                checked={props.selectedFeatures.includes(f.id.toString())}
                 key={f.id}
                 type='checkbox'
                 name={f.name}
