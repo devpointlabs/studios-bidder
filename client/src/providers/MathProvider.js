@@ -52,12 +52,6 @@ export class MathProvider extends React.Component {
     };
   };
 
-  remove = (value) => {
-    this.setState(value)
-  }
-
-  
-    
   render() {
 
       const {webPrice} = this.state
