@@ -9,31 +9,21 @@ const FeatureForm = () => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
-  const [devDays, setDevDays] = useState('')
-  const [multiplier, setMultiplier] = useState()
-  // const [isWeb, setIsWeb] = useState(false)
-  // const [isAndroid, setIsAndroid] = useState(false)
-  // const [isIos, setIsIos] = useState(false)
+  const [base_days, setBase_days] = useState('')
+  const [multiplier, setMultiplier] = useState('')
+
+
 
   const handleSubmit=(e)=>{
-    axios.post(`/api/features`,{
-      name,
-      description,
-      category,
-      devDays,
-      multiplier,
-      // isWeb,
-      // isAndroid,
-      // isIos
-    })
+    axios.post(`/api/categories/${category}/features`,{name, description, base_days, multiplier})
   }
 
   useEffect(()=>{
-    axios.get(`/api/categories`)
+    axios.get(`/api/all_categories`)
     .then(res=>{
       setCategoryOptions(res.data)
     })
-  },)
+  },[])
 
   return(
     <Form onSubmit={handleSubmit}>
@@ -49,18 +39,18 @@ const FeatureForm = () => {
         <Form.Select
           label="Category"
           placeholder="Select Category..."
-          options={categoryOptions.map(category=> ({text:category.id, value:category.id, text:category.name}))}
+          options={categoryOptions.map(category=> ({key:category.id, value:category.id, text:category.name}))}
           name="category"
-          onChange={(e)=> setCategory(e.target.value)}
+          onChange={(e, data)=> setCategory(data.value)}
           required
         />
         <Form.Input
           label="Developer Days"
           type="number"
           placeholder="5"
-          value={devDays}
+          value={base_days}
           name="devDays"
-          onChange={(e)=> setDevDays(e.target.value)}
+          onChange={(e)=> setBase_days(e.target.value)}
           required
         />
         <Form.Input
