@@ -7,7 +7,7 @@ import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header, Form} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
-import axios from 'axios'
+import axios from 'axios';
 
 
 const MainDisplay = () => {
@@ -30,8 +30,8 @@ const MainDisplay = () => {
     setName('')
   };
 
-  const handleSelections = (value) => {
-    setSelectedFeatures(value)
+  const handleSelections = (feature) => {
+    setSelectedFeatures(feature)
   };
 
   const handleWeb = () => {

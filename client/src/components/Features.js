@@ -26,13 +26,13 @@ const Features = (props) => {
   },[props.selectedFeatures])
   
   const getSelectedFeatureData = (id) => {
-    const selected = features.filter( f => {if (f.id == id) return f})
+    const selected = features.filter( f => {if (f.id === parseInt(id)) return f})
     handleSetDays(props.OS, ...selected)
   };
     
   const handleChange = (e) => {
     if (props.selectedFeatures.includes(e.target.value) === false) {props.handleSelections([...props.selectedFeatures, e.target.value])
-    }else props.handleSelections(props.selectedFeatures.filter(f => f != e.target.value));
+    }else props.handleSelections(props.selectedFeatures.filter(f => f !== e.target.value));
 
     getSelectedFeatureData(e.target.value);
    //NEED TO HANDLE RADIO BUTTONS AND PRICING CHANGES BASED ON CLICKS AS WELL

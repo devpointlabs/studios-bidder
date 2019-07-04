@@ -27,15 +27,36 @@ export class MathProvider extends React.Component {
     };
   };
 
-  handleSetDays = (os, feature, selectedFeatures) => {
+  handleSetDays = (os, feature) => {
+    const {webDays} = this.state;
+    const {iOSDays} = this.state;
+    const {androidDays} = this.state;
     if (os === 'web'){
-      this.setState({webDays: [...this.state.webDays, {base_days: feature.base_days, multiplier: feature.multiplier, id: feature.id}]})
+      const wd = webDays.map( d => d.id)
+      if (wd.includes(feature.id) === false) {
+        this.setState({webDays: [...webDays, feature]})
+    }else 
+      this.setState({webDays: webDays.filter( d => d.id !== feature.id)})
     } else if(os === 'ios'){
-      this.setState({iOSDays: [...this.state.iOSDays, {base_days: feature.base_days, multiplier: feature.multiplier, id: feature.id}]})
+      const id = iOSDays.map( d => d.id)
+      if (id.includes(feature.id) === false) {
+        this.setState({iOSDays: [...iOSDays, feature]})
+    }else 
+      this.setState({iOSDays: iOSDays.filter( d => d.id !== feature.id)})
     } else if(os === 'android'){
-      this.setState({androidDays: [...this.state.androidDays, {base_days: feature.base_days, multiplier: feature.multiplier, id: feature.id}]})
+      const ad = androidDays.map( d => d.id)
+      if (ad.includes(feature.id) === false) {
+        this.setState({androidDays: [...androidDays, feature]})
+    }else 
+      this.setState({androidDays: androidDays.filter( d => d.id !== feature.id)})
     };
   };
+
+  remove = (value) => {
+    this.setState(value)
+  }
+
+  
     
   render() {
 
