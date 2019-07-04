@@ -7,6 +7,7 @@ import Colors from "../styles/Colors";
 
 
 const Features = (props) => {
+  const [platforms, setPlatforms] = useState([])
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
   const [value, setValue] = useState('');
@@ -14,12 +15,15 @@ const Features = (props) => {
   const { handleSetPrice } = useContext(MathContext);
 
   useEffect( () => {
-      axios.get(`/api/categories_by_os`,{params: {os: props.OS}})
-    .then( res  => {
-      setCategories(res.data)
-    })
-    axios.get(`/api/features`)
-      .then(res => setFeatures(res.data))
+    axios.get(`/api/platforms`)
+    .then(res=>setPlatforms(res.data))
+
+  //     axios.get(`/api/${}/categories`)
+  //   .then( res  => {
+  //     setCategories(res.data)
+  //   })
+  //   axios.get(`/api/features`)
+  //     .then(res => setFeatures(res.data))
   },[])
 
   const updateSelectedFeatures = () => {

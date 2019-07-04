@@ -3,22 +3,18 @@ import axios from 'axios'
 import {Form} from 'semantic-ui-react'
 
 const CategoryForm = () => {
-  const [platforms, setPlatforms] = useState()
-
+  const [platforms, setPlatforms] = useState([])
   const [name, setName] = useState('')
-  const [isWeb, setIsWeb] = useState(false)
-  const [isAndroid, setIsAndroid] = useState(false)
-  const [isIos, setIsIos] = useState(false)
   const [isExclusive, setIsExclusive] = useState(false)
+  const [platform, setPlatform] = useState('')
+
+  useEffect(()=>{
+    axios.get(`/api/platforms`)
+    .then(res=>setPlatforms(res.data))
+  },[])
 
   const handleSubmit=(e)=>{
-    axios.post(`/api/categories`,{
-      name,
-      isWeb,
-      isAndroid,
-      isIos,
-      isExclusive
-    })
+    axios.post(`/api/platforms/${platform}/categories`,{name, isExclusive})
   }
 
   return(
@@ -34,14 +30,15 @@ const CategoryForm = () => {
         <Form.Select
           label="Platform"
           placeholder="Select Platform..."
-          options={[{key:'Web', value:'Web', text:'Web'},{key:'Android', value:'Android', text:'Android'},{key:'iOS', value:'iOS', text:'iOS'}]}
+          options={platforms.map((p)=>({key:p.id, value:p.id, text:p.name}))}
           name="platform"
+          onChange={(e, data)=>setPlatform(data.value)}
           required
         />
       <Form.Checkbox
         label="Exclusive?"
         name="isExclusive"
-        onChange={(e)=> setIsWeb((e.target.value))}
+        onChange={(e)=> setIsExclusive((e.target.value))}
       />
       <Form.Button>Submit</Form.Button>
     </Form>
