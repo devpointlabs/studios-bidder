@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :estimates, only: [:index, :create, :update]
 
     get 'all_categories', to: 'categories#all_categories'
+    get 'features_by_platform', to: 'features#features_by_platform'
   end
 
 end

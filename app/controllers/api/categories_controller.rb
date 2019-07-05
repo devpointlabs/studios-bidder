@@ -4,7 +4,7 @@ class Api::CategoriesController < ApplicationController
   before_action :set_category, only: [:destroy]
 
   def index
-    render json: Platform.categories
+    render json: @platform.categories
   end
 
   def all_categories

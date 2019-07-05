@@ -1,5 +1,6 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import Navbar from './Navbar';
+// import Features from './Features';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
@@ -14,7 +15,14 @@ const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([])
+
+
+  // useEffect( () => {
+  //   axios.get(`/api/platforms`)
+  //   .then(res=>setPlatforms(res.data))
+  // });
 
   // BIG SUBMIT FUNCTION(EACH STATE)
   const handleSubmit = () => {
@@ -48,7 +56,8 @@ const MainDisplay = () => {
 
   const displayForm = () => {
     switch(focus){
-      case 'web': return <WebDisplay 
+      case 'web': return <WebDisplay
+                            os='web'
                             handleSubmit={handleSubmit} 
                             handleSelections={handleSelections} 
                             selectedFeatures={selectedFeatures}/>;

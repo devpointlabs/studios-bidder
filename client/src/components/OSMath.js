@@ -19,7 +19,6 @@ const OSMath = (props) => {
   return(
     <Container textAlign="center" as={Colors} colored="white">
       <Header align="center" as={DarkText} fSize="large">{props.OS} Math</Header>
-      <Button as={Colors} inverted colored="light" onClick={() => handleSetPrice(props.OS)}>Click to show {props.OS} price</Button >
       <Header align="center" as={DarkText} fSize="small">{props.OS} Price: ${renderPriceDisplay()}</Header>
     </Container>
   );

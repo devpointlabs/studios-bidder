@@ -7,22 +7,25 @@ import Colors from "../styles/Colors";
 
 
 const Features = (props) => {
-  const [platforms, setPlatforms] = useState([])
+  // const [platforms, setPlatforms] = useState([])
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
   const { handleSetPrice } = useContext(MathContext);
   const { handleSetDays } = useContext(MathContext);
 
   useEffect( () => {
-    axios.get(`/api/platforms`)
-    .then(res=>setPlatforms(res.data))
+    // axios.get(`/api/platforms`)
+    //   .then(res=>setPlatforms(res.data))
+    var os = ''
+    if (props.OS === 'web') os = 3
+    else if (props.OS === 'ios') os = 1
+    else if (props.OS === 'android') os = 2
 
-  //     axios.get(`/api/${}/categories`)
-  //   .then( res  => {
-  //     setCategories(res.data)
-  //   })
-  //   axios.get(`/api/features`)
-  //     .then(res => setFeatures(res.data))
+    axios.get(`/api/platforms/${os}/categories`)
+      .then( res  => setCategories(res.data))
+
+    axios.get(`/api/features_by_platform`, {params: {platform_id: os}})
+      .then(res => setFeatures(res.data))
   },[])
   
   useEffect( () => {
