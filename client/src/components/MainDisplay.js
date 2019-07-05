@@ -38,9 +38,6 @@ const MainDisplay = () => {
     setName('')
   };
 
-  const handleSelections = (feature) => {
-    setSelectedFeatures(feature)
-  };
 
   const handleWeb = () => {
     setFocus('web')
@@ -59,15 +56,15 @@ const MainDisplay = () => {
       case 'web': return <WebDisplay
                             os='web'
                             handleSubmit={handleSubmit} 
-                            handleSelections={handleSelections} 
-                            selectedFeatures={selectedFeatures}/>;
+                            selectedFeatures={selectedFeatures}
+                            setSelectedFeatures={setSelectedFeatures}/>;
       case 'ios': return <IOSDisplay 
                             handleSubmit={handleSubmit} 
-                            handleSelections={handleSelections} 
+                            setSelectedFeatures={setSelectedFeatures} 
                             selectedFeatures={selectedFeatures}/>;
       case "android": return <AndroidDisplay 
                                 handleSubmit={handleSubmit}
-                                handleSelections={handleSelections} 
+                                setSelectedFeatures={setSelectedFeatures} 
                                 selectedFeatures={selectedFeatures} />;
       default: return <h1>You broke the platform switcher</h1>
     };

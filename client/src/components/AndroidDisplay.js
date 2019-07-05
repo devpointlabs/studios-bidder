@@ -14,7 +14,7 @@ const AndroidDisplay = (props) => {
         <Container as={FeaturesContainer}>
           <Features 
             OS='android'
-            handleSelections={props.handleSelections}
+            setSelectedFeatures={props.setSelectedFeatures}
             selectedFeatures={props.selectedFeatures} />
         </Container>
       </Segment>

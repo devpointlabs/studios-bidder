@@ -5,7 +5,7 @@ import Colors from "../styles/Colors";
 import DarkText from '../styles/DarkText'
 
 const OSMath = (props) => {
-  const {webPrice, iOSPrice, androidPrice, handleSetPrice} = useContext(MathContext);
+  const {webPrice, iOSPrice, androidPrice,} = useContext(MathContext);
 
   const renderPriceDisplay = () => {
     switch (props.OS){

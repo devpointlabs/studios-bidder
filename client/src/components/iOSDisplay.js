@@ -14,7 +14,7 @@ const IOSDisplay = (props) => {
       <Container as={FeaturesContainer}>
         <Features 
           OS='ios'
-          handleSelections={props.handleSelections}
+          setSelectedFeatures={props.setSelectedFeatures}
           selectedFeatures={props.selectedFeatures}
           />
       </Container>
