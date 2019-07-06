@@ -20,6 +20,11 @@ before_action :set_feature, only: [:update, :destroy]
   end
 
   def update
+    if @feature.update(feature_params)
+      render json: @feature
+    else
+      render json: @feature.errors, status:422
+    end
   end
 
   def destroy
