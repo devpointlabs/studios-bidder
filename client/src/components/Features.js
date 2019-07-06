@@ -36,6 +36,7 @@ const Features = (props) => {
   const getSelectedFeatureData = (id) => {
     const selected = features.filter( f => {if (f.id === parseInt(id)) return f})
     handleSetDays(props.OS, ...selected)
+    //DESTRUCTURE SELECTED AND ONLY SEND VALUES WE NEED TO MATH PROVIDER
   };
     
   const handleCheckbox = (e) => {
@@ -48,11 +49,11 @@ const Features = (props) => {
     let rbCategories = radioButtons.map( rb => (rb.category))
     if(rbCategories.includes(catID) === false) {
       setRadioButtons([...radioButtons, {category: catID, feature: fID}])
-      props.setSelectedFeatures([...props.selectedFeatures, fID]);
     }else {setRadioButtons([...radioButtons.filter( rb => rb.category !== catID ),{category: catID, feature: fID}])
-      props.setSelectedFeatures(props.selectedFeatures.filter(f => f !== fID));
-    }
-    console.log(radioButtons)
+    props.setSelectedFeatures(props.selectedFeatures.filter(f => f !== fID));
+  }
+    props.setSelectedFeatures([...props.selectedFeatures, ...radioButtons]);
+    // console.log(radioButtons)
     getSelectedFeatureData(fID);
   };
 
@@ -69,7 +70,7 @@ const Features = (props) => {
     if (is_exclusive === true) {
       return (
         <>
-          {correctF.map( f => { 
+          {/* {correctF.map( f => { 
             return(
               <Form.Group key={f.id}>
                 <Form.Field>
@@ -82,7 +83,7 @@ const Features = (props) => {
                     />
                     </Form.Field>
               </Form.Group>
-            )})}
+            )})} */}
         </>
         );
       }else {
@@ -114,24 +115,12 @@ const Features = (props) => {
             <Container textAlign="center" key={c.id} id={c.id} as={Colors} colored="white">
               <Header as={DarkText} fSize="medium">{c.name}</Header>
               {exclusiveRendering(c.id, c.is_exclusive)}
-              {/* <ExclusiveRendering 
-                catID={c.id}
-                radioButtons={radioButtons}
-                setRadioButtons={setRadioButtons}
-                handleCheckbox={handleCheckbox}
-                features={features}
-                setSelectedFeatures={props.setSelectedFeatures}
-                getSelectedFeatureData={getSelectedFeatureData}
-                selectedFeatures={props.selectedFeatures}
-                is_exclusive={c.is_exclusive}
-              /> */}
             </Container>
             <br/>
             <br/>
             <br/>
           </>
           )}
-          {/* <Form.Button>Submit for Quote</Form.Button> */}
         </Form >
     </>
   )

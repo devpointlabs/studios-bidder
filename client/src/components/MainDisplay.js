@@ -1,6 +1,5 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useContext} from 'react';
 import Navbar from './Navbar';
-// import Features from './Features';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
@@ -9,14 +8,17 @@ import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header, Form} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import axios from 'axios';
+import {MathContext,} from '../providers/MathProvider';
 
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [estimateID, setEstimateID] = useState('');
   // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([])
+  const {resetMath} = useContext(MathContext);
 
 
   // useEffect( () => {
@@ -26,14 +28,17 @@ const MainDisplay = () => {
 
   // BIG SUBMIT FUNCTION(EACH STATE)
   const handleSubmit = () => {
-    createEstimateRecord()
-
+    createEstimateRecord();
+    axios.post(`/api/features_estimates?feature_id=${selectedFeatures}&estimate_id=${estimateID}`)
+    // FUNCTIONS BELOW COMPLETELY RESET FORM
+    setSelectedFeatures([]);
+    resetMath()
   };
 
   const createEstimateRecord = () => {
     const estimate = {customer_name: name, customer_email: email}
     axios.post(`/api/estimates`, estimate)
-      // .then DO SOMETHING AFTER SUBMIT???????????????????????????
+      .then(res => setEstimateID(res.data));
     setEmail('')
     setName('')
   };
