@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
     resources :sessions, only: [:show, :update]
     resources :estimates, only: [:index, :create, :update]
+    resources :features_estimates, only: [:create]
 
     get 'all_categories', to: 'categories#all_categories'
     get 'features_by_platform', to: 'features#features_by_platform'
