@@ -2,19 +2,19 @@ import React,{useState, useEffect} from 'react';
 import axios from 'axios'
 import {Form} from 'semantic-ui-react'
 
-const CategoryForm = () => {
-  const [platforms, setPlatforms] = useState([])
+const CategoryForm = (props) => {
+  // const [platforms, setPlatforms] = useState([])
   const [name, setName] = useState('')
   const [isExclusive, setIsExclusive] = useState(false)
-  const [platform, setPlatform] = useState('')
+  // const [platform, setPlatform] = useState('')
 
-  useEffect(()=>{
-    axios.get(`/api/platforms`)
-    .then(res=>setPlatforms(res.data))
-  },[])
+  // useEffect(()=>{
+  //   axios.get(`/api/platforms`)
+  //   .then(res=>setPlatforms(res.data))
+  // },[])
 
   const handleSubmit=(e)=>{
-    axios.post(`/api/platforms/${platform}/categories`,{name, isExclusive})
+    axios.post(`/api/platforms/${props.p_id}/categories`,{name, isExclusive})
   }
 
   return(
@@ -27,14 +27,14 @@ const CategoryForm = () => {
         onChange={(e)=> setName((e.target.value))}
         required
       />
-        <Form.Select
+        {/* <Form.Select
           label="Platform"
           placeholder="Select Platform..."
           options={platforms.map((p)=>({key:p.id, value:p.id, text:p.name}))}
           name="platform"
           onChange={(e, data)=>setPlatform(data.value)}
           required
-        />
+        /> */}
       <Form.Checkbox
         label="Exclusive?"
         name="isExclusive"

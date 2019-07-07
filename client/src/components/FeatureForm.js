@@ -3,7 +3,7 @@ import {Form, } from 'semantic-ui-react'
 import axios from 'axios'
 
 
-const FeatureForm = () => {
+const FeatureForm = (props) => {
   const [categoryOptions, setCategoryOptions] = useState([])
 
   const [name, setName] = useState('')
@@ -13,15 +13,8 @@ const FeatureForm = () => {
   const [multiplier, setMultiplier] = useState('')
 
   const handleSubmit=(e)=>{
-    axios.post(`/api/categories/${category}/features`,{name, description, base_days, multiplier})
+    axios.post(`/api/categories/${props.c_id}/features`,{name, description, base_days, multiplier})
   }
-
-  useEffect(()=>{
-    axios.get(`/api/all_categories`)
-    .then(res=>{
-      setCategoryOptions(res.data)
-    })
-  },[])
 
   return(
     <Form onSubmit={handleSubmit}>
@@ -32,14 +25,6 @@ const FeatureForm = () => {
         value={name}
         name="name"
         onChange={(e)=> setName((e.target.value))}
-        required
-      />
-      <Form.Select
-        label="Category"
-        placeholder="Select Category..."
-        options={categoryOptions.map(category=> ({key:category.id, value:category.id, text:category.name}))}
-        name="category"
-        onChange={(e, data)=> setCategory(data.value)}
         required
       />
       <Form.Input

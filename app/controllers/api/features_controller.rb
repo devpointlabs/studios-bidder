@@ -1,5 +1,5 @@
 class Api::FeaturesController < ApplicationController
-before_action :set_category, only: [:index, :create]
+before_action :set_category, only: [:index, :create,]
 before_action :set_feature, only: [:update, :destroy]
 
   def index
