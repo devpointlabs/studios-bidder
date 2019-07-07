@@ -6,56 +6,89 @@ export const MathConsumer = MathContext.Consumer;
 export class MathProvider extends React.Component {
   state = { 
     webDays: [], 
+    exclusiveWebDays: [],
     iOSDays: [], 
+    exclusiveiOSDays: [],
     androidDays: [], 
+    exclusiveAndroidDays: [],
     iOSPrice: 0, 
     webPrice: 0, 
     androidPrice: 0,
+    renderPrices: true, 
   };  
 
   resetMath = () => {
-    this.setState({webDays: [], iOSDays: [], androidDays: [], iOSPrice: 0, webPrice: 0, androidPrice: 0})
+    this.setState({webDays: [], iOSDays: [], androidDays: [], iOSPrice: 0, webPrice: 0, androidPrice: 0, exclusiveAndroidDays: [], exclusiveWebDays: [], exclusiveiOSDays: []})
   }
 
   handleSetPrice = (os) => {
+    const {webDays, androidDays, iOSDays, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = this.state;
     const reducerFunction = (os) => os.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0)
     if (os === 'web'){
-      const {webDays} = this.state;
-      this.setState({webPrice: reducerFunction(webDays)});
+      this.setState({webPrice: reducerFunction(webDays) + reducerFunction(exclusiveWebDays)});
     } else if(os === 'android'){
-      const {androidDays} = this.state;
-      this.setState({androidPrice: reducerFunction(androidDays)});
+      this.setState({androidPrice: reducerFunction(androidDays) + reducerFunction(exclusiveAndroidDays)});
     } else if(os === 'ios'){
-      const {iOSDays} = this.state;
-      this.setState({iOSPrice: reducerFunction(iOSDays)});
+      this.setState({iOSPrice: reducerFunction(iOSDays) + reducerFunction(exclusiveiOSDays)});
     };
   };
 
-  handleSetDays = (os, feature) => {
-    const {webDays} = this.state;
-    const {iOSDays} = this.state;
-    const {androidDays} = this.state;
-    if (os === 'web'){
-      const wd = webDays.map( d => d.id)
-      if (wd.includes(feature.id) === false) {
-        this.setState({webDays: [...webDays, feature]})
-    }else 
-      this.setState({webDays: webDays.filter( d => d.id !== feature.id)})
-    } else if(os === 'ios'){
-      const id = iOSDays.map( d => d.id)
-      if (id.includes(feature.id) === false) {
-        this.setState({iOSDays: [...iOSDays, feature]})
-    }else 
-      this.setState({iOSDays: iOSDays.filter( d => d.id !== feature.id)})
-    } else if(os === 'android'){
-      const ad = androidDays.map( d => d.id)
-      if (ad.includes(feature.id) === false) {
-        this.setState({androidDays: [...androidDays, feature]})
-    }else 
-      this.setState({androidDays: androidDays.filter( d => d.id !== feature.id)})
-    };
+  handleSetDays = (os, feature, exclusive) => {
+    const {webDays, iOSDays, androidDays, renderPrices } = this.state;
+    if (exclusive) this.handleExclusive(os, feature) 
+    else
+      switch(os){
+        case 'web':
+          const wd = webDays.map( d => d.id);
+          if (wd.includes(feature.id) === false) {
+            this.setState({webDays: [...webDays, feature]})
+          }else 
+            this.setState({webDays: webDays.filter( d => d.id !== feature.id)})
+          break;
+        case 'ios':
+          const id = iOSDays.map( d => d.id)
+          if (id.includes(feature.id) === false) {
+            this.setState({iOSDays: [...iOSDays, feature]})
+          }else 
+            this.setState({iOSDays: iOSDays.filter( d => d.id !== feature.id)})
+          break;
+        case 'android':
+          const ad = androidDays.map( d => d.id)
+          if (ad.includes(feature.id) === false) {
+            this.setState({androidDays: [...androidDays, feature]})
+          }else 
+            this.setState({androidDays: androidDays.filter( d => d.id !== feature.id)})
+        };
+      this.setState({renderPrices: !renderPrices})
   };
 
+  handleExclusive = (os, feature) => {
+    const {exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, renderPrices} = this.state;
+    switch(os){
+      case 'web':
+        const wd = exclusiveWebDays.map( wd => wd.category_id);
+        if (wd.includes(feature.category_id) === false) {
+          this.setState({exclusiveWebDays: [...exclusiveWebDays, feature]})
+        }else 
+          this.setState({exclusiveWebDays: [...exclusiveWebDays.filter( d => d.category_id !== feature.category_id), feature]})
+        break;
+      case 'ios':
+        const id = exclusiveiOSDays.map( id => id.category_id);
+        if (id.includes(feature.category_id) === false) {
+          this.setState({exclusiveiOSDays: [...exclusiveiOSDays, feature]})
+        }else 
+          this.setState({exclusiveiOSDays: [...exclusiveiOSDays.filter( d => d.category_id !== feature.category_id), feature]})
+        break;
+      case 'android':
+        const ad = exclusiveAndroidDays.map( ad => ad.category_id);
+        if (ad.includes(feature.category_id) === false) {
+          this.setState({exclusiveAndroidDays: [...exclusiveAndroidDays, feature]})
+        }else 
+          this.setState({exclusiveAndroidDays: [...exclusiveAndroidDays.filter( d => d.category_id !== feature.category_id), feature]})
+      }
+      this.setState({renderPrices: !renderPrices})
+  };
+  
   render() {
     
     return (

@@ -1,4 +1,4 @@
-import React,{useState, useContext} from 'react';
+import React,{useState, useContext,} from 'react';
 import Navbar from './Navbar';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
@@ -18,19 +18,19 @@ const MainDisplay = () => {
   const [estimateID, setEstimateID] = useState('');
   // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([])
-  const {resetMath} = useContext(MathContext);
-
-
-  // useEffect( () => {
+  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
+  
+      // useEffect( () => {
   //   axios.get(`/api/platforms`)
   //   .then(res=>setPlatforms(res.data))
   // });
 
-  // BIG SUBMIT FUNCTION(EACH STATE)
   const handleSubmit = () => {
+    // FIGURE OUT HOW TO NOT POST TO FEATURE_ESTIMATES UNTIL ESTIMATE ID IS RETURNED//////////////////////////////////////////////////////////////////////////////////////////////////
     createEstimateRecord();
+    selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( ewd => ewd.id),...exclusiveAndroidDays.map( ewd => ewd.id), )
     axios.post(`/api/features_estimates?feature_id=${selectedFeatures}&estimate_id=${estimateID}`)
-    // FUNCTIONS BELOW COMPLETELY RESET FORM
+    // FUNCTIONS BELOW COMPLETELY RESET FORM////////////////////////////////////////////////////////////////////////
     setSelectedFeatures([]);
     resetMath()
   };

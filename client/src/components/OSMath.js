@@ -1,11 +1,15 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {MathContext} from '../providers/MathProvider';
-import {Container, Button, Header,} from 'semantic-ui-react';
+import {Container, Header,} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import DarkText from '../styles/DarkText'
 
 const OSMath = (props) => {
-  const {webPrice, iOSPrice, androidPrice,} = useContext(MathContext);
+  const {webPrice, iOSPrice, androidPrice, renderPrices, handleSetPrice} = useContext(MathContext);
+
+  useEffect( () => {
+    handleSetPrice(props.OS)
+  },[renderPrices, props.OS, handleSetPrice])
 
   const renderPriceDisplay = () => {
     switch (props.OS){
