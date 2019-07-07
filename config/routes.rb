@@ -11,8 +11,10 @@ Rails.application.routes.draw do
       resources :features, only: [:index, :create]
     end
 
+    resources :platform, only:[:update]
     resources :category, only:[:update, :destroy]
     resources :features, only:[:update, :destroy]
+    
 
     resources :sessions, only: [:show, :update]
     resources :estimates, only: [:index, :create, :update]
