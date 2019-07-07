@@ -1,13 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
-import {Table, Button, Icon} from 'semantic-ui-react'
+import {Button, Icon, Form} from 'semantic-ui-react'
 import Feature from './Feature'
+import FeatureForm from './FeatureForm'
 
 const Category = (props) => {
   const [features, setFeatures] = useState([])
+  const [editing, setEditing] = useState(false)
+  const [newFeature, setNewFeature] = useState(false)
+
+  const [name, setName] = useState(props.name)
+  const [tempName, setTempName] = useState(props.name)
 
   useEffect(()=>{  
-    axios.get(`/api/categories/${props.category}/features`)
+    axios.get(`/api/categories/${props.id}/features`)
     .then(res=>{setFeatures(res.data)})}
   ,[])
 
@@ -15,38 +21,79 @@ const Category = (props) => {
     axios.delete(`/api/features/${f_id}`)
   }
 
+  const toggleEdit=()=>{
+    setEditing(!editing)
+  }
+
+  const handleSubmit=()=>{
+    setName(tempName)
+    axios.put(`/api/categories/${props.id}`,{category:{name:tempName}})
+
+  }
+
+  const editForm = (
+    <>
+    <Form>
+      <Form.Input 
+        label='Category Name'
+        value={tempName}
+        name="name"
+        onChange={(e)=> setTempName((e.target.value))}
+        required
+      />
+    </Form>
+    <Button size='small' icon color="grey" onClick={toggleEdit}>
+      <Icon name="cancel"/>
+    </Button>
+    <Button size='small' icon color="green" onClick={handleSubmit}>
+      <Icon name="save"/>
+    </Button>
+    </>
+  )
+
+  const toggleNewFeature=()=>{
+    setNewFeature(!newFeature)
+
+  }
+
+
+  const categoryDisplay = (
+    <>
+      <h3>{props.name}</h3>
+      <Button size='small' icon color="blue" onClick={toggleEdit}>
+        <Icon name="pencil"/>
+      </Button>
+      <Button size='small' icon color="red" onClick={()=>props.delete(props.id)}>
+        <Icon name="trash"/>
+      </Button>
+      <Button size='small' icon color="green" onClick={toggleNewFeature}>
+        <Icon name="pencil"/>
+        {newFeature? 'Cancel':'New Feature'} 
+      </Button>
+      <br />
+      <br />
+      {newFeature? <FeatureForm c_id={props.id}/> : null}
+    </>
+  )
+
   return(
-    <Table>
-        <Table.Header>
-          <Table.Row >
-          <Table.HeaderCell colSpan='5'>{props.name}</Table.HeaderCell>
-          <Table.HeaderCell><Button icon color="red" onClick={()=>props.delete(props.category)}>
-          <Icon name="trash"/>
-        </Button></Table.HeaderCell>
-          </Table.Row>
-          <Table.Row>
-          <Table.HeaderCell></Table.HeaderCell>
-          <Table.HeaderCell>Name</Table.HeaderCell>
-          <Table.HeaderCell>Description</Table.HeaderCell>
-          <Table.HeaderCell>Multiplier</Table.HeaderCell>
-          <Table.HeaderCell>Dev Days</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {features.map((feature)=> 
-          <Feature 
-            key={feature.id}
-            id={feature.id}
-            name={feature.name}
-            description={feature.description}
-            baseDays={feature.base_days}
-            multiplier={feature.multiplier}
-            category={feature.category_id}
-            delete={deleteFeature}
-          />)}
-        </Table.Body>
-      </Table>
+    <div>
+      {editing? editForm : categoryDisplay}
+      {features.map((feature)=> 
+      <Feature 
+        key={feature.id}
+        id={feature.id}
+        name={feature.name}
+        description={feature.description}
+        base_days={feature.base_days}
+        multiplier={feature.multiplier}
+        category={feature.category_id}
+        delete={deleteFeature}
+      />)}
+      <br/>
+      <br/>
+    </div>
+
   )
 }
 

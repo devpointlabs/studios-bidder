@@ -1,10 +1,10 @@
 class Api::CategoriesController < ApplicationController
   before_action :set_category, only: [:delete, :update]
-  before_action :set_platform, only: [:index, :create, :update]
-  before_action :set_category, only: [:destroy]
+  before_action :set_platform, only: [:index, :create]
+  before_action :set_category, only: [:destroy, :update]
 
   def index
-    render json: Platform.categories
+    render json: @platform.categories
   end
 
   def all_categories
@@ -24,7 +24,11 @@ class Api::CategoriesController < ApplicationController
   end
 
   def update
-    @category.update()
+    if @category.update(category_params)
+      render json: @category
+    else
+      render json: @category.errors, status:422
+    end
   end
 
   def destroy
@@ -37,7 +41,7 @@ private
   end
 
   def category_params
-    params.require(:category).permit(:name,:platform_id)
+    params.require(:category).permit(:name)
   end
 
   def set_platform
