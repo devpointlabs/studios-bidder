@@ -32,7 +32,8 @@ const Features = (props) => {
   
   
   const handleCheckbox = (e) => {
-    const {value} = e.target;
+    debugger
+    const {value} = e.currentTarget;
     const {selectedFeatures, OS, setSelectedFeatures } = props;
     if (selectedFeatures.includes(value) === false) {setSelectedFeatures([...selectedFeatures, value])
     }else {setSelectedFeatures(selectedFeatures.filter(f => f !== value));
@@ -41,6 +42,7 @@ const Features = (props) => {
   };
   
   const handleRadio = (catID, fID) => {
+    debugger
     const { OS,} = props;
     if(radioButtons.map( rb => (rb.category)).includes(catID) === false) {setRadioButtons([...radioButtons, {category: catID, feature: fID}]);
     }else {setRadioButtons([...radioButtons.filter( rb => rb.category !== catID ),{category: catID, feature: fID}]);
@@ -51,103 +53,121 @@ const Features = (props) => {
   const isSelected = (id) => {
     let selected = [];
     radioButtons.map( rb => selected.push(rb.feature));
+    props.selectedFeatures.map( sf => selected.push(sf))
+    console.log(selected)
     return selected.includes(id);
   };
+
+  // const toggleBorder = () => {
+  //   //  style={complete ? styles.selected : {}}
+
+  //   // if YES selected return 
+  //   // return {}
+
+  //   // if NOT selected return 
+  //   return selected = () => {
+  //     borderRadius: '4px !important',
+  //     border: '5px solid !important', 
+  //     borderColor: 'rgb(9, 0, 41) !important'
+  //   }
+  // }
 
   const exclusiveRendering = (catID, is_exclusive) => {
     const correctF = features.filter( f => catID === f.category_id);
     
     if (is_exclusive === true) {
       return (
-      //   <Spacing>
-      //     <Grid columns={3}>
-      //       <Grid.Row columns="3">
-      //         {correctF.map( f => (
-      //           <>
-      //           <RowSpacing>
-      //             <Grid.Column centered>
-      //               {/* <Card as={CardSelectBorder} key={f.id}>
-      //                   <Card.Content>
-      //                     <Card.Header>{f.name}</Card.Header>
-      //                     <Card.Description>{f.description}</Card.Description>
-      //                   </Card.Content>
-      //               </Card> */}
-      //               <div class="card-wrapper">
-      //                 <input class="c-card" type="checkbox" id="1" value="1" checked="checked"/>
-      //                 <div class="card-content">
-      //                   <div class="card-state-icon"></div>
-      //                   <label for="1">
-      //                     <div class="image"></div>
-      //                     <h4>{f.name}</h4>
-      //                     <h5>{f.description}</h5>
-      //                     <p class="small-meta dim">{f.description}</p>
-      //                   </label>
-      //                 </div>
-      //               </div>
-      //             </Grid.Column>
-      //           </RowSpacing>
-      //         </>
-      //         ))}
-      //       </Grid.Row>
-      //     </Grid>
-      //   </Spacing>
-      //   );
-      // }else {
-      //   return (
-      //     <Spacing>
-      //     <Grid columns={3} centered>
-      //       <Grid.Row columns={3}>
-      //         {correctF.map( f => (
-      //           <>
-      //             <RowSpacing>
-      //               <Grid.Column centered>
-      //                 <Card as={CardSelectBorder} key={f.id}>
-      //                     <Card.Content>
-      //                       <Card.Header>{f.name}</Card.Header>
-      //                       <Card.Description>{f.description}</Card.Description>
-      //                     </Card.Content>
-      //                 </Card>
-      //               </Grid.Column>
-      //             </RowSpacing>
-      //           </>
-      //         ))}
-      //       </Grid.Row>
-      //     </Grid>
-      //   </Spacing>
-        <>
-          {correctF.map( f => { 
-            return(
-              <Form.Group key={f.id}>
-                <Form.Field>
-                  <Radio
-                    // get radio buttons to show checked if applicable when page is re rendered/////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    // defaultChecked={radioButtons.includes(f.id.toString())}
-                    name={f.name}
-                    checked={isSelected(f.id)}
-                    value={f.id}
-                    label={f.name}
-                    onChange={() => handleRadio(f.category_id, f.id)}
-                    />
-                    </Form.Field>
-              </Form.Group>
-            )})}
-        </>
+        <Spacing>
+          <Grid columns={3} centered>
+            <Grid.Row columns="3">
+              {correctF.map( f => (
+                <>
+                <RowSpacing>
+                  <Grid.Column centered>
+                    {/* <CardGroup> */}
+                        {/* <CardStyles> */}
+                        {/* <div style={{zIndex: '100'}} onClick={handleCheckbox} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id} id={f.id}> */}
+                          <Card onClick={handleRadio(f.category_id, f.id))} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id}>
+                              <Card.Content content={f.id} className={f.id} value={f.id}>
+                                <Card.Header>{f.name}</Card.Header>
+                                <Card.Description>{f.description}</Card.Description>
+                                <Card.Meta>Base Days: {f.base_days}</Card.Meta>
+                              </Card.Content>
+                          </Card>
+                        {/* </div> */}
+                        {/* </CardStyles> */}
+                    {/* </CardGroup> */}
+                  </Grid.Column>
+                </RowSpacing>
+              </>
+              ))}
+            </Grid.Row>
+          </Grid>
+        </Spacing>
         );
       }else {
         return (
-          <Form.Group>
-            {correctF.map( f => (
-              <Form.Input
-                checked={props.selectedFeatures.includes(f.id.toString())}
-                key={f.id}
-                type='checkbox'
-                name={f.name}
-                value={f.id}
-                label={f.name}
-                onChange={handleCheckbox}
-              />
-            ))}
-          </Form.Group>
+          <Spacing>
+          <Grid columns={3} centered>
+            <Grid.Row columns={3}>
+              {correctF.map( f => (
+                <>
+                  <RowSpacing>
+                    <Grid.Column centered>
+                      {/* <CardGroup> */}
+                        {/* <CardStyles> */}
+                        <div style={{zIndex: '1000'}} onClick={handleCheckbox} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id} id={f.id}>
+                          <Card onClick={handleCheckbox} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id}  value={f.id}>
+                              <Card.Content>
+                                <Card.Header>{f.name}</Card.Header>
+                                <Card.Description>{f.description}</Card.Description>
+                                <Card.Meta>Base Days: {f.base_days}</Card.Meta>
+                              </Card.Content>
+                          </Card>
+                        </div>
+                        {/* </CardStyles> */}
+                      {/* </CardGroup> */}
+                    </Grid.Column>
+                  </RowSpacing>
+                </>
+              ))}
+            </Grid.Row>
+          </Grid>
+        </Spacing>
+      //   <>
+      //     {correctF.map( f => { 
+      //       return(
+      //         <Form.Group key={f.id}>
+      //           <Form.Field>
+      //             <Radio
+      //               // get radio buttons to show checked if applicable when page is re rendered/////////////////////////////////////////////////////////////////////////////////////////////////////////
+      //               // defaultChecked={radioButtons.includes(f.id.toString())}
+      //               name={f.name}
+      //               checked={isSelected(f.id)}
+      //               value={f.id}
+      //               label={f.name}
+      //               onChange={() => handleRadio(f.category_id, f.id)}
+      //               />
+      //               </Form.Field>
+      //         </Form.Group>
+      //       )})}
+      //   </>
+      //   );
+      // }else {
+      //   return (
+      //     <Form.Group>
+      //       {correctF.map( f => (
+      //         <Form.Input
+      //           checked={props.selectedFeatures.includes(f.id.toString())}
+      //           key={f.id}
+      //           type='checkbox'
+      //           name={f.name}
+      //           value={f.id}
+      //           label={f.name}
+      //           onChange={handleCheckbox}
+      //         />
+      //       ))}
+      //     </Form.Group>
         );
       };
     };
@@ -192,11 +212,42 @@ const RowSpacing = styled.div`
 `;
 
 
+const styles = {
+  selected: {
+    borderRadius: '4px !important',
+    border: '5px solid !important', 
+    borderColor: 'rgb(111, 242, 175) !important'
+  },
+  unselected: {
+    borderRadius: '4px !important',
+    border: '5px solid !important', 
+    borderColor: 'rgb(9, 0, 41) !important'
+  }
+}
+
+
 const CardSelectBorder = styled.div`
-  border-radius: 4px;
-  border: 5px solid 
-  border-color: rgb(111, 242, 175);
+  border-radius: 4px !important;
+  border: 5px solid !important; 
+  border-color: rgb(111, 242, 175) !important;
 `;
+
+const CardUnselectBorder = styled.div`
+  border-radius: 4px !important;
+  border: 5px solid !important; 
+  border-color: rgb(9, 0, 41) !important;
+`;
+
+// const CardStyles = styled(Card)`
+//   /* height: ;
+//   width: ; */
+// `
+
+// const CardGroup = styled(Card.Group)`
+//   /* padding: 30px;
+//   display: flex;
+//   justify-content: center; */
+// `
 
 
 export default Features;
