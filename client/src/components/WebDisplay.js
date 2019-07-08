@@ -20,10 +20,6 @@ const WebDisplay = (props) => {
         />
       </Container>
     </Segment>
-    <Segment>
-      <OSMath OS='web'/>
-      <TotalMath />
-    </Segment>
   </>
   );
 };

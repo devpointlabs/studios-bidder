@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from "react";
 import {MathContext} from '../providers/MathProvider';
 import {Container, Header,} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
-import DarkText from '../styles/DarkText'
+import WhiteText from '../styles/WhiteText'
 
 const OSMath = (props) => {
   const {webPrice, iOSPrice, androidPrice, renderPrices, handleSetPrice} = useContext(MathContext);
@@ -21,10 +21,9 @@ const OSMath = (props) => {
   };
 
   return(
-    <Container textAlign="center" as={Colors} colored="white">
-      <Header align="center" as={DarkText} fSize="large">{props.OS} Math</Header>
-      <Header align="center" as={DarkText} fSize="small">{props.OS} Price: ${renderPriceDisplay()}</Header>
-    </Container>
+    <>
+      <Header align="center" as={WhiteText} fSize="medium">{props.OS} Price: ${renderPriceDisplay()}</Header>
+    </>
   );
 };
 

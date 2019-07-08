@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import {Form, Grid, Radio, Card, Input, Checkbox, Container, Header,} from 'semantic-ui-react';
 import { MathContext} from '../providers/MathProvider';
+import FeatureCard from './FeatureCard';
 import DarkText from "../styles/DarkText";
 import Colors from "../styles/Colors";
 import styled from "styled-components"
@@ -31,9 +32,9 @@ const Features = (props) => {
   },[props.OS]);
   
   
-  const handleCheckbox = (e) => {
-    debugger
-    const {value} = e.currentTarget;
+  const handleCheckbox = (catID, value) => {
+    // debugger
+    // const value = e.currentTarget.attributes.value.nodeValue;
     const {selectedFeatures, OS, setSelectedFeatures } = props;
     if (selectedFeatures.includes(value) === false) {setSelectedFeatures([...selectedFeatures, value])
     }else {setSelectedFeatures(selectedFeatures.filter(f => f !== value));
@@ -42,7 +43,6 @@ const Features = (props) => {
   };
   
   const handleRadio = (catID, fID) => {
-    debugger
     const { OS,} = props;
     if(radioButtons.map( rb => (rb.category)).includes(catID) === false) {setRadioButtons([...radioButtons, {category: catID, feature: fID}]);
     }else {setRadioButtons([...radioButtons.filter( rb => rb.category !== catID ),{category: catID, feature: fID}]);
@@ -86,14 +86,15 @@ const Features = (props) => {
                   <Grid.Column centered>
                     {/* <CardGroup> */}
                         {/* <CardStyles> */}
-                        {/* <div style={{zIndex: '100'}} onClick={handleCheckbox} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id} id={f.id}> */}
-                          <Card onClick={handleRadio(f.category_id, f.id))} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id}>
+                        {/* <div onClick={handleRadio} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id} id={f.id}> */}
+                        <FeatureCard onClickFunction={handleRadio} isSelected={isSelected} f={f}/>
+                          {/* <Card onClick={handleRadio} as={isSelected(f.id) ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id}>
                               <Card.Content content={f.id} className={f.id} value={f.id}>
                                 <Card.Header>{f.name}</Card.Header>
                                 <Card.Description>{f.description}</Card.Description>
                                 <Card.Meta>Base Days: {f.base_days}</Card.Meta>
                               </Card.Content>
-                          </Card>
+                          </Card> */}
                         {/* </div> */}
                         {/* </CardStyles> */}
                     {/* </CardGroup> */}
@@ -116,15 +117,16 @@ const Features = (props) => {
                     <Grid.Column centered>
                       {/* <CardGroup> */}
                         {/* <CardStyles> */}
-                        <div style={{zIndex: '1000'}} onClick={handleCheckbox} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id} id={f.id}>
-                          <Card onClick={handleCheckbox} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id}  value={f.id}>
+                        <FeatureCard onClickFunction={handleCheckbox} isSelected={isSelected} f={f}/>
+                        {/* <div style={{zIndex: '1000'}} onClick={handleCheckbox} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id} id={f.id}>
+                          <Card onClick={handleCheckbox} as={isSelected(f.id) ? CardSelectBorder : CardUnselectBorder} key={f.id}  value={f.id}>
                               <Card.Content>
                                 <Card.Header>{f.name}</Card.Header>
                                 <Card.Description>{f.description}</Card.Description>
                                 <Card.Meta>Base Days: {f.base_days}</Card.Meta>
                               </Card.Content>
                           </Card>
-                        </div>
+                        </div> */}
                         {/* </CardStyles> */}
                       {/* </CardGroup> */}
                     </Grid.Column>

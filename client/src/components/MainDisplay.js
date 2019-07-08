@@ -1,5 +1,7 @@
 import React,{useState, useContext,} from 'react';
 import Navbar from './Navbar';
+import OSMath from './OSMath';
+import TotalMath from './TotalMath';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
@@ -125,6 +127,45 @@ const MainDisplay = () => {
         </Segment>
       </Segment.Group>
       {displayForm()}
+      <Segment.Group horizontal as={NoLine}>
+        <Segment onClick={handleWeb} style={{cursor:'pointer',borderColor: 'transparent'}} as={Colors} colored="light">
+            <br/>
+            <Header align="center" as={WhiteText} fSize="medium">
+              <Icon name="computer"/>  Add a Web App?
+            </Header>
+            <Header align="center" as={WhiteText} fSize="small">
+              A web app or a 
+              <br/>back-end to a mobile app
+            </Header>
+            <OSMath OS='web'/>
+            <br/>
+        </Segment>
+        <Segment onClick={handleiOS} style={{cursor:'pointer'}} as={Colors} colored="medium-dark">
+          <br/>
+          <Header align="center" as={WhiteText} fSize="medium">
+            <Icon name="apple"/>  Add an iOS App?
+          </Header>
+          <Header align="center" as={WhiteText} fSize="small">
+              An iPhone/ iPad app 
+              <br/>(Excluding back-end)
+          </Header>
+          <OSMath OS='ios'/>
+        </Segment>
+        <Segment onClick={handleAndroid} style={{cursor:'pointer'}} as={Colors} colored="dark">
+          <br/> 
+          <Header align="center" as={WhiteText} fSize="medium">
+            <Icon name="android"/>Add an Android App?
+          </Header>
+          <Header align="center" as={WhiteText} fSize="small">
+              An Android/ Tablet App
+              <br/>(Excluding back-end)
+          </Header>
+          <OSMath OS='android'/>
+        </Segment>
+      </Segment.Group>
+      <Segment.Group>
+          <TotalMath />
+      </Segment.Group>
       <br />
       <Form widths='equal'>
         <Form.Input 

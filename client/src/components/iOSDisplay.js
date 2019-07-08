@@ -19,10 +19,6 @@ const IOSDisplay = (props) => {
           />
       </Container>
     </Segment>
-    <Segment>
-      <OSMath OS='ios'/>
-      <TotalMath />
-    </Segment>
   </>
   );
 };

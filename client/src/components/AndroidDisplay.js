@@ -18,10 +18,6 @@ const AndroidDisplay = (props) => {
             selectedFeatures={props.selectedFeatures} />
         </Container>
       </Segment>
-      <Segment>
-        <OSMath OS='android'/>
-        <TotalMath />
-      </Segment>
     </>
   );
 };
