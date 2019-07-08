@@ -4,9 +4,9 @@ class FeatureEstimate < ApplicationRecord
   belongs_to :feature
   belongs_to :estimate
 
-  def post_all_features(feature_id, estimate_id)
-    ids = feature_id.split(',')
-    ids.each do |id|
+  def self.post_all_features(feature_id, estimate_id)
+    binding.pry
+    feature_id.each do |id|
       Feature.find_by_sql(["
         INSERT INTO feature_estimates (feature_id, estimate_id, created_at, updated_at)
         VALUES (:feature_id, :estimate_id, :created_at, :updated_at)",

@@ -26,23 +26,19 @@ const MainDisplay = () => {
   // });
 
   const handleSubmit = () => {
-    // FIGURE OUT HOW TO NOT POST TO FEATURE_ESTIMATES UNTIL ESTIMATE ID IS RETURNED//////////////////////////////////////////////////////////////////////////////////////////////////
-    createEstimateRecord();
-    selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( ewd => ewd.id),...exclusiveAndroidDays.map( ewd => ewd.id), )
-    axios.post(`/api/features_estimates?feature_id=${selectedFeatures}&estimate_id=${estimateID}`)
-    // FUNCTIONS BELOW COMPLETELY RESET FORM////////////////////////////////////////////////////////////////////////
-    setSelectedFeatures([]);
-    resetMath()
-  };
-
-  const createEstimateRecord = () => {
+    selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
     const estimate = {customer_name: name, customer_email: email};
-    axios.post(`/api/estimates`, estimate)
-      .then(res => setEstimateID(res.data));
-    setEmail('');
-    setName('');
+    axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: selectedFeatures}})
+      .then( res => {
+        setEmail('')
+        setName('')
+        setSelectedFeatures([])
+        resetMath()
+        }
+      )
+      .catch(error => console.log(error));
+      
   };
-
 
   const handleWeb = () => {
     setFocus('web');
