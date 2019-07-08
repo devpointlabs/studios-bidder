@@ -10,25 +10,29 @@ const Category = (props) => {
   const [newFeature, setNewFeature] = useState(false)
 
   const [name, setName] = useState(props.name)
-  const [tempName, setTempName] = useState(props.name)
 
   useEffect(()=>{  
     axios.get(`/api/categories/${props.id}/features`)
     .then(res=>{setFeatures(res.data)})}
   ,[])
 
+  const addFeature = (feature) => {
+    setFeatures([...features, feature])
+  }
+
   const deleteFeature =(f_id)=>{
     axios.delete(`/api/features/${f_id}`)
+    setFeatures(features.filter(f => f.id !== f_id))
   }
 
   const toggleEdit=()=>{
     setEditing(!editing)
+    if(!editing){setName(props.name)}
   }
 
   const handleSubmit=()=>{
-    setName(tempName)
-    axios.put(`/api/categories/${props.id}`,{category:{name:tempName}})
-
+    axios.put(`/api/categories/${props.id}`,{category:{name}})
+    setEditing(false)
   }
 
   const editForm = (
@@ -36,9 +40,9 @@ const Category = (props) => {
     <Form>
       <Form.Input 
         label='Category Name'
-        value={tempName}
+        value={name}
         name="name"
-        onChange={(e)=> setTempName((e.target.value))}
+        onChange={(e)=> setName((e.target.value))}
         required
       />
     </Form>
@@ -53,13 +57,12 @@ const Category = (props) => {
 
   const toggleNewFeature=()=>{
     setNewFeature(!newFeature)
-
   }
 
 
   const categoryDisplay = (
     <>
-      <h3>{props.name}</h3>
+      <h3>{name}</h3>
       <Button size='small' icon color="blue" onClick={toggleEdit}>
         <Icon name="pencil"/>
       </Button>
@@ -72,7 +75,7 @@ const Category = (props) => {
       </Button>
       <br />
       <br />
-      {newFeature? <FeatureForm c_id={props.id}/> : null}
+      {newFeature? <FeatureForm c_id={props.id} addFeature={addFeature} toggleForm={setNewFeature}/> : null}
     </>
   )
 
