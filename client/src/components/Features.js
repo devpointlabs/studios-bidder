@@ -5,6 +5,7 @@ import { MathContext} from '../providers/MathProvider';
 import DarkText from "../styles/DarkText";
 import Colors from "../styles/Colors";
 import styled from "styled-components"
+import "./Features.less"
 
 const Features = (props) => {
   const [categories, setCategories] = useState([]);
@@ -44,12 +45,24 @@ const Features = (props) => {
                 <>
                 <RowSpacing>
                   <Grid.Column centered>
-                    <Card as={CardSelectBorder} key={f.id}>
+                    {/* <Card as={CardSelectBorder} key={f.id}>
                         <Card.Content>
                           <Card.Header>{f.name}</Card.Header>
                           <Card.Description>{f.description}</Card.Description>
                         </Card.Content>
-                    </Card>
+                    </Card> */}
+                    <div class="card-wrapper">
+                      <input class="c-card" type="checkbox" id="1" value="1" checked="checked"/>
+                      <div class="card-content">
+                        <div class="card-state-icon"></div>
+                        <label for="1">
+                          <div class="image"></div>
+                          <h4>{f.name}</h4>
+                          <h5>{f.description}</h5>
+                          <p class="small-meta dim">{f.description}</p>
+                        </label>
+                      </div>
+                    </div>
                   </Grid.Column>
                 </RowSpacing>
               </>
