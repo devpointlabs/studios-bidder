@@ -3,7 +3,7 @@ before_action :set_category, only: [:index, :create,]
 before_action :set_feature, only: [:update, :destroy]
 
   def index
-    # render json: @category.features
+    render json: @category.features
   end
   
   def features_by_platform

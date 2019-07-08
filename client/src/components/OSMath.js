@@ -9,7 +9,7 @@ const OSMath = (props) => {
 
   useEffect( () => {
     handleSetPrice(props.OS)
-  },[renderPrices, props.OS, handleSetPrice])
+  },[renderPrices])
 
   const renderPriceDisplay = () => {
     switch (props.OS){

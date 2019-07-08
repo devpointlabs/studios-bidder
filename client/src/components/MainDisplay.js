@@ -36,24 +36,24 @@ const MainDisplay = () => {
   };
 
   const createEstimateRecord = () => {
-    const estimate = {customer_name: name, customer_email: email}
+    const estimate = {customer_name: name, customer_email: email};
     axios.post(`/api/estimates`, estimate)
       .then(res => setEstimateID(res.data));
-    setEmail('')
-    setName('')
+    setEmail('');
+    setName('');
   };
 
 
   const handleWeb = () => {
-    setFocus('web')
+    setFocus('web');
   };
 
   const handleiOS = () => {
-    setFocus('ios')
+    setFocus('ios');
   };
 
   const handleAndroid = () => {
-    setFocus('android')
+    setFocus('android');
   };
 
   const displayForm = () => {
@@ -71,7 +71,7 @@ const MainDisplay = () => {
                                 handleSubmit={handleSubmit}
                                 setSelectedFeatures={setSelectedFeatures} 
                                 selectedFeatures={selectedFeatures} />;
-      default: return <h1>You broke the platform switcher</h1>
+      default: return <h1>You broke the platform switcher</h1>;
     };
   };
 

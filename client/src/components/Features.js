@@ -11,6 +11,7 @@ const Features = (props) => {
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([])
+
   const { handleSetDays, } = useContext(MathContext);
 
   useEffect( () => {
@@ -32,24 +33,18 @@ const Features = (props) => {
   const handleCheckbox = (e) => {
     const {value} = e.target;
     const {selectedFeatures, OS, setSelectedFeatures } = props;
-    if (selectedFeatures.includes(value) === false) {
-      setSelectedFeatures([...selectedFeatures, value])
-    }else {
-      setSelectedFeatures(selectedFeatures.filter(f => f !== value));
-    }
+    if (selectedFeatures.includes(value) === false) {setSelectedFeatures([...selectedFeatures, value])
+    }else {setSelectedFeatures(selectedFeatures.filter(f => f !== value));
+    };
     handleSetDays(OS, ...features.filter( f => {if (f.id === parseInt(value)) return f; else return null}), false);
   };
   
   const handleRadio = (catID, fID) => {
     const { OS,} = props;
-    let rbCategories = radioButtons.map( rb => (rb.category));
-    if(rbCategories.includes(catID) === false) {
-      setRadioButtons([...radioButtons, {category: catID, feature: fID}]);
-    }else {
-      setRadioButtons([...radioButtons.filter( rb => rb.category !== catID ),{category: catID, feature: fID}]);
+    if(radioButtons.map( rb => (rb.category)).includes(catID) === false) {setRadioButtons([...radioButtons, {category: catID, feature: fID}]);
+    }else {setRadioButtons([...radioButtons.filter( rb => rb.category !== catID ),{category: catID, feature: fID}]);
     };
     handleSetDays(OS, ...features.filter( f => {if (f.id === parseInt(fID)) return f; else return null}),true);
-  // console.log(radioButtons)
   };
 
   const isSelected = (id) => {
