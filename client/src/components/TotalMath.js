@@ -1,6 +1,6 @@
 import React from "react";
 import { MathConsumer } from "../providers/MathProvider";
-import { Container, Header,} from 'semantic-ui-react';
+import { Container, Header, Segment} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import DarkText from '../styles/DarkText'
 
@@ -18,9 +18,11 @@ class TotalMath extends React.Component {
   
   render() {
     return(
-      <Container textAlign="center" as={Colors} colored="white">
+      // <Container textAlign="center" as={Colors} colored="white">
+      <Segment>
         <Header align="center" as={DarkText} fSize="small">Total Price: ${this.featureTotal()}</Header>
-      </Container>
+      </Segment>
+      // </Container>
     );
   };
 };

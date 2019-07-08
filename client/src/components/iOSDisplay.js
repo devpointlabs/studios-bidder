@@ -10,7 +10,7 @@ const IOSDisplay = (props) => {
   
   return(
     <>
-    <Segment as={Colors} colored="medium-dark">
+    <Segment as={NoLine}>
       <Container as={FeaturesContainer}>
         <Features 
           OS='ios'
@@ -19,10 +19,6 @@ const IOSDisplay = (props) => {
           />
       </Container>
     </Segment>
-    <Segment>
-      <OSMath OS='ios'/>
-      <TotalMath />
-    </Segment>
   </>
   );
 };
@@ -30,5 +26,12 @@ const IOSDisplay = (props) => {
 const FeaturesContainer = styled.div`
   padding: 20px;
 `;
+
+const NoLine = styled.div`
+  border-top: none !important;
+  border-top-width: 0px !important;
+  background-color: rgb(94, 66, 150) !important;
+`
+
 
 export default IOSDisplay;

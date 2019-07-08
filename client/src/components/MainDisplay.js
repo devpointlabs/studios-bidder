@@ -1,5 +1,7 @@
 import React,{useState, useContext,} from 'react';
 import Navbar from './Navbar';
+import OSMath from './OSMath';
+import TotalMath from './TotalMath';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
@@ -7,6 +9,7 @@ import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header, Form} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
+import styled from "styled-components";
 import axios from 'axios';
 import {MathContext,} from '../providers/MathProvider';
 
@@ -86,8 +89,8 @@ const MainDisplay = () => {
       <Header align="center" as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
         All estimates are approximate but should give you a rough idea of what it will take to build your app.
       </Header>
-      <Segment.Group horizontal>
-        <Segment onClick={handleWeb} as={Colors} colored="light">
+      <Segment.Group horizontal as={NoLine}>
+        <Segment onClick={handleWeb} style={{cursor:'pointer',borderColor: 'transparent'}} as={Colors} colored="light">
             <br/>
             <Header align="center" as={WhiteText} fSize="medium">
               <Icon name="computer"/>  Web App
@@ -98,7 +101,7 @@ const MainDisplay = () => {
             </Header>
             <br/>
         </Segment>
-        <Segment onClick={handleiOS} as={Colors} colored="medium-dark">
+        <Segment onClick={handleiOS} style={{cursor:'pointer'}} as={Colors} colored="medium-dark">
           <br/>
           <Header align="center" as={WhiteText} fSize="medium">
             <Icon name="apple"/>  iOS App
@@ -108,7 +111,7 @@ const MainDisplay = () => {
               <br/>(Excluding back-end)
           </Header>
         </Segment>
-        <Segment onClick={handleAndroid} as={Colors} colored="dark">
+        <Segment onClick={handleAndroid} style={{cursor:'pointer'}} as={Colors} colored="dark">
           <br/> 
           <Header align="center" as={WhiteText} fSize="medium">
             <Icon name="android"/>Android App
@@ -120,6 +123,45 @@ const MainDisplay = () => {
         </Segment>
       </Segment.Group>
       {displayForm()}
+      <Segment.Group horizontal as={NoLine}>
+        <Segment onClick={handleWeb} style={{cursor:'pointer',borderColor: 'transparent'}} as={Colors} colored="light">
+            <br/>
+            <Header align="center" as={WhiteText} fSize="medium">
+              <Icon name="computer"/>  Add a Web App?
+            </Header>
+            <Header align="center" as={WhiteText} fSize="small">
+              A web app or a 
+              <br/>back-end to a mobile app
+            </Header>
+            <OSMath OS='web'/>
+            <br/>
+        </Segment>
+        <Segment onClick={handleiOS} style={{cursor:'pointer'}} as={Colors} colored="medium-dark">
+          <br/>
+          <Header align="center" as={WhiteText} fSize="medium">
+            <Icon name="apple"/>  Add an iOS App?
+          </Header>
+          <Header align="center" as={WhiteText} fSize="small">
+              An iPhone/ iPad app 
+              <br/>(Excluding back-end)
+          </Header>
+          <OSMath OS='ios'/>
+        </Segment>
+        <Segment onClick={handleAndroid} style={{cursor:'pointer'}} as={Colors} colored="dark">
+          <br/> 
+          <Header align="center" as={WhiteText} fSize="medium">
+            <Icon name="android"/>Add an Android App?
+          </Header>
+          <Header align="center" as={WhiteText} fSize="small">
+              An Android/ Tablet App
+              <br/>(Excluding back-end)
+          </Header>
+          <OSMath OS='android'/>
+        </Segment>
+      </Segment.Group>
+      <Segment.Group>
+          <TotalMath />
+      </Segment.Group>
       <br />
       <Form widths='equal'>
         <Form.Input 
@@ -140,4 +182,10 @@ const MainDisplay = () => {
     )
 };
 
+const NoLine = styled.div`
+  border-top: none !important;
+  border-top-width: 0px !important;
+`
+
 export default MainDisplay;
+

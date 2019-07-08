@@ -10,17 +10,13 @@ const AndroidDisplay = (props) => {
 
   return(
     <>
-      <Segment as={Colors} colored="dark">
+      <Segment as={NoLine}>
         <Container as={FeaturesContainer}>
           <Features 
             OS='android'
             setSelectedFeatures={props.setSelectedFeatures}
             selectedFeatures={props.selectedFeatures} />
         </Container>
-      </Segment>
-      <Segment>
-        <OSMath OS='android'/>
-        <TotalMath />
       </Segment>
     </>
   );
@@ -29,6 +25,12 @@ const AndroidDisplay = (props) => {
 const FeaturesContainer = styled.div`
   padding: 20px;
 `;
+
+const NoLine = styled.div`
+  border-top: none !important;
+  border-top-width: 0px !important;
+  background-color: rgb(63, 39, 115) !important;
+`
 
 
 export default AndroidDisplay;
