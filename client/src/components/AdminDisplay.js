@@ -1,55 +1,34 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
-import {Table, Icon} from 'semantic-ui-react'
 import FeatureForm from './FeatureForm'
 import CategoryForm from './CategoryForm'
 import Navbar from './Navbar';
+import Category from './Category'
+import Platform from './Platform'
 
-const MainDisplay = () => {
-  const [features, setFeatures] = useState([])
+const AdminDisplay = () => {
+  const [categories, setCategories] = useState([])
+  const [platforms, setPlatforms] = useState([])
 
-  const getFeatures=()=>{
-    axios.get(`/api/features`)
-    .then(res=>{setFeatures(res.data)})
+  const deleteCategory =(c_id)=>{
+    axios.delete(`/api/categories/${c_id}`)
   }
 
-
+  useEffect(()=>{
+    axios.get(`/api/all_categories`)
+    .then(res=>{setCategories(res.data)})
+    
+    axios.get(`/api/platforms`)
+    .then(res=>{setPlatforms(res.data)})
+  },[])
+  
   return(
     <>
-    <Navbar/>
-      <CategoryForm/>
-        <br />
-        <hr />
-        <br />
-      <FeatureForm/>
-        <br />
-        <hr />
-        <br />
-      <Table>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell colSpan="4">Features</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {
-          features.map((feature)=>
-          <Table.Row>
-            <Table.Cell collapsing><Icon name="arrow circle right"/></Table.Cell>
-            <Table.Cell collapsing>{feature.name}</Table.Cell>
-            <Table.Cell>{feature.description}</Table.Cell>
-            <Table.Cell>{feature.category}</Table.Cell>
-            <Table.Cell>{feature.base_days}</Table.Cell>
-            <Table.Cell>{feature.base_days}</Table.Cell>
-            <Table.Cell>{feature.multiplier}</Table.Cell>
-            <Table.Cell><Icon name="trash"/></Table.Cell>
-          </Table.Row>
-          )
-        }
-      </Table.Body>
-    </Table>
-  </>
-    )
+      <Navbar/>
+      {platforms.map((platform)=> <Platform key={platform.id} name={platform.name} id={platform.id} />)}
+      
+    </>
+  )
 };
 
-export default MainDisplay;
+export default AdminDisplay;

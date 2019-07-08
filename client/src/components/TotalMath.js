@@ -7,7 +7,6 @@ import DarkText from '../styles/DarkText'
 class TotalMath extends React.Component {
   featureTotal = () => {
     const {math:{webPrice, iOSPrice, androidPrice}} = this.props
-    var total = 0
     return(
       webPrice + iOSPrice + androidPrice
       

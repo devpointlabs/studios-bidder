@@ -8,103 +8,155 @@ import styled from "styled-components"
 import "./Features.less"
 
 const Features = (props) => {
+  // const [platforms, setPlatforms] = useState([])
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
-  const [value, setValue] = useState('');
-  const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const { handleSetPrice } = useContext(MathContext);
+  const [radioButtons, setRadioButtons] = useState([])
+
+  const { handleSetDays, } = useContext(MathContext);
 
   useEffect( () => {
-      axios.get(`/api/categories_by_os`,{params: {os: props.OS}})
-    .then( res  => {
-      setCategories(res.data)
-    })
-    axios.get(`/api/features`)
-      .then(res => setFeatures(res.data))
-  },[])
+    // axios.get(`/api/platforms`)
+    //   .then(res=>setPlatforms(res.data))
+    var os = '';
+    if (props.OS === 'web') os = 3;
+    else if (props.OS === 'ios') os = 1;
+    else if (props.OS === 'android') os = 2;
 
-  const updateSelectedFeatures = () => {
-    
-  }
+    axios.get(`/api/platforms/${os}/categories`)
+      .then( res  => setCategories(res.data));
 
-  const handleChange = (e) => {
-    // debugger
-    // this will track what is clicked. Then spread new value into it. Then set selected features again. Pass in the mathProvider state price. 
-    // button function on each checkbox. Then update state in MathProvider of what ID's have been clicked. Then pass it down into here so we have the info for the estimate. 
-    setSelectedFeatures(e.value)
-    setValue(e.value)}
+    axios.get(`/api/features_by_platform`, {params: {platform_id: os}})
+      .then(res => setFeatures(res.data));
+  },[props.OS]);
+  
+  
+  const handleCheckbox = (e) => {
+    const {value} = e.target;
+    const {selectedFeatures, OS, setSelectedFeatures } = props;
+    if (selectedFeatures.includes(value) === false) {setSelectedFeatures([...selectedFeatures, value])
+    }else {setSelectedFeatures(selectedFeatures.filter(f => f !== value));
+    };
+    handleSetDays(OS, ...features.filter( f => {if (f.id === parseInt(value)) return f; else return null}), false);
+  };
+  
+  const handleRadio = (catID, fID) => {
+    const { OS,} = props;
+    if(radioButtons.map( rb => (rb.category)).includes(catID) === false) {setRadioButtons([...radioButtons, {category: catID, feature: fID}]);
+    }else {setRadioButtons([...radioButtons.filter( rb => rb.category !== catID ),{category: catID, feature: fID}]);
+    };
+    handleSetDays(OS, ...features.filter( f => {if (f.id === parseInt(fID)) return f; else return null}),true);
+  };
+
+  const isSelected = (id) => {
+    let selected = [];
+    radioButtons.map( rb => selected.push(rb.feature));
+    return selected.includes(id);
+  };
 
   const exclusiveRendering = (catID, is_exclusive) => {
-    let correctF = features.filter( f => catID === f.category_id);
+    const correctF = features.filter( f => catID === f.category_id);
+    
     if (is_exclusive === true) {
       return (
-        <Spacing>
-          <Grid columns={3}>
-            <Grid.Row columns="3">
-              {correctF.map( f => (
-                <>
-                <RowSpacing>
-                  <Grid.Column centered>
-                    {/* <Card as={CardSelectBorder} key={f.id}>
-                        <Card.Content>
-                          <Card.Header>{f.name}</Card.Header>
-                          <Card.Description>{f.description}</Card.Description>
-                        </Card.Content>
-                    </Card> */}
-                    <div class="card-wrapper">
-                      <input class="c-card" type="checkbox" id="1" value="1" checked="checked"/>
-                      <div class="card-content">
-                        <div class="card-state-icon"></div>
-                        <label for="1">
-                          <div class="image"></div>
-                          <h4>{f.name}</h4>
-                          <h5>{f.description}</h5>
-                          <p class="small-meta dim">{f.description}</p>
-                        </label>
-                      </div>
-                    </div>
-                  </Grid.Column>
-                </RowSpacing>
-              </>
-              ))}
-            </Grid.Row>
-          </Grid>
-        </Spacing>
+      //   <Spacing>
+      //     <Grid columns={3}>
+      //       <Grid.Row columns="3">
+      //         {correctF.map( f => (
+      //           <>
+      //           <RowSpacing>
+      //             <Grid.Column centered>
+      //               {/* <Card as={CardSelectBorder} key={f.id}>
+      //                   <Card.Content>
+      //                     <Card.Header>{f.name}</Card.Header>
+      //                     <Card.Description>{f.description}</Card.Description>
+      //                   </Card.Content>
+      //               </Card> */}
+      //               <div class="card-wrapper">
+      //                 <input class="c-card" type="checkbox" id="1" value="1" checked="checked"/>
+      //                 <div class="card-content">
+      //                   <div class="card-state-icon"></div>
+      //                   <label for="1">
+      //                     <div class="image"></div>
+      //                     <h4>{f.name}</h4>
+      //                     <h5>{f.description}</h5>
+      //                     <p class="small-meta dim">{f.description}</p>
+      //                   </label>
+      //                 </div>
+      //               </div>
+      //             </Grid.Column>
+      //           </RowSpacing>
+      //         </>
+      //         ))}
+      //       </Grid.Row>
+      //     </Grid>
+      //   </Spacing>
+      //   );
+      // }else {
+      //   return (
+      //     <Spacing>
+      //     <Grid columns={3} centered>
+      //       <Grid.Row columns={3}>
+      //         {correctF.map( f => (
+      //           <>
+      //             <RowSpacing>
+      //               <Grid.Column centered>
+      //                 <Card as={CardSelectBorder} key={f.id}>
+      //                     <Card.Content>
+      //                       <Card.Header>{f.name}</Card.Header>
+      //                       <Card.Description>{f.description}</Card.Description>
+      //                     </Card.Content>
+      //                 </Card>
+      //               </Grid.Column>
+      //             </RowSpacing>
+      //           </>
+      //         ))}
+      //       </Grid.Row>
+      //     </Grid>
+      //   </Spacing>
+        <>
+          {correctF.map( f => { 
+            return(
+              <Form.Group key={f.id}>
+                <Form.Field>
+                  <Radio
+                    // get radio buttons to show checked if applicable when page is re rendered/////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    // defaultChecked={radioButtons.includes(f.id.toString())}
+                    name={f.name}
+                    checked={isSelected(f.id)}
+                    value={f.id}
+                    label={f.name}
+                    onChange={() => handleRadio(f.category_id, f.id)}
+                    />
+                    </Form.Field>
+              </Form.Group>
+            )})}
+        </>
         );
       }else {
         return (
-          <Spacing>
-          <Grid columns={3} centered>
-            <Grid.Row columns={3}>
-              {correctF.map( f => (
-                <>
-                  <RowSpacing>
-                    <Grid.Column centered>
-                      <Card as={CardSelectBorder} key={f.id}>
-                          <Card.Content>
-                            <Card.Header>{f.name}</Card.Header>
-                            <Card.Description>{f.description}</Card.Description>
-                          </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </RowSpacing>
-                </>
-              ))}
-            </Grid.Row>
-          </Grid>
-        </Spacing>
+          <Form.Group>
+            {correctF.map( f => (
+              <Form.Input
+                checked={props.selectedFeatures.includes(f.id.toString())}
+                key={f.id}
+                type='checkbox'
+                name={f.name}
+                value={f.id}
+                label={f.name}
+                onChange={handleCheckbox}
+              />
+            ))}
+          </Form.Group>
         );
       };
     };
-
-    const handleSubmit = () => {
-    }
 
   return (
     <Container textAlign="center">
         <br/>
         <br/>
-        <Form onSubmit={handleSubmit()}>
+        <Form>
           {categories.map(c => 
           <>
             <Container textAlign="center" key={c.id} id={c.id}>
@@ -116,7 +168,6 @@ const Features = (props) => {
             <Spacing/>
           </>
           )}
-          <Form.Button inverted>Submit for Quote</Form.Button>
         </Form >
     </Container>
   )

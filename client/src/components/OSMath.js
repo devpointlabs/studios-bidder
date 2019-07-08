@@ -1,11 +1,15 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {MathContext} from '../providers/MathProvider';
-import {Container, Button, Header,} from 'semantic-ui-react';
+import {Container, Header,} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import DarkText from '../styles/DarkText'
 
 const OSMath = (props) => {
-  const {webPrice, iOSPrice, androidPrice, handleSetPrice} = useContext(MathContext);
+  const {webPrice, iOSPrice, androidPrice, renderPrices, handleSetPrice} = useContext(MathContext);
+
+  useEffect( () => {
+    handleSetPrice(props.OS)
+  },[renderPrices])
 
   const renderPriceDisplay = () => {
     switch (props.OS){
@@ -19,7 +23,6 @@ const OSMath = (props) => {
   return(
     <Container textAlign="center" as={Colors} colored="white">
       <Header align="center" as={DarkText} fSize="large">{props.OS} Math</Header>
-      <Button as={Colors} inverted colored="light" onClick={() => handleSetPrice(props.OS)}>Click to show {props.OS} price</Button >
       <Header align="center" as={DarkText} fSize="small">{props.OS} Price: ${renderPriceDisplay()}</Header>
     </Container>
   );
