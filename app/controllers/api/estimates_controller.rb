@@ -1,7 +1,12 @@
 class Api::EstimatesController < ApplicationController
 
   def create
-    Estimate.create(estimates_params)
+    estimate = Estimate.new(estimates_params)
+    if estimate.save
+      render json: estimate.id
+    else
+      render json: estimate.errors, status:422
+    end
   end
 
   private

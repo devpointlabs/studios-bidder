@@ -14,7 +14,7 @@ platforms.each do |a|
       name: "#{a} Feature #{i+1}/#{j+1}",
       description: Faker::TvShows::MichaelScott.quote,
       list_location: rand(10),
-      base_days: rand(10),
+      base_days: rand(1..10),
       multiplier: 1,
       category_id: category.id,
       platform_id: p.id
@@ -33,7 +33,7 @@ platforms.each do |a|
         name: "#{a} exclusive Feature #{k+1}/#{l+1}",
         description: Faker::TvShows::MichaelScott.quote,
         list_location: rand(10),
-        base_days: rand(10),
+        base_days: rand(1..10),
         multiplier: 1,
         category_id: category.id,
         platform_id: p.id

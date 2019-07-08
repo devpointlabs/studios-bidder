@@ -4,7 +4,10 @@ before_action :set_feature, only: [:update, :destroy]
 
   def index
     render json: @category.features
-    # render json: Feature.get_feature_by_category(params[:category_id])
+  end
+  
+  def features_by_platform
+    render json: Feature.get_features_by_platform(params[:platform_id])
   end
 
   def create

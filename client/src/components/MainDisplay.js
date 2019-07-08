@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useContext,} from 'react';
 import Navbar from './Navbar';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
@@ -7,50 +7,71 @@ import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header, Form} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
-import axios from 'axios'
+import axios from 'axios';
+import {MathContext,} from '../providers/MathProvider';
 
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [features, setFeatures] = useState([])
-  // const [webSelections, setWebSelections] = useState({})
-  // const [iosSelections, setIOSSelections] = useState({})
-  // const [androidSelections, setAndroidSelections] = useState({})
+  const [estimateID, setEstimateID] = useState('');
+  // const [platforms, setPlatforms] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState([])
+  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
+  
+      // useEffect( () => {
+  //   axios.get(`/api/platforms`)
+  //   .then(res=>setPlatforms(res.data))
+  // });
 
-  // BIG SUBMIT FUNCTION(EACH STATE)
   const handleSubmit = () => {
-    createEstimateRecord()
-
+    // FIGURE OUT HOW TO NOT POST TO FEATURE_ESTIMATES UNTIL ESTIMATE ID IS RETURNED//////////////////////////////////////////////////////////////////////////////////////////////////
+    createEstimateRecord();
+    selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( ewd => ewd.id),...exclusiveAndroidDays.map( ewd => ewd.id), )
+    axios.post(`/api/features_estimates?feature_id=${selectedFeatures}&estimate_id=${estimateID}`)
+    // FUNCTIONS BELOW COMPLETELY RESET FORM////////////////////////////////////////////////////////////////////////
+    setSelectedFeatures([]);
+    resetMath()
   };
 
   const createEstimateRecord = () => {
-    const estimate = {customer_name: name, customer_email: email}
+    const estimate = {customer_name: name, customer_email: email};
     axios.post(`/api/estimates`, estimate)
-      // .then DO SOMETHING AFTER SUBMIT???????????????????????????
-    setEmail('')
-    setName('')
+      .then(res => setEstimateID(res.data));
+    setEmail('');
+    setName('');
   };
 
+
   const handleWeb = () => {
-    setFocus('web')
+    setFocus('web');
   };
 
   const handleiOS = () => {
-    setFocus('ios')
+    setFocus('ios');
   };
 
   const handleAndroid = () => {
-    setFocus('android')
+    setFocus('android');
   };
 
   const displayForm = () => {
     switch(focus){
-      case 'web': return <WebDisplay handleSubmit={handleSubmit} />;
-      case 'ios': return <IOSDisplay handleSubmit={handleSubmit} />;
-      case "android": return <AndroidDisplay handleSubmit={handleSubmit} />;
-      default: return <h1>You broke the platform switcher</h1>
+      case 'web': return <WebDisplay
+                            os='web'
+                            handleSubmit={handleSubmit} 
+                            selectedFeatures={selectedFeatures}
+                            setSelectedFeatures={setSelectedFeatures}/>;
+      case 'ios': return <IOSDisplay 
+                            handleSubmit={handleSubmit} 
+                            setSelectedFeatures={setSelectedFeatures} 
+                            selectedFeatures={selectedFeatures}/>;
+      case "android": return <AndroidDisplay 
+                                handleSubmit={handleSubmit}
+                                setSelectedFeatures={setSelectedFeatures} 
+                                selectedFeatures={selectedFeatures} />;
+      default: return <h1>You broke the platform switcher</h1>;
     };
   };
 

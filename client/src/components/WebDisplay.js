@@ -2,7 +2,7 @@ import React from 'react';
 import OSMath from './OSMath';
 import Features from './Features';
 import TotalMath from './TotalMath';
-import {Container, Segment, Header } from 'semantic-ui-react';
+import {Container, Segment, } from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import styled from "styled-components";
 
@@ -13,7 +13,11 @@ const WebDisplay = (props) => {
     <>
     <Segment as={Colors} colored="light">
       <Container as={FeaturesContainer}>
-        <Features OS='web'/>
+        <Features 
+          OS='web'
+          selectedFeatures={props.selectedFeatures}
+          setSelectedFeatures={props.setSelectedFeatures}
+        />
       </Container>
     </Segment>
     <Segment>
