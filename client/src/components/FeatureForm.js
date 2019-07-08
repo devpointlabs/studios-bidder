@@ -1,19 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState,} from 'react';
 import {Form, } from 'semantic-ui-react'
 import axios from 'axios'
 
 
 const FeatureForm = (props) => {
-  const [categoryOptions, setCategoryOptions] = useState([])
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [category, setCategory] = useState('')
   const [base_days, setBase_days] = useState('')
   const [multiplier, setMultiplier] = useState('')
 
   const handleSubmit=(e)=>{
     axios.post(`/api/categories/${props.c_id}/features`,{name, description, base_days, multiplier})
+    .then( res=>{
+      props.addFeature(res.data)
+      props.toggleForm(false)
+    })
   }
 
   return(
