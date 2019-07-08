@@ -98,7 +98,6 @@ const Features = (props) => {
     };
 
     const handleSubmit = () => {
-
     }
 
   return (
