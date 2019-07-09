@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import Navbar from './Navbar';
-import Platform from './Platform'
+import Platform from './Admin/Platform'
 
 const AdminDisplay = (props) => {
   const [categories, setCategories] = useState([])

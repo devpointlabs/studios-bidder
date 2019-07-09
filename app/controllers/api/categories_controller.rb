@@ -1,5 +1,4 @@
 class Api::CategoriesController < ApplicationController
-  before_action :set_category, only: [:delete, :update]
   before_action :set_platform, only: [:index, :create]
   before_action :set_category, only: [:destroy, :update]
 
@@ -25,6 +24,7 @@ class Api::CategoriesController < ApplicationController
 
   def update
     if @category.update(category_params)
+      binding.pry
       render json: @category
     else
       render json: @category.errors, status:422
@@ -41,7 +41,7 @@ private
   end
 
   def category_params
-    params.require(:category).permit(:name)
+    params.require(:category).permit(:name, :is_exclusive)
   end
 
   def set_platform
