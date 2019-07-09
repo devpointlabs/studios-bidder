@@ -1,9 +1,6 @@
 import React from 'react';
-import OSMath from './OSMath';
 import Features from './Features';
-import TotalMath from './TotalMath';
 import {Container, Segment } from 'semantic-ui-react';
-import Colors from "../styles/Colors";
 import styled from "styled-components";
 
 const IOSDisplay = (props) => {

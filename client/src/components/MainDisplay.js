@@ -159,32 +159,48 @@ const MainDisplay = () => {
           <OSMath OS='android'/>
         </Segment>
       </Segment.Group>
-      <Segment.Group>
-          <TotalMath />
-      </Segment.Group>
-      <br />
-      <Form widths='equal'>
-        <Form.Input 
-          type='text'
-          onChange={(e) => setName(e.target.value)}
-          label='Name'
-          value={name}
-        />
-        <Form.Input
-          type='email'
-          onChange={(e) => setEmail(e.target.value)}
-          label='Email'
-          value={email}
-        />
-        <Form.Button onClick={handleSubmit} >Submit for Quote</Form.Button>
-      </Form>
+      <TotalMath />
+      <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
+        <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
+          client's name and email to save estimate
+        </Header>
+        <FormBorder>
+          <Form widths='equal'>
+            <Form.Input 
+              type='text'
+              onChange={(e) => setName(e.target.value)}
+              label='Name'
+              value={name}
+            />
+            <Form.Input
+              type='email'
+              onChange={(e) => setEmail(e.target.value)}
+              label='Email'
+              value={email}
+            />
+            <Form.Button onClick={handleSubmit} basic>Submit for Quote</Form.Button>
+          </Form>
+        </FormBorder>
+      </Segment>
     </Segment.Group>
-    )
+  )
 };
 
 const NoLine = styled.div`
   border-top: none !important;
   border-top-width: 0px !important;
+`
+
+const FormBorder = styled.div`
+  padding: 30px !important;
+  border-top: 5px !important;
+  border-top-width: 5px !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+  margin-top:10px;
+  border-radius: 4px;
+  padding: 20px; 
+  background: white !important;
 `
 
 export default MainDisplay;

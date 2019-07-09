@@ -10,7 +10,7 @@ import styled from "styled-components";
 const WebDisplay = (props) => {
   
   return (
-    <>
+  <>
     <Segment as={NoLine}>
       <Container as={FeaturesContainer}>
         <Features 

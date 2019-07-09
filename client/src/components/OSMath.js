@@ -1,7 +1,6 @@
 import React, {useContext, useEffect} from "react";
 import {MathContext} from '../providers/MathProvider';
-import {Container, Header,} from 'semantic-ui-react';
-import Colors from "../styles/Colors";
+import {Header,} from 'semantic-ui-react';
 import WhiteText from '../styles/WhiteText'
 
 const OSMath = (props) => {
