@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_26_231228) do
+ActiveRecord::Schema.define(version: 2019_07_03_032639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2019_06_26_231228) do
     t.boolean "is_web"
     t.integer "list_location"
     t.boolean "is_exclusive"
+    t.bigint "platform_id"
+    t.index ["platform_id"], name: "index_categories_on_platform_id"
   end
 
   create_table "estimates", force: :cascade do |t|
@@ -57,7 +59,15 @@ ActiveRecord::Schema.define(version: 2019_06_26_231228) do
     t.boolean "is_ios"
     t.boolean "is_web"
     t.integer "list_location"
+    t.bigint "platform_id"
     t.index ["category_id"], name: "index_features_on_category_id"
+    t.index ["platform_id"], name: "index_features_on_platform_id"
+  end
+
+  create_table "platforms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -103,7 +113,9 @@ ActiveRecord::Schema.define(version: 2019_06_26_231228) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "categories", "platforms"
   add_foreign_key "feature_estimates", "estimates"
   add_foreign_key "feature_estimates", "features"
   add_foreign_key "features", "categories"
+  add_foreign_key "features", "platforms"
 end

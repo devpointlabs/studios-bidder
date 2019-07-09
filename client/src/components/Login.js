@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react';
+import Navbar from './Navbar';
 import { AuthContext, } from '../providers/AuthProvider';
 import {Button, Form, Segment, Header, } from 'semantic-ui-react';
 
@@ -15,6 +16,7 @@ const Login = (props) => {
 
     return(
       <Segment basic>
+        <Navbar/>
         <Header as='h1' textAlign='center'>Admin Login</Header>
         <Form onSubmit={handleSubmit}>
           <Form.Input

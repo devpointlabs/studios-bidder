@@ -1,20 +1,34 @@
-import React, {useState, useEffect, } from 'react';
-import axios from 'axios';
-import OSMath from './OSMath';
+import React from 'react';
 import Features from './Features';
-import TotalMath from './TotalMath';
-import {Container, } from 'semantic-ui-react';
+import {Container, Segment } from 'semantic-ui-react';
+import styled from "styled-components";
 
-const IOSDisplay = () => {
+const IOSDisplay = (props) => {
   
   return(
-    <Container>
-      <h1>iOS</h1>
-      <Features OS='ios'/>
-      <OSMath OS='ios'/>
-      <TotalMath />
-    </Container>
+    <>
+    <Segment as={NoLine}>
+      <Container as={FeaturesContainer}>
+        <Features 
+          OS='ios'
+          setSelectedFeatures={props.setSelectedFeatures}
+          selectedFeatures={props.selectedFeatures}
+          />
+      </Container>
+    </Segment>
+  </>
   );
 };
+
+const FeaturesContainer = styled.div`
+  padding: 20px;
+`;
+
+const NoLine = styled.div`
+  border-top: none !important;
+  border-top-width: 0px !important;
+  background-color: rgb(94, 66, 150) !important;
+`
+
 
 export default IOSDisplay;

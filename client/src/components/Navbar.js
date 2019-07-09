@@ -1,41 +1,54 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu } from "semantic-ui-react";
+import { Menu, Image, Header } from "semantic-ui-react";
+import styled from 'styled-components';
 
 const Navbar = () => (
-  <Menu>
-    <Link to="/">
+  <Menu borderless pointing secondary >
+    <Menu.Menu position="left">
+      <Link to="/">
+        <Menu.Item>
+          <Image
+            src={require('../images/dpl-logo.png')}
+            size="tiny"
+          />
+        </Menu.Item>
+      </Link> 
+      <Link to="/">
+        <Menu.Item>
+          <br/>
+          <Header align="center" as={NavHeader}>DevPoint Labs</Header>
+        </Menu.Item>
+      </Link>
+    </Menu.Menu>
+    <Menu.Menu position="right">
+      <Link to="/Login">
       <Menu.Item>
-        Main Display
-      </Menu.Item>
-    </Link>
-    <Link to="/android">
-      <Menu.Item>
-        Android Display
-      </Menu.Item>
-    </Link>
-    <Link to="/iOS">
-      <Menu.Item>
-        iOS Display
-      </Menu.Item>
-    </Link>
-    <Link to="/Web">
-      <Menu.Item>
-        Web Display
-      </Menu.Item>
-    </Link>
-    <Link to="/Login">
-      <Menu.Item>
-        Login
+        <br/>
+        <Header align="center" as={NavRight}> Login </Header>
       </Menu.Item>
     </Link>
     <Link to="/Admin">
       <Menu.Item>
-        Admin Display
+        <br/>
+        <Header align="center" as={NavRight}> Admin</Header>
       </Menu.Item>
     </Link>
+    </Menu.Menu>
   </Menu>
 )
+
+const NavHeader = styled.h1`
+    color: rgb(129, 104, 177) !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: '25px' !important;
+`;
+
+const NavRight = styled.h1`
+    color: rgb(129, 104, 177) !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: '10px' !important;
+`;
 
 export default Navbar;
 // link to MainDisplay
