@@ -9,7 +9,6 @@ const [editing, setEditing] = useState(false)
 const [categories, setCategories] = useState([])
 const [newCategory, setNewCategory] = useState(false)
 
-
 const [tempName, setTempName] = useState('')
 
   useEffect(()=>{
@@ -17,14 +16,22 @@ const [tempName, setTempName] = useState('')
     .then(res=>{setCategories(res.data)})
   },[])
 
-  const handleSubmit=()=>{
+  // passed to the category form so it can update state
+  const addCategory = (category) => {
+    setCategories([...categories, category])
+  }
+
+  const handleSubmit=(e)=>{
+    e.preventDefault()
     axios.put(`/api/platforms/${props.id}`,{platform:{name:tempName}})
   }
 
+
   const deleteCategory =(c_id)=>{
     axios.delete(`/api/categories/${c_id}`)
+    setCategories(categories.filter(c => c.id !== c_id))
   }
-
+  
   const PlatformDisplay=(
     <>
       <Button icon color="blue" onClick={()=>setEditing(true)}>
@@ -36,7 +43,7 @@ const [tempName, setTempName] = useState('')
       </Button>
       <br />
       <br />
-      {newCategory? <CategoryForm p_id={props.id}/> : null}
+      {newCategory? <CategoryForm  addCategory={addCategory} toggleForm={setNewCategory} p_id={props.id}/> : null}
     </>
   )
 

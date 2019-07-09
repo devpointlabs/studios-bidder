@@ -1,18 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
-import FeatureForm from './FeatureForm'
-import CategoryForm from './CategoryForm'
 import Navbar from './Navbar';
-import Category from './Category'
 import Platform from './Platform'
 
-const AdminDisplay = () => {
+const AdminDisplay = (props) => {
   const [categories, setCategories] = useState([])
   const [platforms, setPlatforms] = useState([])
-
-  const deleteCategory =(c_id)=>{
-    axios.delete(`/api/categories/${c_id}`)
-  }
 
   useEffect(()=>{
     axios.get(`/api/all_categories`)
@@ -21,12 +14,17 @@ const AdminDisplay = () => {
     axios.get(`/api/platforms`)
     .then(res=>{setPlatforms(res.data)})
   },[])
+
+  const testStuff = () => {
+
+    // console.log("These are the props" + platforms.props)
+  
+  }
   
   return(
     <>
       <Navbar/>
-      {platforms.map((platform)=> <Platform key={platform.id} name={platform.name} id={platform.id} />)}
-      
+      {platforms.map((platform)=> <Platform key={platform.id} name={platform.name} id={platform.id}  history={props.history}/>)}
     </>
   )
 };
