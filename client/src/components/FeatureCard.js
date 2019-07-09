@@ -15,7 +15,10 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
   }, [isSelected])
 
   return (
-    <Card style={{cursor:'pointer'}} onClick={() => handleSubmit(f.category_id, f.id)} as={isSelectedState ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id}>
+    <Card raised style={{cursor:'pointer'}} 
+          onClick={() => handleSubmit(f.category_id, f.id)} 
+          as={isSelectedState ? CardSelectBorder : CardUnselectBorder} 
+          key={f.id} value={f.id}>
       <Card.Content content={f.id} className={f.id} value={f.id}>
         <Card.Header>{f.name}</Card.Header>
         <Card.Description>{f.description}</Card.Description>
@@ -29,7 +32,7 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
 const CardSelectBorder = styled.div`
   border-radius: 4px !important;
   border: 5px solid !important; 
-  border-color: rgb(111, 242, 175) !important;
+  border-color: rgb(77, 247, 74) !important;
 `;
 
 const CardUnselectBorder = styled.div`
