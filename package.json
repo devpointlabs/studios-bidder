@@ -5,7 +5,9 @@
   "main": "index.js",
   "directories": {
     "lib": "lib",
-    "test": "test"
+    "test": "test",
+    "engines": {
+      "node": "12.3.1"
   },
   "scripts": {
     // "test": "echo \"Error: no test specified\" && exit 1",
