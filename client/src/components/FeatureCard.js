@@ -15,7 +15,7 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
   }, [isSelected])
 
   return (
-    <Card onClick={() => handleSubmit(f.category_id, f.id)} as={isSelectedState ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id}>
+    <Card style={{cursor:'pointer'}} onClick={() => handleSubmit(f.category_id, f.id)} as={isSelectedState ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id}>
       <Card.Content content={f.id} className={f.id} value={f.id}>
         <Card.Header>{f.name}</Card.Header>
         <Card.Description>{f.description}</Card.Description>

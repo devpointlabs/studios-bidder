@@ -178,12 +178,12 @@ const MainDisplay = () => {
               label='Email'
               value={email}
             />
-            <Form.Button onClick={handleSubmit} basic color="">Submit for Quote</Form.Button>
+            <Form.Button onClick={handleSubmit} basic>Submit for Quote</Form.Button>
           </Form>
         </FormBorder>
       </Segment>
     </Segment.Group>
-    )
+  )
 };
 
 const NoLine = styled.div`
