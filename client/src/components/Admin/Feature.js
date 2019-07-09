@@ -1,5 +1,5 @@
 import React, {useState,} from 'react';
-import {Table, Icon, Button,Form} from 'semantic-ui-react'
+import {Table, Icon, Button,Form, Container} from 'semantic-ui-react'
 import axios from 'axios'
 
 const Feature = (props) => {
@@ -31,9 +31,9 @@ const Feature = (props) => {
           <Table.Row>
             <Table.Cell collapsing>
               {editing?
-                <Button icon color="grey" onClick={toggleEdit}><Icon name="cancel"/></Button>
+                <Button size='tiny' icon color="grey" onClick={toggleEdit}><Icon name="cancel"/></Button>
                 :
-                <Button icon color="blue" onClick={toggleEdit}><Icon name="pencil"/></Button>
+                <Button size='tiny' icon color="blue" onClick={toggleEdit}><Icon name="pencil"/></Button>
               }
             </Table.Cell>
             <Table.Cell collapsing>
@@ -66,9 +66,9 @@ const Feature = (props) => {
             </Table.Cell>
             <Table.Cell collapsing textAlign='right'>
               {editing?
-                <Button icon color="green" onClick={handleSubmit}><Icon name="save"/></Button>
+                <Button size='tiny' icon color="green" onClick={handleSubmit}><Icon name="save"/></Button>
                 :
-                <Button icon color="red" onClick={()=>props.delete(props.id)}><Icon name="trash"/></Button>
+                <Button size='tiny' icon color="red" onClick={()=>props.delete(props.id)}><Icon name="trash"/></Button>
               }
             </Table.Cell>
             </Table.Row>
@@ -78,9 +78,9 @@ const Feature = (props) => {
     )
 
   return(
-   <div>
+   <Container>
       {Feature}
-      </div>
+      </Container>
    
   )
 }

@@ -7,7 +7,7 @@ const CategoryForm = (props) => {
   const [isExclusive, setIsExclusive] = useState(false)
 
   const handleSubmit=(e)=>{
-    axios.post(`/api/platforms/${props.p_id}/categories`,{name, isExclusive})
+    axios.post(`/api/platforms/${props.p_id}/categories`,{name, is_exclusive:isExclusive})
     .then( res => {
       props.addCategory(res.data)
       props.toggleForm(false)
@@ -15,7 +15,9 @@ const CategoryForm = (props) => {
   }
 
   return(
+    <>
     <Form onSubmit={handleSubmit}>
+      <Form.Group>
       <Form.Input
         label="Category Name"
         placeholder="Category Name..."
@@ -25,12 +27,15 @@ const CategoryForm = (props) => {
         required
       />
       <Form.Checkbox
-        label="Exclusive?"
+        label="Single Selection?"
         name="isExclusive"
-        onChange={(e)=> setIsExclusive((e.target.value))}
+        onChange={()=>setIsExclusive(!isExclusive)}
       />
+      </Form.Group>
       <Form.Button>Submit</Form.Button>
     </Form>
+    <br/>
+    </>
   )
 }
 
