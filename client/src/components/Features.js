@@ -48,11 +48,15 @@ const Features = (props) => {
     handleSetDays(OS, ...features.filter( f => {if (f.id === parseInt(fID)) return f; else return null}),true);
   };
 
+  const unselectExclusiveFeature = (fID) => {
+    debugger
+    setRadioButtons([...radioButtons.filter( rb => rb.id !== fID)])
+  };
+
   const isSelected = (id) => {
     let selected = [];
     radioButtons.map( rb => selected.push(rb.feature));
     props.selectedFeatures.map( sf => selected.push(sf))
-    console.log(selected)
     return selected.includes(id);
   };
 
