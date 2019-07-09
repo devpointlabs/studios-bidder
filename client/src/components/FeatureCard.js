@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react';
 import {Card} from 'semantic-ui-react';
 import styled from "styled-components"
 
-const FeatureCard = ({unselectExclusiveFeature, onClickFunction, isSelected, f}) => {
+const FeatureCard = ({onClickFunction, isSelected, f}) => {
   const [isSelectedState, setIsSelectedState] = useState(false);
 
   const handleSubmit = (catID, fID) => {
@@ -12,7 +12,7 @@ const FeatureCard = ({unselectExclusiveFeature, onClickFunction, isSelected, f})
 
   useEffect(() => {
     setIsSelectedState(isSelected(f.id)) 
-  }, [isSelected])
+  },[isSelected])
 
   return (
     <Card style={{cursor:'pointer'}} onClick={() => handleSubmit(f.category_id, f.id)} as={isSelectedState ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id}>

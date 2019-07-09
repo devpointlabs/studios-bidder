@@ -10,9 +10,9 @@ const Features = (props) => {
   // const [platforms, setPlatforms] = useState([])
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
-  const [radioButtons, setRadioButtons] = useState([])
+  // const [radioButtons, setRadioButtons] = useState([])
 
-  const { handleSetDays, } = useContext(MathContext);
+  const { handleSetDays, handleExclusiveDaysByFeature} = useContext(MathContext);
 
   useEffect( () => {
     // axios.get(`/api/platforms`)
@@ -41,21 +41,21 @@ const Features = (props) => {
   };
   
   const handleRadio = (catID, fID) => {
-    const { OS,} = props;
+    const { OS, radioButtons, setRadioButtons} = props;
     if(radioButtons.map( rb => (rb.category)).includes(catID) === false) {setRadioButtons([...radioButtons, {category: catID, feature: fID}]);
     }else {setRadioButtons([...radioButtons.filter( rb => rb.category !== catID ),{category: catID, feature: fID}]);
     };
     handleSetDays(OS, ...features.filter( f => {if (f.id === parseInt(fID)) return f; else return null}),true);
-  };
 
-  const unselectExclusiveFeature = (fID) => {
-    debugger
-    setRadioButtons([...radioButtons.filter( rb => rb.id !== fID)])
+    if(radioButtons.map( rb => (rb.feature)).includes(fID) === true) {
+      setRadioButtons([...radioButtons.filter( rb => rb.feature !== fID)])
+      handleExclusiveDaysByFeature(OS, fID)
+    }
   };
 
   const isSelected = (id) => {
     let selected = [];
-    radioButtons.map( rb => selected.push(rb.feature));
+    props.radioButtons.map( rb => selected.push(rb.feature));
     props.selectedFeatures.map( sf => selected.push(sf))
     return selected.includes(id);
   };
