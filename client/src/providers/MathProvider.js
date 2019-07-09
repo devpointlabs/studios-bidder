@@ -34,7 +34,7 @@ export class MathProvider extends React.Component {
 
   handleSetDays = (os, feature, exclusive) => {
     const {webDays, iOSDays, androidDays, renderPrices } = this.state;
-    if (exclusive) this.handleExclusiveDays(os, feature)
+    if (exclusive) this.handleExclusiveDaysByCategory(os, feature)
     else {
       switch(os){
         case 'web':
@@ -59,7 +59,7 @@ export class MathProvider extends React.Component {
     this.setState({renderPrices: !renderPrices});
   };
 
-  handleExclusiveDays = (os, feature) => {
+  handleExclusiveDaysByCategory = (os, feature) => {
     const {exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, renderPrices} = this.state;
     switch(os){
       case 'web':
@@ -82,6 +82,21 @@ export class MathProvider extends React.Component {
       }
     this.setState({renderPrices: !renderPrices});
   };
+
+  handleExclusiveDaysByFeature = (os, feature) => {
+    const {exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, renderPrices} = this.state;
+    switch(os){
+      case 'web':
+          this.setState({exclusiveWebDays: [...exclusiveWebDays.filter( wd => wd.id !== feature),]})
+        break;
+      case 'ios':
+          this.setState({exclusiveiOSDays: [...exclusiveiOSDays.filter( id => id.id !== feature),]})
+         break;
+      case 'android':
+          this.setState({exclusiveAndroidDays: [...exclusiveAndroidDays.filter( ad => ad.id !== feature),]});
+      };
+    this.setState({renderPrices: !renderPrices});
+  }
   
   render() {
     
@@ -90,6 +105,7 @@ export class MathProvider extends React.Component {
        ...this.state,
        handleSetPrice: this.handleSetPrice,
        handleSetDays: this.handleSetDays,
+       handleExclusiveDaysByFeature: this.handleExclusiveDaysByFeature,
        resetMath: this.resetMath,
       }}>
         {this.props.children}

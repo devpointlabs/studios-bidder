@@ -17,6 +17,8 @@ const WebDisplay = (props) => {
           OS='web'
           selectedFeatures={props.selectedFeatures}
           setSelectedFeatures={props.setSelectedFeatures}
+          setRadioButtons={props.setRadioButtons}
+          radioButtons={props.radioButtons}
         />
       </Container>
     </Segment>

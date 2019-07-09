@@ -18,9 +18,10 @@ const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [estimateID, setEstimateID] = useState('');
   // const [platforms, setPlatforms] = useState([]);
-  const [selectedFeatures, setSelectedFeatures] = useState([])
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [radioButtons, setRadioButtons] = useState([]);
+
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
   
       // useEffect( () => {
@@ -36,6 +37,7 @@ const MainDisplay = () => {
         setEmail('')
         setName('')
         setSelectedFeatures([])
+        setRadioButtons([])
         resetMath()
         }
       )
@@ -58,18 +60,23 @@ const MainDisplay = () => {
   const displayForm = () => {
     switch(focus){
       case 'web': return <WebDisplay
-                            os='web'
                             handleSubmit={handleSubmit} 
+                            setSelectedFeatures={setSelectedFeatures}
                             selectedFeatures={selectedFeatures}
-                            setSelectedFeatures={setSelectedFeatures}/>;
+                            setRadioButtons={setRadioButtons}
+                            radioButtons={radioButtons}/>;
       case 'ios': return <IOSDisplay 
                             handleSubmit={handleSubmit} 
                             setSelectedFeatures={setSelectedFeatures} 
-                            selectedFeatures={selectedFeatures}/>;
+                            selectedFeatures={selectedFeatures}
+                            setRadioButtons={setRadioButtons}
+                            radioButtons={radioButtons}/>;
       case "android": return <AndroidDisplay 
                                 handleSubmit={handleSubmit}
                                 setSelectedFeatures={setSelectedFeatures} 
-                                selectedFeatures={selectedFeatures} />;
+                                selectedFeatures={selectedFeatures}
+                                setRadioButtons={setRadioButtons}
+                                radioButtons={radioButtons} />;
       default: return <h1>You broke the platform switcher</h1>;
     };
   };
