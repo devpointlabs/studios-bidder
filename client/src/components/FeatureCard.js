@@ -12,7 +12,7 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
 
   useEffect(() => {
     setIsSelectedState(isSelected(f.id)) 
-  }, [isSelected])
+  },[isSelected])
 
   return (
     <Card raised style={{cursor:'pointer'}} 

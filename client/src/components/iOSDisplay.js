@@ -13,6 +13,8 @@ const IOSDisplay = (props) => {
           OS='ios'
           setSelectedFeatures={props.setSelectedFeatures}
           selectedFeatures={props.selectedFeatures}
+          setRadioButtons={props.setRadioButtons}
+          radioButtons={props.radioButtons}
           />
       </Container>
     </Segment>
