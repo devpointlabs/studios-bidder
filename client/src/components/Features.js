@@ -84,20 +84,20 @@ const Features = (props) => {
       }else {
         return (
           <Spacing>
-          <Grid columns={3} centered>
-            <Grid.Row columns={3}>
-              {correctF.map( f => (
-                <>
-                  <RowSpacing>
-                    <Grid.Column centered>
-                      <FeatureCard onClickFunction={handleCheckbox} isSelected={isSelected} f={f}/>
-                    </Grid.Column>
-                  </RowSpacing>
-                </>
-              ))}
-            </Grid.Row>
-          </Grid>
-        </Spacing>
+            <Grid columns={3} centered>
+              <Grid.Row columns={3}>
+                {correctF.map( f => (
+                  <>
+                    <RowSpacing>
+                      <Grid.Column centered>
+                        <FeatureCard onClickFunction={handleCheckbox} isSelected={isSelected} f={f}/>
+                      </Grid.Column>
+                    </RowSpacing>
+                  </>
+                ))}
+              </Grid.Row>
+            </Grid>
+          </Spacing>
         );
       };
     };
@@ -110,10 +110,10 @@ const Features = (props) => {
           {categories.map(c => 
           <>
             <Container textAlign="center" key={c.id} id={c.id}>
-              <FormContainer>
+              <CategoryContainer>
               <Header as={DarkText} fSize="medium">{c.name}</Header>
               {exclusiveRendering(c.id, c.is_exclusive)}
-              </FormContainer>
+              </CategoryContainer>
             </Container>
             <Spacing/>
           </>
@@ -123,8 +123,8 @@ const Features = (props) => {
   )
 };
 
-const FormContainer = styled.div`
-  padding: 20px;
+const CategoryContainer = styled.div`
+  padding: 50px 20px 50px 20px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
   margin-bottom: 20px;
   margin-top:10px;
@@ -137,7 +137,7 @@ const Spacing = styled.div`
 `;
 
 const RowSpacing = styled.div`
-  padding: 5px 10px 10px 10px !important;
+  padding: 30px 10px 10px 10px !important;
 `;
 
 export default Features;
