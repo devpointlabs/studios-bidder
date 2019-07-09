@@ -1,12 +1,10 @@
 import React, {useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import {Form, Grid, Radio, Card, Input, Checkbox, Container, Header,} from 'semantic-ui-react';
+import {Form, Grid, Container, Header,} from 'semantic-ui-react';
 import { MathContext} from '../providers/MathProvider';
 import FeatureCard from './FeatureCard';
 import DarkText from "../styles/DarkText";
-import Colors from "../styles/Colors";
 import styled from "styled-components"
-import "./Features.less"
 
 const Features = (props) => {
   // const [platforms, setPlatforms] = useState([])
@@ -58,20 +56,6 @@ const Features = (props) => {
     return selected.includes(id);
   };
 
-  // const toggleBorder = () => {
-  //   //  style={complete ? styles.selected : {}}
-
-  //   // if YES selected return 
-  //   // return {}
-
-  //   // if NOT selected return 
-  //   return selected = () => {
-  //     borderRadius: '4px !important',
-  //     border: '5px solid !important', 
-  //     borderColor: 'rgb(9, 0, 41) !important'
-  //   }
-  // }
-
   const exclusiveRendering = (catID, is_exclusive) => {
     const correctF = features.filter( f => catID === f.category_id);
     
@@ -84,20 +68,7 @@ const Features = (props) => {
                 <>
                 <RowSpacing>
                   <Grid.Column centered>
-                    {/* <CardGroup> */}
-                        {/* <CardStyles> */}
-                        {/* <div onClick={handleRadio} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id} id={f.id}> */}
-                        <FeatureCard onClickFunction={handleRadio} isSelected={isSelected} f={f}/>
-                          {/* <Card onClick={handleRadio} as={isSelected(f.id) ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id}>
-                              <Card.Content content={f.id} className={f.id} value={f.id}>
-                                <Card.Header>{f.name}</Card.Header>
-                                <Card.Description>{f.description}</Card.Description>
-                                <Card.Meta>Base Days: {f.base_days}</Card.Meta>
-                              </Card.Content>
-                          </Card> */}
-                        {/* </div> */}
-                        {/* </CardStyles> */}
-                    {/* </CardGroup> */}
+                    <FeatureCard onClickFunction={handleRadio} isSelected={isSelected} f={f}/>
                   </Grid.Column>
                 </RowSpacing>
               </>
@@ -115,20 +86,7 @@ const Features = (props) => {
                 <>
                   <RowSpacing>
                     <Grid.Column centered>
-                      {/* <CardGroup> */}
-                        {/* <CardStyles> */}
-                        <FeatureCard onClickFunction={handleCheckbox} isSelected={isSelected} f={f}/>
-                        {/* <div style={{zIndex: '1000'}} onClick={handleCheckbox} as={isSelected ? CardSelectBorder : CardUnselectBorder} key={f.id} value={f.id} id={f.id}>
-                          <Card onClick={handleCheckbox} as={isSelected(f.id) ? CardSelectBorder : CardUnselectBorder} key={f.id}  value={f.id}>
-                              <Card.Content>
-                                <Card.Header>{f.name}</Card.Header>
-                                <Card.Description>{f.description}</Card.Description>
-                                <Card.Meta>Base Days: {f.base_days}</Card.Meta>
-                              </Card.Content>
-                          </Card>
-                        </div> */}
-                        {/* </CardStyles> */}
-                      {/* </CardGroup> */}
+                      <FeatureCard onClickFunction={handleCheckbox} isSelected={isSelected} f={f}/>
                     </Grid.Column>
                   </RowSpacing>
                 </>
@@ -136,40 +94,6 @@ const Features = (props) => {
             </Grid.Row>
           </Grid>
         </Spacing>
-      //   <>
-      //     {correctF.map( f => { 
-      //       return(
-      //         <Form.Group key={f.id}>
-      //           <Form.Field>
-      //             <Radio
-      //               // get radio buttons to show checked if applicable when page is re rendered/////////////////////////////////////////////////////////////////////////////////////////////////////////
-      //               // defaultChecked={radioButtons.includes(f.id.toString())}
-      //               name={f.name}
-      //               checked={isSelected(f.id)}
-      //               value={f.id}
-      //               label={f.name}
-      //               onChange={() => handleRadio(f.category_id, f.id)}
-      //               />
-      //               </Form.Field>
-      //         </Form.Group>
-      //       )})}
-      //   </>
-      //   );
-      // }else {
-      //   return (
-      //     <Form.Group>
-      //       {correctF.map( f => (
-      //         <Form.Input
-      //           checked={props.selectedFeatures.includes(f.id.toString())}
-      //           key={f.id}
-      //           type='checkbox'
-      //           name={f.name}
-      //           value={f.id}
-      //           label={f.name}
-      //           onChange={handleCheckbox}
-      //         />
-      //       ))}
-      //     </Form.Group>
         );
       };
     };
@@ -197,14 +121,13 @@ const Features = (props) => {
 
 const FormContainer = styled.div`
   padding: 20px;
-  /* border-radius: 4px; */
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
   margin-bottom: 20px;
   margin-top:10px;
   border-radius: 4px;
   background: white;
-  padding: 20px; 
 `;
+
 const Spacing = styled.div`
   padding: 5px 30px 30px 30px !important;
 `;
@@ -212,44 +135,5 @@ const Spacing = styled.div`
 const RowSpacing = styled.div`
   padding: 5px 10px 10px 10px !important;
 `;
-
-
-const styles = {
-  selected: {
-    borderRadius: '4px !important',
-    border: '5px solid !important', 
-    borderColor: 'rgb(111, 242, 175) !important'
-  },
-  unselected: {
-    borderRadius: '4px !important',
-    border: '5px solid !important', 
-    borderColor: 'rgb(9, 0, 41) !important'
-  }
-}
-
-
-const CardSelectBorder = styled.div`
-  border-radius: 4px !important;
-  border: 5px solid !important; 
-  border-color: rgb(111, 242, 175) !important;
-`;
-
-const CardUnselectBorder = styled.div`
-  border-radius: 4px !important;
-  border: 5px solid !important; 
-  border-color: rgb(9, 0, 41) !important;
-`;
-
-// const CardStyles = styled(Card)`
-//   /* height: ;
-//   width: ; */
-// `
-
-// const CardGroup = styled(Card.Group)`
-//   /* padding: 30px;
-//   display: flex;
-//   justify-content: center; */
-// `
-
 
 export default Features;

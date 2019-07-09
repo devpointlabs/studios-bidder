@@ -1,11 +1,6 @@
-import React, {useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import {Form, Grid, Radio, Card, Input, Checkbox, Container, Header,} from 'semantic-ui-react';
-import { MathContext} from '../providers/MathProvider';
-import DarkText from "../styles/DarkText";
-import Colors from "../styles/Colors";
+import React, {useState, useEffect } from 'react';
+import {Card} from 'semantic-ui-react';
 import styled from "styled-components"
-import "./Features.less"
 
 const FeatureCard = ({onClickFunction, isSelected, f}) => {
   const [isSelectedState, setIsSelectedState] = useState(false);

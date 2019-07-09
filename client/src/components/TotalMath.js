@@ -1,8 +1,8 @@
 import React from "react";
 import { MathConsumer } from "../providers/MathProvider";
-import { Container, Header, Segment} from 'semantic-ui-react';
-import Colors from "../styles/Colors";
+import { Header } from 'semantic-ui-react';
 import DarkText from '../styles/DarkText'
+import MainTitle from "../styles/MainTitle";
 
 class TotalMath extends React.Component {
   featureTotal = () => {
@@ -18,11 +18,12 @@ class TotalMath extends React.Component {
   
   render() {
     return(
-      // <Container textAlign="center" as={Colors} colored="white">
-      <Segment>
-        <Header align="center" as={DarkText} fSize="small">Total Price: ${this.featureTotal()}</Header>
-      </Segment>
-      // </Container>
+      <>
+        <Header align="center" as={DarkText} fSize="medium">Total Price: ${this.featureTotal()}</Header>
+        <Header align="center" as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
+          Combined price of Web, iOs, and Android.
+        </Header>
+      </>
     );
   };
 };
