@@ -20,7 +20,7 @@ export class MathProvider extends React.Component {
     this.setState({webDays: [], iOSDays: [], androidDays: [], iOSPrice: 0, webPrice: 0, androidPrice: 0, exclusiveAndroidDays: [], exclusiveWebDays: [], exclusiveiOSDays: []});
   };
 
-  handleSetPrice = (os) => {
+  handleSetOsPrice = (os) => {
     const {webDays, androidDays, iOSDays, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = this.state;
     const reducerFunction = (os) => os.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0);
     if (os === 'web'){
@@ -103,7 +103,7 @@ export class MathProvider extends React.Component {
     return (
       <MathContext.Provider value={{
        ...this.state,
-       handleSetPrice: this.handleSetPrice,
+       handleSetOsPrice: this.handleSetOsPrice,
        handleSetDays: this.handleSetDays,
        handleExclusiveDaysByFeature: this.handleExclusiveDaysByFeature,
        resetMath: this.resetMath,
