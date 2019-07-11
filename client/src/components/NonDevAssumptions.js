@@ -1,83 +1,108 @@
 import React from 'react';
 import {Grid, } from 'semantic-ui-react';
 import SliderBar from './SliderBar';
+import styled from 'styled-components';
 
 
 class NonDevAssumptions extends React.Component {
-//UPDATE STATE VALUES AUTOMATICALLY///////////////////////////////////////
-//SHOW DAYS/DOLLARS NEXT TO HEADERS//////////////////////////////////////
   state = {
-    design: {multiplier: 10, value: ''},
-    qaTesting: {multiplier: 10, value: ''},
-    deployment: {multiplier: 3, value: ''},
-    postDeploymentDev: {multiplier: 15, value: ''},
-    projectManagement: {multiplier: 10, value: ''},
-    generalBuffer: {multiplier: 5, value: ''},
+    design: {multiplier: .10, value: this.props.coreDevTime * .1},
+    qaTesting: {multiplier: .10, value: this.props.coreDevTime * .1},
+    deployment: {multiplier: .03, value: this.props.coreDevTime * .03},
+    postDeploymentDev: {multiplier: .15, value: this.props.coreDevTime * .15},
+    projectManagement: {multiplier: .10, value: this.props.coreDevTime * .1},
+    generalBuffer: {multiplier: .5, value: ''},
     subTotal: '',
     total: '',
+    coreDevTime: this.props.coreDevTime,
+    devTimeUpdated: false,
   }
 
+
   handleChange = (nonDevTime, multiplier, name) => {   
-    this.setState({[name]: {multiplier: multiplier, value: nonDevTime}})
+    this.setState({[name]: {multiplier: (multiplier / 100), value: nonDevTime}})
   };
+
+  componentDidUpdate() {
+    let dt = this.props.coreDevTime
+    if (this.state.coreDevTime !== dt ) {
+      this.setState({
+        design: {multiplier: this.state.multiplier, value: this.props.coreDevTime * .1},
+        qaTesting: {multiplier: 10, value: this.props.coreDevTime * .1},
+        deployment: {multiplier: 3, value: this.props.coreDevTime * .03},
+        postDeploymentDev: {multiplier: 15, value: this.props.coreDevTime * .15},
+        projectManagement: {multiplier: 10, value: this.props.coreDevTime * .1},
+        coreDevTime: dt });
+    }
+  }
 
   render() {
     return(
-      <>
-        <h1>Non Dev Assumptions</h1>
-        <br />
-        <br />
-        <br />
-        <Grid columns='two' divided>
-
+      <div>
+        <Grid columns='two' stackable divided relaxed style={{padding: '20px'}}>
         <Grid.Row>
-          <Grid.Column>
-            <h4>Design</h4>
+          <Grid.Column centered>
+            <SliderInfo>
+              <h4>Design</h4>
+              <h4>Days: {this.state.design.value.toFixed(1)}</h4>
+            </SliderInfo>
             <SliderBar 
               name='design'
               defaultValue={this.state.design.multiplier}
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
-            />
+              disabled={true}
+              />
           </Grid.Column>
             <br />
           <Grid.Column>
-            <h4>QA Testing</h4>
+            <SliderInfo>
+              <h4>Quality Assurance Testing</h4>
+              <h4>Days: {this.state.qaTesting.value.toFixed(1)}</h4>
+            </SliderInfo>>
             <SliderBar 
               name='qaTesting'
               defaultValue={this.state.qaTesting.multiplier}
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
-            />
+              />
           </Grid.Column>
             <br />
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <h4>Deployment</h4>
+            <SliderInfo>
+              <h4>Deployment</h4>
+              <h4>Days: {this.state.deployment.value.toFixed(1)}</h4>
+            </SliderInfo>
             <SliderBar 
               name='deployment'
               defaultValue={this.state.deployment.multiplier}
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
-            />
+              />
           </Grid.Column>
             <br />
           <Grid.Column>
-            <h4>Post Deployment Dev</h4>
+            <SliderInfo>
+              <h4>Post Deployment Development</h4>
+              <h4>Days: {this.state.postDeploymentDev.value.toFixed(1)}</h4>
+            </SliderInfo>
             <SliderBar 
               name='postDeploymentDev'
               defaultValue={this.state.postDeploymentDev.multiplier}
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
-            />
+              />
           </Grid.Column>
             <br />
-          </Grid.Row>
-          <Grid.Row>
-
+        </Grid.Row>
+        <Grid.Row>
           <Grid.Column>
-            <h4>Project Management</h4>
+            <SliderInfo>
+              <h4>Design</h4>
+              <h4>Days: {this.state.design.value.toFixed(1)}</h4>
+            </SliderInfo>
             <SliderBar 
               name='projectManagement'
               defaultValue={this.state.projectManagement.multiplier}
@@ -87,10 +112,17 @@ class NonDevAssumptions extends React.Component {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </>
+    </div>
   )
 }
 };
+
+const SliderInfo = styled.div`
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  margin-top: -30px !important;
+`
 
 export default NonDevAssumptions;
 

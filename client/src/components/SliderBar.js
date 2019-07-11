@@ -12,7 +12,7 @@ const domain = [0, 25]
 
 
 const SliderBar = (props) => {
-  const defaultValues = [props.defaultValue]
+  const defaultValues = [props.defaultValue * 100]
   const [values, setValues] = useState(defaultValues);
   const [update, setUpdate] = useState(defaultValues);
 
@@ -23,7 +23,7 @@ const SliderBar = (props) => {
   
   const onChange = values => {
     setValues(values)
-    let nonDevTime = values[0] * props.coreDevTime()    
+    let nonDevTime = values[0]/100 * props.coreDevTime    
     props.handleChange(nonDevTime, ...values, props.name)
   }
 

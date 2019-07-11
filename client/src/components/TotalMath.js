@@ -10,7 +10,7 @@ class TotalMath extends React.Component {
   coreDevTime = () => {
     const {math:{webPrice, iOSPrice, androidPrice}} = this.props
     return(webPrice + iOSPrice + androidPrice)
-  }
+  };
   
   render() {
     return(
@@ -19,9 +19,11 @@ class TotalMath extends React.Component {
         <Header align="center" as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
           Combined price of Web, iOs, and Android.
         </Header>
+        {this.coreDevTime() > 1 &&
         <NonDevAssumptions 
-          coreDevTime={this.coreDevTime}
+          coreDevTime={this.coreDevTime()}
         />
+        }
         <Header align="center" as={MainTitle} colored="light-grey"  fSize="micro">
         "Please note, all cost estimates are intended to be indicative of development costs and timescales only and are exclusive of all hosting costs, paid services or purchased assets of any kind. All prices are in USD and inclusive of sales tax."
         </Header>

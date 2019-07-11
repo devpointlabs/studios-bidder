@@ -22,7 +22,8 @@ export class MathProvider extends React.Component {
 
   handleSetOsPrice = (os) => {
     const {webDays, androidDays, iOSDays, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = this.state;
-    const reducerFunction = (os) => os.reduce( (acc, cur, ) => acc + (cur.base_days * cur.multiplier), 0);
+    /////////////////////////////////////////////////CHANGE THIS TO  (cur.base_days * cur.multiplier) TO SWAP TO DOLLARS
+    const reducerFunction = (os) => os.reduce( (acc, cur, ) => acc + (cur.base_days), 0);
     if (os === 'web'){
       this.setState({webPrice: reducerFunction(webDays) + reducerFunction(exclusiveWebDays)});
     } else if(os === 'android'){
