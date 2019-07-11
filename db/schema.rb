@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_03_032639) do
+ActiveRecord::Schema.define(version: 2019_07_11_220703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,12 @@ ActiveRecord::Schema.define(version: 2019_07_03_032639) do
     t.bigint "estimate_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "design"
+    t.integer "qaTesting"
+    t.integer "deployment"
+    t.integer "postDeploymentDev"
+    t.integer "projectManagement"
+    t.integer "generalBuffer"
     t.index ["estimate_id"], name: "index_feature_estimates_on_estimate_id"
     t.index ["feature_id"], name: "index_feature_estimates_on_feature_id"
   end

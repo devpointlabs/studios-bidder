@@ -59,7 +59,7 @@ class NonDevAssumptions extends React.Component {
             <SliderInfo>
               <h4>Quality Assurance Testing</h4>
               <h4>Days: {this.state.qaTesting.value.toFixed(1)}</h4>
-            </SliderInfo>>
+            </SliderInfo>
             <SliderBar 
               name='qaTesting'
               defaultValue={this.state.qaTesting.multiplier}
