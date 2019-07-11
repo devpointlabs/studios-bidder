@@ -22,6 +22,6 @@ Rails.application.routes.draw do
 
     get 'all_categories', to: 'categories#all_categories'
     get 'features_by_platform', to: 'features#features_by_platform'
-    get '*other', to: 'static#index'
   end
+  get '*other', to: 'static#index'
 end
