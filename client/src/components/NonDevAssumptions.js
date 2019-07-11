@@ -12,6 +12,7 @@ class NonDevAssumptions extends React.Component {
     postDeploymentDev: {multiplier: .15, value: this.props.coreDevTime * .15},
     projectManagement: {multiplier: .10, value: this.props.coreDevTime * .1},
     generalBuffer: {multiplier: .5, value: ''},
+    nonDevTotal: 0,
     subTotal: '',
     total: '',
     coreDevTime: this.props.coreDevTime,
@@ -19,8 +20,10 @@ class NonDevAssumptions extends React.Component {
   }
 
 
-  handleChange = (nonDevTime, multiplier, name) => {   
+  handleChange = (nonDevTime, multiplier, name) => {
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = this.state   
     this.setState({[name]: {multiplier: (multiplier / 100), value: nonDevTime}})
+    this.setState({nonDevTotal: (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(2)})
   };
 
   componentDidUpdate() {
@@ -59,7 +62,7 @@ class NonDevAssumptions extends React.Component {
             <SliderInfo>
               <h4>Quality Assurance Testing</h4>
               <h4>Days: {this.state.qaTesting.value.toFixed(1)}</h4>
-            </SliderInfo>>
+            </SliderInfo>
             <SliderBar 
               name='qaTesting'
               defaultValue={this.state.qaTesting.multiplier}
@@ -110,6 +113,9 @@ class NonDevAssumptions extends React.Component {
               handleChange={this.handleChange}
               />
           </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <h2>Non Dev Assumptions Total: {this.state.nonDevTotal}</h2>
         </Grid.Row>
       </Grid>
     </div>
