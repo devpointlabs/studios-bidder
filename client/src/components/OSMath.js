@@ -4,10 +4,10 @@ import {Header,} from 'semantic-ui-react';
 import WhiteText from '../styles/WhiteText'
 
 const OSMath = (props) => {
-  const {webPrice, iOSPrice, androidPrice, renderPrices, handleSetPrice} = useContext(MathContext);
+  const {webPrice, iOSPrice, androidPrice, renderPrices, handleSetOsPrice} = useContext(MathContext);
 
   useEffect( () => {
-    handleSetPrice(props.OS)
+    handleSetOsPrice(props.OS)
   },[renderPrices])
 
   const renderPriceDisplay = () => {
