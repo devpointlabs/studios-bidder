@@ -6,32 +6,32 @@ import styled from 'styled-components';
 const GeneralBufferSlider = (props) => {
   const [generalBufferMultiplier, setGeneralBufferMultiplier] = useState(.05);
   const [generalBufferValue, setGeneralBufferValue] = useState(0);
+  const [nonDevTotal, setNonDevTotal] = useState(0)
   const [total, setTotal] = useState(0);
 
 
   useEffect( () => {
-    let gBV = props.nonDevTotal * generalBufferMultiplier
-    let subTotal = parseFloat(props.nonDevTotal) + props.coreDevTime
-    setGeneralBufferValue(gBV.toFixed(1))
-    setTotal(subTotal + gBV)
-
-  },[props.nonDevTotal, props.coreDevTime]);
+    let gBV = props.nonDevTotal() * generalBufferMultiplier;
+    let subTotal = parseFloat(props.nonDevTotal()) + props.coreDevTime;
+    setGeneralBufferValue(gBV.toFixed(1));
+    setNonDevTotal(props.nonDevTotal());
+    setTotal(subTotal + gBV);
+  },[props.nonDevTotal(), props.coreDevTime]);
 
 
   const handleChange = (nonDevTime, multiplier, name) => {
     setGeneralBufferMultiplier(multiplier/100);
     setGeneralBufferValue(nonDevTime.toFixed(1));
-    updateFinalTotal(generalBufferValue)
+    setTotal(parseFloat(props.nonDevTotal()) + props.coreDevTime + parseFloat(generalBufferValue));
   };
 
-  const updateFinalTotal = (generalBufferValue) => {
-    let subTotal = parseFloat(props.nonDevTotal) + props.coreDevTime
-    setTotal(subTotal + parseFloat(generalBufferValue))
-  }
-
     return(
-      <>
-      <Grid columns='one' stackable divided relaxed style={{padding: '20px'}}>
+    <>
+      <div style={{width: '100%', textAlign: 'center'}}>
+        <h2>Non Dev Assumptions Total Days: {nonDevTotal}</h2>
+      </div>
+      <Divider style={{margin: '0px 30px 0px 30px'}}/>
+      <Grid columns='one' stackable divided relaxed style={{padding: '20px 200px 20px 200px'}}>
         <Grid.Row>
           <Grid.Column>
           <SliderInfo>
@@ -42,7 +42,7 @@ const GeneralBufferSlider = (props) => {
           <SliderBar 
             name='generalBuffer'
             defaultValue={generalBufferMultiplier}
-            coreDevTime={props.nonDevTotal}
+            coreDevTime={props.nonDevTotal()}
             handleChange={handleChange}
             />
           </Grid.Column>
@@ -50,12 +50,10 @@ const GeneralBufferSlider = (props) => {
       </Grid>
       <Divider style={{margin: '0px 30px 0px 30px'}}/>
       <div style={{width: '100%', textAlign: 'center'}}>
-        {total > 0 &&
-        <h2>Total Total Days: {total.toFixed(1)}</h2>
-        }
+        <h2 style={{fontSize: '3em'}}>Total Days: {total.toFixed(1)}</h2>
       </div>
-      </>
-    )
+    </>
+  );
 };
 
 const SliderInfo = styled.div`

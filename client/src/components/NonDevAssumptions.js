@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Divider } from 'semantic-ui-react';
+import {Grid, } from 'semantic-ui-react';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
 import GeneralBufferSlider from './GeneralBufferSlider';
@@ -11,11 +11,10 @@ class NonDevAssumptions extends React.Component {
     deployment: {multiplier: .03, value: this.props.coreDevTime * .03},
     postDeploymentDev: {multiplier: .15, value: this.props.coreDevTime * .15},
     projectManagement: {multiplier: .10, value: this.props.coreDevTime * .1},
-    // generalBuffer: {multiplier: .05, value: 0},
     nonDevTotal: 0,
     coreDevTime: this.props.coreDevTime,
     devTimeUpdated: false,
-  }
+  };
 
 
   handleChange = (nonDevTime, multiplier, name) => {
@@ -24,34 +23,32 @@ class NonDevAssumptions extends React.Component {
     this.setState({nonDevTotal: (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)})
   };
   
-  // handleGeneralBuffer = (bufferTime, multiplier, name) => {
-  //   this.setState({[name]: {multiplier: (multiplier / 100), value: bufferTime}})
-  //   this.setState({total: (this.state.generalBuffer.value + this.props.coreDevTime + this.state.nonDevTotal)})
-  // };
-  
   componentDidMount() {
-    const {design, qaTesting, deployment, postDeploymentDev,
-           projectManagement, generalBuffer, nonDevTotal} = this.state   
-    this.setState({nonDevTotal: (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)})
-    // this.setState({generalBuffer: {multiplier: .05, value: nonDevTotal * .05}})
-    this.setState({total: (this.props.coreDevTime + nonDevTotal)})
-  }
+    const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
+    this.setState({nonDevTotal: (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)});
+  };
 
-  // componentDidUpdate() {
-  //   let dt = this.props.coreDevTime
-  //   if (this.state.coreDevTime !== dt ) {
-  //     this.setState({
-  //       design: {multiplier: this.state.multiplier, value: this.props.coreDevTime * .1},
-  //       qaTesting: {multiplier: 10, value: this.props.coreDevTime * .1},
-  //       deployment: {multiplier: 3, value: this.props.coreDevTime * .03},
-  //       postDeploymentDev: {multiplier: 15, value: this.props.coreDevTime * .15},
-  //       projectManagement: {multiplier: 10, value: this.props.coreDevTime * .1},
-  //       generalBuffer: {multiplier: 5, value: this.state.nonDevTotal * .05},
-  //       coreDevTime: dt });
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = prevState;
+    const {coreDevTime} = this.props;
+    let dt = this.props.coreDevTime
+    if (this.state.coreDevTime !== dt ) {
+      this.setState({
+        design: {multiplier: design.multiplier, value: coreDevTime * design.multiplier},
+        qaTesting: {multiplier: qaTesting.multiplier, value: coreDevTime * qaTesting.multiplier},
+        deployment: {multiplier: deployment.multiplier, value: coreDevTime * deployment.multiplier},
+        postDeploymentDev: {multiplier: postDeploymentDev.multiplier, value: coreDevTime* postDeploymentDev.multiplier},
+        projectManagement: {multiplier: projectManagement.multiplier, value: coreDevTime* projectManagement.multiplier},
+        coreDevTime: dt,
+      });
+      this.updateNonDevTotal();
+    };
+  };
 
-
+  updateNonDevTotal = () => {
+    const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
+    return (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)
+  };
 
   render() {
     return(
@@ -129,36 +126,15 @@ class NonDevAssumptions extends React.Component {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <Divider style={{margin: '0px 30px 0px 30px'}}/>
-        <div style={{width: '100%', textAlign: 'center'}}>
-          <h2>Non Dev Assumptions Total Days: {this.state.nonDevTotal}</h2>
-        </div>
       {(this.state.nonDevTotal > 0) && 
       <GeneralBufferSlider 
-        nonDevTotal={this.state.nonDevTotal}
+        nonDevTotal={this.updateNonDevTotal}
         coreDevTime={this.props.coreDevTime}
       />
       }
-      {/* <Grid columns='one' stackable divided relaxed style={{padding: '20px'}}>
-        <Grid.Row>
-          <Grid.Column>
-          <SliderInfo>
-            <h4>General Buffer Time</h4>
-            <h4>Days: {this.state.generalBuffer.value.toFixed(1)}</h4>
-          </SliderInfo>
-          <SliderBar 
-            name='generalBuffer'
-            defaultValue={this.state.generalBuffer.multiplier}
-            coreDevTime={this.props.coreDevTime}
-            handleChange={this.handleGeneralBuffer}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid> */}
-      
     </div>
-  )
-}
+    );
+  };
 };
 
 const SliderInfo = styled.div`
