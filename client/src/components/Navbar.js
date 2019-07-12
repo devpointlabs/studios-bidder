@@ -22,16 +22,22 @@ const Navbar = () => (
       </Link>
     </Menu.Menu>
     <Menu.Menu position="right">
-      <Link to="/Login">
+    <Link to="/History">
       <Menu.Item>
         <br/>
-        <Header align="center" as={NavRight}> Login </Header>
+        <Header align="center" as={NavRight}> History</Header>
       </Menu.Item>
     </Link>
     <Link to="/Admin">
       <Menu.Item>
         <br/>
         <Header align="center" as={NavRight}> Admin</Header>
+      </Menu.Item>
+    </Link>
+      <Link to="/Login">
+      <Menu.Item>
+        <br/>
+        <Header align="center" as={NavRight}> Login </Header>
       </Menu.Item>
     </Link>
     </Menu.Menu>

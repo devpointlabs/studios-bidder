@@ -87,7 +87,7 @@ const MainDisplay = () => {
     <Segment.Group Vertical as={Colors} colored="white">
       {/* <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"></link> */}
       {/* <style>@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');</style> */}
-      <Navbar/>
+      {/* <Navbar/> */}
       <Header align="center" as={MainTitle} colored="dark-grey" fSize="large">
         Estimate Your App
       </Header>
