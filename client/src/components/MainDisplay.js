@@ -16,22 +16,24 @@ import {MathContext,} from '../providers/MathProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('a');
+  const [email, setEmail] = useState('a@a');
   // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
+  const [nonDevAssumptions, setNonDevAssumptions] = useState([])
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
-  
+
       // useEffect( () => {
   //   axios.get(`/api/platforms`)
   //   .then(res=>setPlatforms(res.data))
   // });
 
   const handleSubmit = () => {
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer} = nonDevAssumptions
     selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
-    const estimate = {customer_name: name, customer_email: email};
+    const estimate = {customer_name: name, customer_email: email, design: design, qaTesting: qaTesting, deployment: deployment, postDeploymentDev: postDeploymentDev, projectManagement: projectManagement, generalBuffer: generalBuffer};
     axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: selectedFeatures}})
       .then( res => {
         setEmail('')
@@ -45,6 +47,10 @@ const MainDisplay = () => {
       .catch(error => console.log(error));
       
   };
+
+  const getNonDevAssumptionsData = (data) => {
+    setNonDevAssumptions(data)
+  }
 
   const handleWeb = () => {
     setFocus('web');
@@ -167,7 +173,7 @@ const MainDisplay = () => {
           <OSMath OS='android'/>
         </Segment>
       </Segment.Group>
-      <TotalMath />
+      <TotalMath getNonDevAssumptionsData={getNonDevAssumptionsData}/>
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
           client's name and email to save estimate

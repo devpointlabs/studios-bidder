@@ -17,6 +17,10 @@ const GeneralBufferSlider = (props) => {
     setNonDevTotal(props.nonDevTotal());
     setTotal(subTotal + gBV);
   },[props.nonDevTotal(), props.coreDevTime]);
+  
+  useEffect( () => {
+    props.getGeneralBufferData(generalBufferMultiplier)
+  },[generalBufferMultiplier])
 
 
   const handleChange = (nonDevTime, multiplier, name) => {
