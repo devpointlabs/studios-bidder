@@ -116,6 +116,8 @@ const MainDisplay = () => {
 
 
   return(
+    <>
+    <Navbar />
     <Segment.Group Vertical as={Colors} colored="white">
       {/* <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"></link> */}
       {/* <style>@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');</style> */}
@@ -243,6 +245,7 @@ const MainDisplay = () => {
         </FormBorder>
       </Segment>
     </Segment.Group>
+    </>
   )
 };
 

@@ -21,19 +21,19 @@ export class FeatureProvider extends React.Component {
     const {allFeatures, iosFeatures, webFeatures, androidFeatures} = this.state;
     this.setState({allFeatures: [...features]});
     }
-  }
+  // }
 
-  // componenet did update/ comparison if this.state.features /= features then go through and do map
-  splitFeatures = () => {
-    allFeatures.map( f => { 
-      // var platform = f.platform_id
-      if (f.platform_id === 1) {
-        this.setState({iosFeatures: [...iosFeatures, f]})};
-      if (f.platform_id === 2) {
-        this.setState({androidFeatures: [...androidFeatures, f]})};
-      if (f.platform_id === 3) {
-        this.setState({webFeatures: [...webFeatures, f]})};
-  }
+  // // componenet did update/ comparison if this.state.features /= features then go through and do map
+  // splitFeatures = () => {
+  //   allFeatures.map( f => { 
+  //     // var platform = f.platform_id
+  //     if (f.platform_id === 1) {
+  //       this.setState({iosFeatures: [...iosFeatures, f]})};
+  //     if (f.platform_id === 2) {
+  //       this.setState({androidFeatures: [...androidFeatures, f]})};
+  //     if (f.platform_id === 3) {
+  //       this.setState({webFeatures: [...webFeatures, f]})};
+  // }
 
 
   handleCategories = (categories) => {

@@ -16,7 +16,6 @@ import styled from "styled-components";
 
 const App = () => (
   <>
-  <Navbar />
   <AppContainer>
     <MidContainer>
         <Switch>
