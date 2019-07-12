@@ -48,7 +48,7 @@ const EstimateHistory = () => {
   }, [])
 
   const estimate = (id, name, email, created) => (
-    <Table.Row>
+    <Table.Row key={id}>
       <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
       <Table.Cell textAlign='center'>{name}</Table.Cell>
       <Table.Cell textAlign='center'>{email}</Table.Cell>
@@ -84,7 +84,7 @@ const EstimateHistory = () => {
           </Table.Header>
           <Table.Body>
             {
-              estimates.map((e) => estimate(e.id, e.customer_name, e.customer_email, e.created_at))
+              estimates.map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.created_at))
             }
           </Table.Body>
         </Table>
