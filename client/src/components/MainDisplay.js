@@ -24,12 +24,11 @@ const MainDisplay = () => {
   // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
+  const [nonDevAssumptions, setNonDevAssumptions] = useState([])
   // const [modalClose, setModalClose] = useState(true);
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
   const { handleFeatures, handleCategories } = useContext(FeatureContext);
-
-  // close = () => useState({ modalClose: true })
 
       // useEffect( () => {
   //   axios.get(`/api/platforms`)
@@ -48,8 +47,9 @@ const MainDisplay = () => {
   },[]);
 
   const handleSubmit = () => {
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer} = nonDevAssumptions
     selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
-    const estimate = {customer_name: name, customer_email: email};
+    const estimate = {customer_name: name, customer_email: email, design: design, qaTesting: qaTesting, deployment: deployment, postDeploymentDev: postDeploymentDev, projectManagement: projectManagement, generalBuffer: generalBuffer};
     axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: selectedFeatures}})
       .then( res => {
         // setEmail('')
@@ -74,6 +74,9 @@ const MainDisplay = () => {
   //       resetMath()
   //     }
       
+  const getNonDevAssumptionsData = (data) => {
+    setNonDevAssumptions(data)
+  }
 
   const handleWeb = () => {
     setFocus('web');
@@ -116,7 +119,7 @@ const MainDisplay = () => {
     <Segment.Group Vertical as={Colors} colored="white">
       {/* <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"></link> */}
       {/* <style>@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');</style> */}
-      <Navbar/>
+      {/* <Navbar/> */}
       <Header align="center" as={MainTitle} colored="dark-grey" fSize="large">
         Estimate Your App
       </Header>
@@ -196,7 +199,7 @@ const MainDisplay = () => {
           <OSMath OS='android'/>
         </Segment>
       </Segment.Group>
-      <TotalMath />
+      <TotalMath getNonDevAssumptionsData={getNonDevAssumptionsData}/>
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
           client's name and email to save estimate

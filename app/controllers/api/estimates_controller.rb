@@ -1,5 +1,9 @@
 class Api::EstimatesController < ApplicationController
 
+  def index
+    render json: Estimate.all
+  end
+
   def create
     estimate = Estimate.new(estimates_params)
     if estimate.save
@@ -13,6 +17,6 @@ class Api::EstimatesController < ApplicationController
   private
 
     def estimates_params
-      params.require(:estimate).permit(:customer_name, :customer_email)
+      params.require(:estimate).permit(:customer_name, :customer_email, :design, :qaTesting, :deployment, :postDeploymentDev, :projectManagement, :generalBuffer)
     end
 end

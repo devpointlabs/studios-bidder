@@ -2,6 +2,7 @@ import React from 'react';
 import MainDisplay from './components/MainDisplay';
 import WebDisplay from './components/WebDisplay';
 import AdminDisplay from './components/AdminDisplay';
+import EstimateHistory from './components/EstimateHistory';
 import iOSDisplay from './components/iOSDisplay';
 import AndroidDisplay from './components/AndroidDisplay';
 import SummaryPage from './components/SummaryPage';
@@ -14,10 +15,13 @@ import styled from "styled-components";
 
 
 const App = () => (
+  <>
+  <Navbar />
   <AppContainer>
     <MidContainer>
         <Switch>
           <Route exact path ='/' component={MainDisplay} />
+          <Route exact path ='/History' component={EstimateHistory} />
           <Route exact path ='/Admin' component={AdminDisplay} />
           <Route exact path ='/Android' component={AndroidDisplay} />
           <Route exact path ='/Summary' component={SummaryPage} />
@@ -29,8 +33,8 @@ const App = () => (
           <Route component={NoMatch} />
         </Switch>
       </MidContainer>
-
   </AppContainer>
+  </>
 );
 
 const AppContainer = styled.div`
