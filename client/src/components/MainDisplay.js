@@ -1,49 +1,79 @@
-import React,{useState, useContext,} from 'react';
+import React,{useState, useContext, useEffect} from 'react';
 import Navbar from './Navbar';
 import OSMath from './OSMath';
 import TotalMath from './TotalMath';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
+import SummaryPage from './SummaryPage';
+import SummaryModal from './SummaryModal';
 import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
-import {Icon, Segment, Header, Form} from 'semantic-ui-react';
+import {Icon, Segment, Header, Form, Modal, Button} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
 import {MathContext,} from '../providers/MathProvider';
-
+import { FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [estimate_id, setEstimate_id] = useState('');
   // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
+  // const [modalClose, setModalClose] = useState(true);
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
-  
+  const { handleFeatures, handleCategories } = useContext(FeatureContext);
+
+  // close = () => useState({ modalClose: true })
+
       // useEffect( () => {
   //   axios.get(`/api/platforms`)
   //   .then(res=>setPlatforms(res.data))
   // });
+
+    useEffect( () => {
+    // axios.get(`/api/platforms`)
+    //   .then(res=>setPlatforms(res.data))
+  
+    axios.get(`/api/all_categories`)
+      .then( res  => handleCategories(res.data));
+
+    axios.get(`/api/all_features`)
+      .then(res => handleFeatures(res.data))
+  },[]);
 
   const handleSubmit = () => {
     selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
     const estimate = {customer_name: name, customer_email: email};
     axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: selectedFeatures}})
       .then( res => {
-        setEmail('')
-        setName('')
-        setSelectedFeatures([])
-        setRadioButtons([])
-        resetMath()
+        // setEmail('')
+        // setName('')
+        // setSelectedFeatures([])
+        // setRadioButtons([])
+        // resetMath()
+        // console.log(res.data)
+        setEstimate_id(res.data)
+        // console.log(res.data)
+        // debugger
         }
       )
       .catch(error => console.log(error));
-      
   };
+
+  // const handleModal = () => {
+  //       setEmail('')
+  //       setName('')
+  //       setSelectedFeatures([])
+  //       setRadioButtons([])
+  //       resetMath()
+  //     }
+      
 
   const handleWeb = () => {
     setFocus('web');
@@ -97,7 +127,7 @@ const MainDisplay = () => {
         All estimates are approximate but should give you a rough idea of what it will take to build your app.
       </Header>
       <Segment.Group horizontal as={NoLine}>
-        <Segment onClick={handleWeb} style={{cursor:'pointer',borderColor: 'transparent'}} as={Colors} colored="light">
+        <Segment onClick={handleWeb} style={{cursor:'pointer'}} as={Colors} colored="light">
             <br/>
             <Header align="center" as={WhiteText} fSize="medium">
               <Icon name="computer"/>  Web App
@@ -131,7 +161,7 @@ const MainDisplay = () => {
       </Segment.Group>
       {displayForm()}
       <Segment.Group horizontal as={NoLine}>
-        <Segment onClick={handleWeb} style={{cursor:'pointer',borderColor: 'transparent'}} as={Colors} colored="light">
+        <Segment onClick={handleWeb} style={{cursor:'pointer'}} as={Colors} colored="light">
             <br/>
             <Header align="center" as={WhiteText} fSize="medium">
               <Icon name="computer"/>  Add a Web App?
@@ -185,7 +215,27 @@ const MainDisplay = () => {
               label='Email'
               value={email}
             />
-            <Form.Button onClick={handleSubmit} basic>Submit for Quote</Form.Button>
+            <Modal  
+                    // closeIcon
+                    // closeOnDimmerClick={false} 
+                    // closeOnEscape={false} 
+                    // closeOnDocumentClick={false}
+                    trigger={
+                    <Form.Button onClick={handleSubmit} basic>Submit for Estimate Summary</Form.Button>
+                    }>
+              <SummaryPage eID={estimate_id} submit={handleSubmit} name={name} email={email}/>
+              {/* <Modal.Actions>
+                <Button>
+                  <Icon name='remove' /> Go back and edit these choices
+                </Button>
+                <Button
+                  onClick={handleModal}
+                  labelPosition='right'
+                  icon='checkmark'
+                  content='Save and close this estimate'
+              />
+              </Modal.Actions> */}
+            </Modal>
           </Form>
         </FormBorder>
       </Segment>

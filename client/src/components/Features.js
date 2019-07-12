@@ -2,32 +2,21 @@ import React, {useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import {Form, Grid, Container, Header,} from 'semantic-ui-react';
 import { MathContext} from '../providers/MathProvider';
+import { FeatureContext} from '../providers/FeatureProvider';
 import FeatureCard from './FeatureCard';
 import DarkText from "../styles/DarkText";
 import styled from "styled-components"
 
 const Features = (props) => {
   // const [platforms, setPlatforms] = useState([])
-  const [categories, setCategories] = useState([]);
-  const [features, setFeatures] = useState([]);
+  // const [categories, setCategories] = useState([]);
+  // const [features, setFeatures] = useState([]);
   // const [radioButtons, setRadioButtons] = useState([])
 
   const { handleSetDays, handleExclusiveDaysByFeature} = useContext(MathContext);
-
-  useEffect( () => {
-    // axios.get(`/api/platforms`)
-    //   .then(res=>setPlatforms(res.data))
-    var os = '';
-    if (props.OS === 'web') os = 3;
-    else if (props.OS === 'ios') os = 1;
-    else if (props.OS === 'android') os = 2;
-
-    axios.get(`/api/platforms/${os}/categories`)
-      .then( res  => setCategories(res.data));
-
-    axios.get(`/api/features_by_platform`, {params: {platform_id: os}})
-      .then(res => setFeatures(res.data));
-  },[props.OS]);
+  const { allCategories, iosCategories, webCategories, androidCategories,
+          allFeatures, iosFeatures, webFeatures, androidFeatures,
+          handleFeatures, handleCategories, handleSelected } = useContext(FeatureContext);
   
   
   const handleCheckbox = (catID, value) => {
@@ -37,7 +26,7 @@ const Features = (props) => {
     if (selectedFeatures.includes(value) === false) {setSelectedFeatures([...selectedFeatures, value])
     }else {setSelectedFeatures(selectedFeatures.filter(f => f !== value));
     };
-    handleSetDays(OS, ...features.filter( f => {if (f.id === parseInt(value)) return f; else return null}), false);
+    handleSetDays(OS, ...allFeatures.filter( f => {if (f.id === parseInt(value)) return f; else return null}), false);
   };
   
   const handleRadio = (catID, fID) => {
@@ -45,7 +34,7 @@ const Features = (props) => {
     if(radioButtons.map( rb => (rb.category)).includes(catID) === false) {setRadioButtons([...radioButtons, {category: catID, feature: fID}]);
     }else {setRadioButtons([...radioButtons.filter( rb => rb.category !== catID ),{category: catID, feature: fID}]);
     };
-    handleSetDays(OS, ...features.filter( f => {if (f.id === parseInt(fID)) return f; else return null}),true);
+    handleSetDays(OS, ...allFeatures.filter( f => {if (f.id === parseInt(fID)) return f; else return null}),true);
 
     if(radioButtons.map( rb => (rb.feature)).includes(fID) === true) {
       setRadioButtons([...radioButtons.filter( rb => rb.feature !== fID)])
@@ -61,7 +50,7 @@ const Features = (props) => {
   };
 
   const exclusiveRendering = (catID, is_exclusive) => {
-    const correctF = features.filter( f => catID === f.category_id);
+    const correctF = allFeatures.filter( f => catID === f.category_id);
     
     if (is_exclusive === true) {
       return (
@@ -107,7 +96,7 @@ const Features = (props) => {
         <br/>
         <br/>
         <Form>
-          {categories.map(c => 
+          {allCategories.map(c => 
           <>
             <Container textAlign="center" key={c.id} id={c.id}>
               <CategoryContainer>
