@@ -61,7 +61,7 @@ GEM
       devise (> 3.5.2, < 4.6)
       rails (>= 4.2.0, < 6)
     erubi (1.8.0)
-    faker (1.9.3)
+    faker (1.9.6)
       i18n (>= 0.7)
     ffi (1.11.1)
     globalid (0.4.2)
@@ -172,7 +172,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.6.1p33
 
 BUNDLED WITH
    2.0.2
