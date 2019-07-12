@@ -1,5 +1,9 @@
 class Api::EstimatesController < ApplicationController
 
+  def index
+    render json: Estimate.all
+  end
+
   def create
     estimate = Estimate.new(estimates_params)
     if estimate.save

@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import MainDisplay from './components/MainDisplay';
 import WebDisplay from './components/WebDisplay';
 import AdminDisplay from './components/AdminDisplay';
+import EstimateHistory from './components/EstimateHistory';
 import iOSDisplay from './components/iOSDisplay';
 import AndroidDisplay from './components/AndroidDisplay';
 import Features from './components/Features';
@@ -15,10 +16,13 @@ import styled, { keyframes } from "styled-components";
 
 
 const App = () => (
+  <>
+  <Navbar />
   <AppContainer>
     <MidContainer>
         <Switch>
           <Route exact path ='/' component={MainDisplay} />
+          <Route exact path ='/History' component={EstimateHistory} />
           <Route exact path ='/Admin' component={AdminDisplay} />
           <Route exact path ='/Android' component={AndroidDisplay} />
           <Route exact path ='/iOS' component={iOSDisplay} />
@@ -29,8 +33,8 @@ const App = () => (
           <Route component={NoMatch} />
         </Switch>
       </MidContainer>
-
   </AppContainer>
+  </>
 );
 
 const AppContainer = styled.div`
