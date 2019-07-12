@@ -13,7 +13,6 @@ class NonDevAssumptions extends React.Component {
     projectManagement: {multiplier: .10, value: this.props.coreDevTime * .1},
     nonDevTotal: 0,
     coreDevTime: this.props.coreDevTime,
-    devTimeUpdated: false,
   };
 
 
