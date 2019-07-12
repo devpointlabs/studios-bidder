@@ -39,6 +39,7 @@ const MainDisplay = () => {
         setSelectedFeatures([])
         setRadioButtons([])
         resetMath()
+        console.log(res)
         }
       )
       .catch(error => console.log(error));
