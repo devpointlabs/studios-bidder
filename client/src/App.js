@@ -17,7 +17,6 @@ import styled, { keyframes } from "styled-components";
 
 const App = () => (
   <>
-  <Navbar />
   <AppContainer>
     <MidContainer>
         <Switch>

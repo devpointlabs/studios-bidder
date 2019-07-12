@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import _ from 'lodash'
 import axios from 'axios'
 import { Table, Form, Header, Segment, Search, Label } from 'semantic-ui-react'
+import Navbar from './Navbar'
 
 const EstimateHistory = () => {
   const [estimates, setEstimates] = useState([])
@@ -68,6 +69,7 @@ const EstimateHistory = () => {
   )
   return (
     <>
+      <Navbar />
       <Segment style={{color: 'black'}}>
         Search: {searchForm}
         <Table striped>
