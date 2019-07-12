@@ -11,11 +11,12 @@ class NonDevAssumptions extends React.Component {
     deployment: {multiplier: .03, value: this.props.coreDevTime * .03},
     postDeploymentDev: {multiplier: .15, value: this.props.coreDevTime * .15},
     projectManagement: {multiplier: .10, value: this.props.coreDevTime * .1},
+    generalBuffer: .05,
     nonDevTotal: 0,
     coreDevTime: this.props.coreDevTime,
   };
-
-
+  
+  
   handleChange = (nonDevTime, multiplier, name) => {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = this.state   
     this.setState({[name]: {multiplier: (multiplier / 100), value: nonDevTime}})
@@ -26,11 +27,11 @@ class NonDevAssumptions extends React.Component {
     const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
     this.setState({nonDevTotal: (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)});
   };
-
+  
   componentDidUpdate(prevProps, prevState) {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = prevState;
     const {coreDevTime} = this.props;
-    let dt = this.props.coreDevTime
+    let dt = this.props.coreDevTime;
     if (this.state.coreDevTime !== dt ) {
       this.setState({
         design: {multiplier: design.multiplier, value: coreDevTime * design.multiplier},
@@ -42,13 +43,21 @@ class NonDevAssumptions extends React.Component {
       });
       this.updateNonDevTotal();
     };
+    if (this.state.nonDevTotal !== prevState.nonDevTotal){
+    const dataToSendToMainDisplay = {design: this.state.design.multiplier, qaTesting: this.state.qaTesting.multiplier, deployment: this.state.deployment.multiplier, postDeploymentDev: this.state.postDeploymentDev.multiplier, projectManagement: this.state.projectManagement.multiplier, generalBuffer: this.state.generalBuffer};
+    this.props.getNonDevAssumptionsData(dataToSendToMainDisplay);
+    }
   };
-
+  
   updateNonDevTotal = () => {
     const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
     return (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)
   };
 
+  getGeneralBufferData = (data) => {
+    this.setState({generalBuffer: data})
+  }
+  
   render() {
     return(
       <div>
@@ -129,6 +138,7 @@ class NonDevAssumptions extends React.Component {
       <GeneralBufferSlider 
         nonDevTotal={this.updateNonDevTotal}
         coreDevTime={this.props.coreDevTime}
+        getGeneralBufferData={this.getGeneralBufferData}
       />
       }
     </div>

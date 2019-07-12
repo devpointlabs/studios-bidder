@@ -22,6 +22,7 @@ class TotalMath extends React.Component {
         {this.coreDevTime() > 1 &&
         <NonDevAssumptions 
           coreDevTime={this.coreDevTime()}
+          getNonDevAssumptionsData={this.props.getNonDevAssumptionsData}
         />
         }
         <Header align="center" as={MainTitle} colored="light-grey"  fSize="micro">

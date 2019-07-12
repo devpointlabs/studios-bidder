@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_07_12_065651) do
     t.integer "designer_day_rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "design"
+    t.float "design"
     t.float "qaTesting"
     t.float "deployment"
     t.float "postDeploymentDev"

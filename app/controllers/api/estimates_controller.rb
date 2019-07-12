@@ -13,6 +13,6 @@ class Api::EstimatesController < ApplicationController
   private
 
     def estimates_params
-      params.require(:estimate).permit(:customer_name, :customer_email)
+      params.require(:estimate).permit(:customer_name, :customer_email, :design, :qaTesting, :deployment, :postDeploymentDev, :projectManagement, :generalBuffer)
     end
 end
