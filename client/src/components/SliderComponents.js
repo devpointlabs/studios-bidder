@@ -206,7 +206,7 @@ export class Handle extends Component {
             border: 0,
             borderRadius: '50%',
             boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.2)',
-            backgroundColor: disabled ? '#666' : '#3F2773',
+            backgroundColor: disabled ? '#666' : '#5E4296',
           }}
         />
       </Fragment>
@@ -241,7 +241,7 @@ export function Track({ source, target, getTrackProps, disabled }) {
         transform: 'translate(0%, -50%)',
         height: 14,
         zIndex: 1,
-        backgroundColor: disabled ? '#999' : '#3F2773',
+        backgroundColor: disabled ? '#999' : '#5E4296',
         borderRadius: 7,
         cursor: 'pointer',
         left: `${source.percent}%`,

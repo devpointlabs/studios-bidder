@@ -15,9 +15,9 @@ class TotalMath extends React.Component {
   render() {
     return(
       <>
-        <Header align="center" as={DarkText} fSize="medium">Subtotal Days: {this.coreDevTime()}</Header>
+        <Header align="center" as={DarkText} fSize="medium">Developer Days: {this.coreDevTime()}</Header>
         <Header align="center" as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
-          Combined price of Web, iOs, and Android.
+          Combined developer days for web, iOS and android.
         </Header>
         {this.coreDevTime() > 1 &&
         <NonDevAssumptions 

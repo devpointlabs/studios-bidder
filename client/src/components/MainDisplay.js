@@ -16,8 +16,8 @@ import {MathContext,} from '../providers/MathProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
-  const [name, setName] = useState('a');
-  const [email, setEmail] = useState('a@a');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
