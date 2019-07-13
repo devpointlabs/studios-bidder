@@ -1,7 +1,7 @@
 import React from 'react';
 // import {Grid, } from 'semantic-ui-react';
 import SliderBar from './SliderBar';
-import {Table, Row, Cell, SliderCell} from '../styles/SliderTable';
+import {Table, Row, Cell, SliderCell} from '../../styles/SliderTable';
 import GeneralBufferSlider from './GeneralBufferSlider';
 
 class NonDevAssumptions extends React.Component {

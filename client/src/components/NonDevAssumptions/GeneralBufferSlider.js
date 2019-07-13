@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {Header, Divider} from 'semantic-ui-react';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
-import {Table, Row, Cell, SliderCell} from '../styles/SliderTable';
-import DarkText from '../styles/DarkText'
+import {Table, Row, Cell, SliderCell} from '../../styles/SliderTable';
+import DarkText from '../../styles/DarkText'
 
 
 
