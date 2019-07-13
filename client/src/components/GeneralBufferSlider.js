@@ -37,7 +37,7 @@ const GeneralBufferSlider = (props) => {
     return(
     <>
       <SubTotal>
-        <Header as={DarkText} >Non Dev Assumptions Total Days: {nonDevTotal}</Header >
+        <Header as={DarkText}style={{fontSize: '2.2em'}} >Non Dev Assumptions Total Days: {nonDevTotal}</Header >
       </SubTotal>
       <Divider />
       <div style={{backgroundColor: '#CCCACF'}}>

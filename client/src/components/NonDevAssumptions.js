@@ -105,7 +105,7 @@ class NonDevAssumptions extends React.Component {
           </Cell>
           </Row>
           <Row>
-            <Cell position='left'><h3><span>Post </span><br /><span>Deployment</span><br/><span> Dev</span></h3></Cell>
+            <Cell position='left'><h3>Post Deployment Dev</h3></Cell>
             <SliderCell> 
               <SliderBar 
                 name='postDeploymentDev'
@@ -119,7 +119,7 @@ class NonDevAssumptions extends React.Component {
           </Cell>
           </Row>
           <Row>
-            <Cell position='left'><h3><span>Project</span><br /><span>Management</span></h3></Cell>
+            <Cell position='left'><h3>Project Management</h3></Cell>
             <SliderCell> 
               <SliderBar 
                 name='projectManagement'
@@ -134,13 +134,13 @@ class NonDevAssumptions extends React.Component {
           </Row>
           </tbody>
         </Table>
-        {(this.state.nonDevTotal > 0) && 
+        {/* {(this.state.nonDevTotal > 0) &&  */}
         <GeneralBufferSlider 
           nonDevTotal={this.updateNonDevTotal()}
           coreDevTime={this.props.coreDevTime}
           getGeneralBufferData={this.getGeneralBufferData}
         />
-        }
+        {/* } */}
       </>
     );
   };

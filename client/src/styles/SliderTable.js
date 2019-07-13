@@ -17,7 +17,7 @@ export const Table = styled.table`
 `;
 export const  Row = styled.tr`
   width: 75%;
-  height: 10vh;
+  height: 7vh;
 `;
 export const Cell = styled.td`
   text-align: ${props => position(props.position)};
