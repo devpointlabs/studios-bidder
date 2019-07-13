@@ -23,6 +23,7 @@ const AdminDisplay = (props) => {
   
   return(
     <>
+      <Navbar />
       {platforms.map((platform)=> <Platform key={platform.id} name={platform.name} id={platform.id}  history={props.history}/>)}
     </>
   )
