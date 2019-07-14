@@ -23,7 +23,7 @@ const MainDisplay = () => {
   const [radioButtons, setRadioButtons] = useState([]);
   const [nonDevAssumptions, setNonDevAssumptions] = useState([])
 
-  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
+  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays,} = useContext(MathContext);
 
       // useEffect( () => {
   //   axios.get(`/api/platforms`)
@@ -176,7 +176,9 @@ const MainDisplay = () => {
           <OSMath OS='android'/>
         </Segment>
       </Segment.Group>
-      <TotalMath getNonDevAssumptionsData={getNonDevAssumptionsData}/>
+      <TotalMath 
+        getNonDevAssumptionsData={getNonDevAssumptionsData}
+      />
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
           client's name and email to save estimate

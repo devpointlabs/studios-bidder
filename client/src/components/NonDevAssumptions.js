@@ -1,12 +1,13 @@
 import React from 'react';
 import {Grid, } from 'semantic-ui-react';
 import SliderBar from './SliderBar';
+import DesignSliderBar from './DesignSliderBar';
 import styled from 'styled-components';
 import GeneralBufferSlider from './GeneralBufferSlider';
 
 class NonDevAssumptions extends React.Component {
   state = {
-    design: {multiplier: .10, value: this.props.coreDevTime * .1},
+    design: {multiplier: .10, value: this.props.featuresAffectedByDesign * .1},
     qaTesting: {multiplier: .10, value: this.props.coreDevTime * .1},
     deployment: {multiplier: .03, value: this.props.coreDevTime * .03},
     postDeploymentDev: {multiplier: .15, value: this.props.coreDevTime * .15},
@@ -30,16 +31,15 @@ class NonDevAssumptions extends React.Component {
   
   componentDidUpdate(prevProps, prevState) {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = prevState;
-    const {coreDevTime} = this.props;
-    let dt = this.props.coreDevTime;
-    if (this.state.coreDevTime !== dt ) {
+    const {coreDevTime, featuresAffectedByDesign} = this.props;
+    if (this.state.coreDevTime !== coreDevTime || prevProps.featuresAffectedByDesign !== featuresAffectedByDesign ) {
       this.setState({
-        design: {multiplier: design.multiplier, value: coreDevTime * design.multiplier},
+        design: {multiplier: design.multiplier, value: featuresAffectedByDesign.reduce((acc, cur) => acc + (cur * design.multiplier))},
         qaTesting: {multiplier: qaTesting.multiplier, value: coreDevTime * qaTesting.multiplier},
         deployment: {multiplier: deployment.multiplier, value: coreDevTime * deployment.multiplier},
         postDeploymentDev: {multiplier: postDeploymentDev.multiplier, value: coreDevTime* postDeploymentDev.multiplier},
         projectManagement: {multiplier: projectManagement.multiplier, value: coreDevTime* projectManagement.multiplier},
-        coreDevTime: dt,
+        coreDevTime: coreDevTime,
       });
       this.updateNonDevTotal();
     };
@@ -68,13 +68,12 @@ class NonDevAssumptions extends React.Component {
               <h4>Design</h4>
               <h4>Days: {this.state.design.value.toFixed(1)}</h4>
             </SliderInfo>
-            <SliderBar 
+            <DesignSliderBar 
               name='design'
               defaultValue={this.state.design.multiplier}
-              coreDevTime={this.props.coreDevTime}
+              featuresAffectedByDesign={this.props.featuresAffectedByDesign}
               handleChange={this.handleChange}
-              disabled={true}
-              />
+            />
           </Grid.Column>
             <br />
           <Grid.Column>
@@ -122,8 +121,8 @@ class NonDevAssumptions extends React.Component {
         <Grid.Row>
           <Grid.Column>
             <SliderInfo>
-              <h4>Design</h4>
-              <h4>Days: {this.state.design.value.toFixed(1)}</h4>
+              <h4>Project Management</h4>
+              <h4>Days: {this.state.projectManagement.value.toFixed(1)}</h4>
             </SliderInfo>
             <SliderBar 
               name='projectManagement'
@@ -156,7 +155,7 @@ const SliderInfo = styled.div`
 export default NonDevAssumptions;
 
 // *2. Non-Dev Assumptions -* Admin control of assumptions for non-dev related tasks, which are added to final quote, and are calculated from core dev time
-//   1. Design: 10% (of core dev time)
+//   1. Project Management: 10% (of core dev time)
 //   1. QA Testing: 10%
 //   2. Deployment: 3%
 //   3. Post-Deployment Development & Bug Fixes: 15%

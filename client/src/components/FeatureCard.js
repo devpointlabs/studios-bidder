@@ -1,12 +1,16 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext } from 'react';
 import {Card} from 'semantic-ui-react';
 import styled from "styled-components"
+import { MathContext} from '../providers/MathProvider';
 
 const FeatureCard = ({onClickFunction, isSelected, f}) => {
   const [isSelectedState, setIsSelectedState] = useState(false);
 
-  const handleSubmit = (catID, fID) => {
-    onClickFunction(catID, fID);
+  const {handleAffectedByDesign} = useContext(MathContext);
+
+  const handleSubmit = (catID, f,) => {
+    f.affected_by_design && handleAffectedByDesign(f)
+    onClickFunction(catID, f.id);
     setIsSelectedState(!isSelectedState)
   }
 
@@ -16,7 +20,7 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
 
   return (
     <Card raised style={{cursor:'pointer'}} 
-          onClick={() => handleSubmit(f.category_id, f.id)} 
+          onClick={() => handleSubmit(f.category_id, f,)} 
           as={isSelectedState ? CardSelectBorder : CardUnselectBorder} 
           key={f.id} value={f.id}>
       <Card.Content content={f.id} className={f.id} value={f.id}>

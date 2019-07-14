@@ -6,7 +6,6 @@ import DarkText from '../styles/DarkText'
 import MainTitle from "../styles/MainTitle";
 
 class TotalMath extends React.Component {
-
   coreDevTime = () => {
     const {math:{webPrice, iOSPrice, androidPrice}} = this.props
     return(webPrice + iOSPrice + androidPrice)
@@ -23,6 +22,7 @@ class TotalMath extends React.Component {
         <NonDevAssumptions 
           coreDevTime={this.coreDevTime()}
           getNonDevAssumptionsData={this.props.getNonDevAssumptionsData}
+          featuresAffectedByDesign={this.props.math.featuresAffectedByDesign.map(fabd => fabd.base_days)}
         />
         }
         <Header align="center" as={MainTitle} colored="light-grey"  fSize="micro">
