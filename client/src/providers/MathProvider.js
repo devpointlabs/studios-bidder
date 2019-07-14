@@ -10,6 +10,7 @@ export class MathProvider extends React.Component {
     exclusiveiOSDays: [],
     androidDays: [], 
     exclusiveAndroidDays: [],
+    featuresAffectedByDesign: [],
     iOSPrice: 0, 
     webPrice: 0, 
     androidPrice: 0,
@@ -18,6 +19,19 @@ export class MathProvider extends React.Component {
 
   resetMath = () => {
     this.setState({webDays: [], iOSDays: [], androidDays: [], iOSPrice: 0, webPrice: 0, androidPrice: 0, exclusiveAndroidDays: [], exclusiveWebDays: [], exclusiveiOSDays: []});
+  };
+
+  handleAffectedByDesign = (feature) => {
+    const {featuresAffectedByDesign} = this.state
+    if (featuresAffectedByDesign.map( abd => abd.id).includes(feature.id) === false) {
+      this.setState({featuresAffectedByDesign: [...featuresAffectedByDesign, feature]});
+    }else 
+      this.setState({featuresAffectedByDesign: [...featuresAffectedByDesign.filter( f => f.id !== feature.id), feature]})
+
+    if (featuresAffectedByDesign.map( abd => abd.category_id).includes(feature.category_id) === false) {
+      this.setState({featuresAffectedByDesign: [...featuresAffectedByDesign, feature]});
+    }else 
+      this.setState({featuresAffectedByDesign: [...featuresAffectedByDesign.filter( d => d.category_id !== feature.category_id), feature]})
   };
 
   handleSetOsPrice = (os) => {
@@ -107,6 +121,7 @@ export class MathProvider extends React.Component {
        handleSetOsPrice: this.handleSetOsPrice,
        handleSetDays: this.handleSetDays,
        handleExclusiveDaysByFeature: this.handleExclusiveDaysByFeature,
+       handleAffectedByDesign: this.handleAffectedByDesign,
        resetMath: this.resetMath,
       }}>
         {this.props.children}
