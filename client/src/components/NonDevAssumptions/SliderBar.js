@@ -23,7 +23,7 @@ const SliderBar = (props) => {
   
   const onChange = values => {
     setValues(values)
-    let nonDevTime = values[0]/100 * props.coreDevTime    
+    let nonDevTime = (values[0]/100) * props.coreDevTime  
     props.handleChange(nonDevTime, ...values, props.name)
   }
 

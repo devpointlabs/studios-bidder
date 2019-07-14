@@ -1,5 +1,5 @@
 import React from "react";
-import NonDevAssumptions from './NonDevAssumptions';
+import NonDevAssumptions from './NonDevAssumptions/NonDevAssumptions';
 import { MathConsumer } from "../providers/MathProvider";
 import { Header } from 'semantic-ui-react';
 import DarkText from '../styles/DarkText'
@@ -14,17 +14,19 @@ class TotalMath extends React.Component {
   render() {
     return(
       <>
-        <Header align="center" as={DarkText} fSize="medium">Subtotal Days: {this.coreDevTime()}</Header>
+      <div style={{backgroundColor: '#8168A9'}}>
+        <Header align="center" as={DarkText} fSize="medium">Developer Days: {this.coreDevTime()}*</Header>
         <Header align="center" as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
-          Combined price of Web, iOs, and Android.
+          *Combined developer days for web, iOS and android.
         </Header>
-        {this.coreDevTime() > 1 &&
+      </div>
+        {/* {this.coreDevTime() > 1 && */}
         <NonDevAssumptions 
           coreDevTime={this.coreDevTime()}
           getNonDevAssumptionsData={this.props.getNonDevAssumptionsData}
           featuresAffectedByDesign={this.props.math.featuresAffectedByDesign.map(fabd => fabd.base_days)}
         />
-        }
+        {/* // } */}
         <Header align="center" as={MainTitle} colored="light-grey"  fSize="micro">
         "Please note, all cost estimates are intended to be indicative of development costs and timescales only and are exclusive of all hosting costs, paid services or purchased assets of any kind. All prices are in USD and inclusive of sales tax."
         </Header>

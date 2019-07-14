@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, } from 'semantic-ui-react';
+// import {Grid, } from 'semantic-ui-react';
 import SliderBar from './SliderBar';
 import DesignSliderBar from './DesignSliderBar';
 import styled from 'styled-components';
@@ -60,97 +60,120 @@ class NonDevAssumptions extends React.Component {
   
   render() {
     return(
-      <div>
-        <Grid columns='two' stackable relaxed style={{padding: '20px'}}>
-        <Grid.Row>
-          <Grid.Column centered>
-            <SliderInfo>
-              <h4>Design</h4>
-              <h4>Days: {this.state.design.value.toFixed(1)}</h4>
-            </SliderInfo>
-            <DesignSliderBar 
-              name='design'
-              defaultValue={this.state.design.multiplier}
-              featuresAffectedByDesign={this.props.featuresAffectedByDesign}
-              handleChange={this.handleChange}
-            />
-          </Grid.Column>
-            <br />
-          <Grid.Column>
-            <SliderInfo>
-              <h4>Quality Assurance Testing</h4>
-              <h4>Days: {this.state.qaTesting.value.toFixed(1)}</h4>
-            </SliderInfo>
-            <SliderBar 
-              name='qaTesting'
-              defaultValue={this.state.qaTesting.multiplier}
-              coreDevTime={this.props.coreDevTime}
-              handleChange={this.handleChange}
+      // <div>
+      //   <Grid columns='two' stackable relaxed style={{padding: '20px'}}>
+      //   <Grid.Row>
+      //     <Grid.Column centered>
+      //       <SliderInfo>
+      //         <h4>Design</h4>
+      //         <h4>Days: {this.state.design.value.toFixed(1)}</h4>
+      //       </SliderInfo>
+      //       <DesignSliderBar 
+      //         name='design'
+      //         defaultValue={this.state.design.multiplier}
+      //         featuresAffectedByDesign={this.props.featuresAffectedByDesign}
+      //         handleChange={this.handleChange}
+      //       />
+      //     </Grid.Column>
+      //       <br />
+      //     <Grid.Column>
+      //       <SliderInfo>
+      //         <h4>Quality Assurance Testing</h4>
+      //         <h4>Days: {this.state.qaTesting.value.toFixed(1)}</h4>
+      //       </SliderInfo>
+      //       <SliderBar 
+      //         name='qaTesting'
+      //         defaultValue={this.state.qaTesting.multiplier}
+      //         coreDevTime={this.props.coreDevTime}
+      //         handleChange={this.handleChange}
+      //         />
+      <>
+        <Table>
+          <tbody>
+          <Row>
+            <Cell position='left'><h3>Design</h3></Cell>
+            <SliderCell> 
+              <SliderBar 
+                name='design'
+                defaultValue={this.state.design.multiplier}
+                coreDevTime={this.props.coreDevTime}
+                handleChange={this.handleChange}
               />
-          </Grid.Column>
-            <br />
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <SliderInfo>
-              <h4>Deployment</h4>
-              <h4>Days: {this.state.deployment.value.toFixed(1)}</h4>
-            </SliderInfo>
-            <SliderBar 
-              name='deployment'
-              defaultValue={this.state.deployment.multiplier}
-              coreDevTime={this.props.coreDevTime}
-              handleChange={this.handleChange}
+          </SliderCell>
+          <Cell position='right'>
+              <h3>Days: {this.state.design.value.toFixed(1)}</h3>
+          </Cell>
+          </Row>
+          <Row>
+            <Cell position='left'><h3>QA Testing</h3></Cell>
+            <SliderCell> 
+              <SliderBar 
+                name='qaTesting'
+                defaultValue={this.state.qaTesting.multiplier}
+                coreDevTime={this.props.coreDevTime}
+                handleChange={this.handleChange}
               />
-          </Grid.Column>
-            <br />
-          <Grid.Column>
-            <SliderInfo>
-              <h4>Post Deployment Development</h4>
-              <h4>Days: {this.state.postDeploymentDev.value.toFixed(1)}</h4>
-            </SliderInfo>
-            <SliderBar 
-              name='postDeploymentDev'
-              defaultValue={this.state.postDeploymentDev.multiplier}
-              coreDevTime={this.props.coreDevTime}
-              handleChange={this.handleChange}
+          </SliderCell>
+          <Cell position='right'>
+              <h3>Days: {this.state.qaTesting.value.toFixed(1)}</h3>
+          </Cell>
+          </Row>
+          <Row>
+            <Cell position='left'><h3>Deployment</h3></Cell>
+            <SliderCell> 
+              <SliderBar 
+                name='deployment'
+                defaultValue={this.state.deployment.multiplier}
+                coreDevTime={this.props.coreDevTime}
+                handleChange={this.handleChange}
               />
-          </Grid.Column>
-            <br />
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <SliderInfo>
-              <h4>Project Management</h4>
-              <h4>Days: {this.state.projectManagement.value.toFixed(1)}</h4>
-            </SliderInfo>
-            <SliderBar 
-              name='projectManagement'
-              defaultValue={this.state.projectManagement.multiplier}
-              coreDevTime={this.props.coreDevTime}
-              handleChange={this.handleChange}
+          </SliderCell>
+          <Cell position='right'>
+              <h3>Days: {this.state.deployment.value.toFixed(1)}</h3>
+          </Cell>
+          </Row>
+          <Row>
+            <Cell position='left'><h3>Post Deployment Dev</h3></Cell>
+            <SliderCell> 
+              <SliderBar 
+                name='postDeploymentDev'
+                defaultValue={this.state.postDeploymentDev.multiplier}
+                coreDevTime={this.props.coreDevTime}
+                handleChange={this.handleChange}
               />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-      {(this.state.nonDevTotal > 0) && 
-      <GeneralBufferSlider 
-        nonDevTotal={this.updateNonDevTotal}
-        coreDevTime={this.props.coreDevTime}
-        getGeneralBufferData={this.getGeneralBufferData}
-      />
-      }
-    </div>
+          </SliderCell>
+          <Cell position='right'>
+              <h3>Days: {this.state.postDeploymentDev.value.toFixed(1)}</h3>
+          </Cell>
+          </Row>
+          <Row>
+            <Cell position='left'><h3>Project Management</h3></Cell>
+            <SliderCell> 
+              <SliderBar 
+                name='projectManagement'
+                defaultValue={this.state.projectManagement.multiplier}
+                coreDevTime={this.props.coreDevTime}
+                handleChange={this.handleChange}
+              />
+          </SliderCell>
+          <Cell position='right'>
+              <h3>Days: {this.state.projectManagement.value.toFixed(1)}</h3>
+          </Cell>
+          </Row>
+          </tbody>
+        </Table>
+        {/* {(this.state.nonDevTotal > 0) &&  */}
+        <GeneralBufferSlider 
+          nonDevTotal={this.updateNonDevTotal()}
+          coreDevTime={this.props.coreDevTime}
+          getGeneralBufferData={this.getGeneralBufferData}
+        />
+        {/* } */}
+      </>
     );
   };
 };
 
-const SliderInfo = styled.div`
-  display: flex !important;
-  align-items: baseline !important;
-  justify-content: space-between !important;
-  margin-top: -30px !important;
-`
 
 export default NonDevAssumptions;
 
