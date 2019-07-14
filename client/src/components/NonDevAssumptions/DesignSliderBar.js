@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { Slider, Rail, Handles, Tracks,  } from 'react-compound-slider'
-import { Handle, Track, TooltipRail } from './SliderComponents'
+import {Slider, Rail, Handles, Tracks, } from 'react-compound-slider'
+import { Handle, Track, TooltipRail, } from './SliderComponents'
 
 
 const sliderStyle = {
@@ -23,7 +23,7 @@ const SliderBar = (props) => {
   
   const onChange = values => {
     setValues(values)
-    let nonDevTime = props.featuresAffectedByDesign.map(cdt => cdt * values[0]/100)  
+    let nonDevTime = props.coreDevTime.map(cdt => cdt * values[0]/100)  
     props.handleChange(...nonDevTime, ...values, props.name)
   }
 

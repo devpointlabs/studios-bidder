@@ -1,13 +1,13 @@
 import React from 'react';
+import {Grid, } from 'semantic-ui-react';
 import SliderBar from './SliderBar';
-import DesignSliderBar from './DesignSliderBar';
+import DesignSliderBar from './NonDevAssumptions/DesignSliderBar';
 import styled from 'styled-components';
 import GeneralBufferSlider from './GeneralBufferSlider';
-import {Table, Row, Cell, SliderCell} from '../../styles/SliderTable';
 
 class NonDevAssumptions extends React.Component {
   state = {
-    design: {multiplier: .10, value: this.props.featuresAffectedByDesign.reduce((acc, cur) => acc + (cur * .1),0)},
+    design: {multiplier: .10, value: this.props.featuresAffectedByDesign * .1},
     qaTesting: {multiplier: .10, value: this.props.coreDevTime * .1},
     deployment: {multiplier: .03, value: this.props.coreDevTime * .03},
     postDeploymentDev: {multiplier: .15, value: this.props.coreDevTime * .15},
@@ -32,9 +32,9 @@ class NonDevAssumptions extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = prevState;
     const {coreDevTime, featuresAffectedByDesign} = this.props;
-    if (this.state.coreDevTime !== coreDevTime ) {
+    if (this.state.coreDevTime !== coreDevTime || prevProps.featuresAffectedByDesign !== featuresAffectedByDesign ) {
       this.setState({
-        design: {multiplier: design.multiplier, value: featuresAffectedByDesign.reduce((acc, cur) => acc + (cur * design.multiplier),0)},
+        design: {multiplier: design.multiplier, value: featuresAffectedByDesign.reduce((acc, cur) => acc + (cur * design.multiplier))},
         qaTesting: {multiplier: qaTesting.multiplier, value: coreDevTime * qaTesting.multiplier},
         deployment: {multiplier: deployment.multiplier, value: coreDevTime * deployment.multiplier},
         postDeploymentDev: {multiplier: postDeploymentDev.multiplier, value: coreDevTime* postDeploymentDev.multiplier},
@@ -60,101 +60,97 @@ class NonDevAssumptions extends React.Component {
   
   render() {
     return(
-      <>
-        <Table style={{backgroundColor: '#CCCACF', width: '100%'}}>
-          <h2 style={{textAlign: 'center'}}>Design</h2>
-          <tbody>
-          <Row>
-            <Cell position='left'>
-              <h3>Design*</h3>
-              </Cell>
-            <SliderCell> 
-              <DesignSliderBar 
-                name='design'
-                defaultValue={this.state.design.multiplier}
-                coreDevTime={this.props.featuresAffectedByDesign}
-                handleChange={this.handleChange}
+      <div>
+        <Grid columns='two' stackable relaxed style={{padding: '20px'}}>
+        <Grid.Row>
+          <Grid.Column centered>
+            <SliderInfo>
+              <h4>Design</h4>
+              <h4>Days: {this.state.design.value.toFixed(1)}</h4>
+            </SliderInfo>
+            <DesignSliderBar 
+              name='design'
+              defaultValue={this.state.design.multiplier}
+              featuresAffectedByDesign={this.props.featuresAffectedByDesign}
+              handleChange={this.handleChange}
+            />
+          </Grid.Column>
+            <br />
+          <Grid.Column>
+            <SliderInfo>
+              <h4>Quality Assurance Testing</h4>
+              <h4>Days: {this.state.qaTesting.value.toFixed(1)}</h4>
+            </SliderInfo>
+            <SliderBar 
+              name='qaTesting'
+              defaultValue={this.state.qaTesting.multiplier}
+              coreDevTime={this.props.coreDevTime}
+              handleChange={this.handleChange}
               />
-          </SliderCell>
-          <Cell position='right'>
-            <h3>Days: {this.state.design.value}</h3>
-          </Cell>
-          </Row>
-          </tbody>
-          <br />
-        </Table>
-        <Table>
-          <tbody>
-          <Row>
-            <Cell position='left'><h3>QA Testing</h3></Cell>
-            <SliderCell> 
-              <SliderBar 
-                name='qaTesting'
-                defaultValue={this.state.qaTesting.multiplier}
-                coreDevTime={this.props.coreDevTime}
-                handleChange={this.handleChange}
+          </Grid.Column>
+            <br />
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <SliderInfo>
+              <h4>Deployment</h4>
+              <h4>Days: {this.state.deployment.value.toFixed(1)}</h4>
+            </SliderInfo>
+            <SliderBar 
+              name='deployment'
+              defaultValue={this.state.deployment.multiplier}
+              coreDevTime={this.props.coreDevTime}
+              handleChange={this.handleChange}
               />
-          </SliderCell>
-          <Cell position='right'>
-              <h3>Days: {this.state.qaTesting.value.toFixed(1)}</h3>
-          </Cell>
-          </Row>
-          <Row>
-            <Cell position='left'><h3>Deployment</h3></Cell>
-            <SliderCell> 
-              <SliderBar 
-                name='deployment'
-                defaultValue={this.state.deployment.multiplier}
-                coreDevTime={this.props.coreDevTime}
-                handleChange={this.handleChange}
+          </Grid.Column>
+            <br />
+          <Grid.Column>
+            <SliderInfo>
+              <h4>Post Deployment Development</h4>
+              <h4>Days: {this.state.postDeploymentDev.value.toFixed(1)}</h4>
+            </SliderInfo>
+            <SliderBar 
+              name='postDeploymentDev'
+              defaultValue={this.state.postDeploymentDev.multiplier}
+              coreDevTime={this.props.coreDevTime}
+              handleChange={this.handleChange}
               />
-          </SliderCell>
-          <Cell position='right'>
-              <h3>Days: {this.state.deployment.value.toFixed(1)}</h3>
-          </Cell>
-          </Row>
-          <Row>
-            <Cell position='left'><h3>Post Deployment Dev</h3></Cell>
-            <SliderCell> 
-              <SliderBar 
-                name='postDeploymentDev'
-                defaultValue={this.state.postDeploymentDev.multiplier}
-                coreDevTime={this.props.coreDevTime}
-                handleChange={this.handleChange}
+          </Grid.Column>
+            <br />
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <SliderInfo>
+              <h4>Project Management</h4>
+              <h4>Days: {this.state.projectManagement.value.toFixed(1)}</h4>
+            </SliderInfo>
+            <SliderBar 
+              name='projectManagement'
+              defaultValue={this.state.projectManagement.multiplier}
+              coreDevTime={this.props.coreDevTime}
+              handleChange={this.handleChange}
               />
-          </SliderCell>
-          <Cell position='right'>
-              <h3>Days: {this.state.postDeploymentDev.value.toFixed(1)}</h3>
-          </Cell>
-          </Row>
-          <Row>
-            <Cell position='left'><h3>Project Management</h3></Cell>
-            <SliderCell> 
-              <SliderBar 
-                name='projectManagement'
-                defaultValue={this.state.projectManagement.multiplier}
-                coreDevTime={this.props.coreDevTime}
-                handleChange={this.handleChange}
-              />
-          </SliderCell>
-          <Cell position='right'>
-              <h3>Days: {this.state.projectManagement.value.toFixed(1)}</h3>
-          </Cell>
-          </Row>
-          </tbody>
-        </Table>
-        {/* {(this.state.nonDevTotal > 0) &&  */}
-        <GeneralBufferSlider 
-          nonDevTotal={this.updateNonDevTotal()}
-          coreDevTime={this.props.coreDevTime}
-          getGeneralBufferData={this.getGeneralBufferData}
-        />
-        {/* } */}
-      </>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+      {(this.state.nonDevTotal > 0) && 
+      <GeneralBufferSlider 
+        nonDevTotal={this.updateNonDevTotal}
+        coreDevTime={this.props.coreDevTime}
+        getGeneralBufferData={this.getGeneralBufferData}
+      />
+      }
+    </div>
     );
   };
 };
 
+const SliderInfo = styled.div`
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  margin-top: -30px !important;
+`
 
 export default NonDevAssumptions;
 
