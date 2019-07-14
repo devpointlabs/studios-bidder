@@ -31,21 +31,36 @@ const Navbar = ({history}) => {
     <Link to="/History">
       <Menu.Item>
         <br/>
+        { authenticated &&
         <Header align="center" as={NavRight}> History</Header>
+        }
       </Menu.Item>
     </Link>
     <Link to="/Admin">
       <Menu.Item>
         <br/>
+        { authenticated &&
         <Header align="center" as={NavRight}> Admin</Header>
+        }
       </Menu.Item>
     </Link>
+      { authenticated ? 
+      <Link to="/">
+        <Menu.Item>
+          <br/>
+          <Header align='center' as={NavRight} onClick={() => handleLogout(history)}>
+            Logout
+          </Header> 
+        </Menu.Item>
+      </Link>
+      : 
       <Link to="/Login">
-      <Menu.Item>
-        <br/>
-        <Header align="center" as={NavRight}> Login </Header>
+        <Menu.Item>
+          <br/>
+          <Header align="center" as={NavRight}> Login </Header>
       </Menu.Item>
-    </Link>
+      </Link>
+      }
     </Menu.Menu>
   </Menu>
     // {/* REMOVE ABOVE BEFORE PRODUCTION AND USE CODE BELOW */}
