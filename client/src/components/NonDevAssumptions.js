@@ -8,12 +8,12 @@ import GeneralBufferSlider from './GeneralBufferSlider';
 
 class NonDevAssumptions extends React.Component {
   state = {
-    design: {multiplier: .10, value: this.props.coreDevTime * .1},
-    qaTesting: {multiplier: .10, value: this.props.coreDevTime * .1},
-    deployment: {multiplier: .03, value: this.props.coreDevTime * .03},
-    postDeploymentDev: {multiplier: .15, value: this.props.coreDevTime * .15},
-    projectManagement: {multiplier: .10, value: this.props.coreDevTime * .1},
-    generalBuffer: .05,
+    design: {multiplier: .10, value: Math.round((this.props.coreDevTime * .1) * 1e1) / 1e1},
+    qaTesting: {multiplier: .10, value: Math.round((this.props.coreDevTime * .1) * 1e1) / 1e1},
+    deployment: {multiplier: .03, value: Math.round((this.props.coreDevTime * .03) * 1e1) / 1e1},
+    postDeploymentDev: {multiplier: .15, value: Math.round((this.props.coreDevTime * .15) * 1e1) / 1e1},
+    projectManagement: {multiplier: .10, value: Math.round((this.props.coreDevTime * .1) * 1e1) / 1e1},
+    generalBuffer: {multiplier: .05, value: null},
     nonDevTotal: 0,
     coreDevTime: this.props.coreDevTime,
   };
@@ -22,17 +22,17 @@ class NonDevAssumptions extends React.Component {
   handleChange = (nonDevTime, multiplier, name) => {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = this.state   
     this.setState({[name]: {multiplier: (multiplier / 100), value: nonDevTime}})
-    this.setState({nonDevTotal: (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)})
+    this.setState({nonDevTotal: Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value))})
   };
   
   componentDidMount() {
     const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
-    this.setState({nonDevTotal: (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)});
+    this.setState({nonDevTotal: Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value) * 5) / 5});
   };
   
   componentDidUpdate(prevProps, prevState) {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = prevState;
-    const {coreDevTime} = this.props;
+    const {coreDevTime, getNonDevAssumptionsData} = this.props;
     let dt = this.props.coreDevTime;
     if (this.state.coreDevTime !== dt ) {
       this.setState({
@@ -46,14 +46,15 @@ class NonDevAssumptions extends React.Component {
       this.updateNonDevTotal();
     };
     if (this.state.nonDevTotal !== prevState.nonDevTotal){
-    const dataToSendToMainDisplay = {design: this.state.design.multiplier, qaTesting: this.state.qaTesting.multiplier, deployment: this.state.deployment.multiplier, postDeploymentDev: this.state.postDeploymentDev.multiplier, projectManagement: this.state.projectManagement.multiplier, generalBuffer: this.state.generalBuffer};
-    this.props.getNonDevAssumptionsData(dataToSendToMainDisplay);
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal} = this.state;
+    const dataToSendToMainDisplay = {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer: {multiplier: generalBuffer, value: nonDevTotal * generalBuffer}}
+    getNonDevAssumptionsData(dataToSendToMainDisplay);
     }
   };
   
   updateNonDevTotal = () => {
     const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
-    return (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)
+    return (Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value) * 1e1) / 1e1)
   };
 
   getGeneralBufferData = (data) => {
@@ -115,8 +116,8 @@ class NonDevAssumptions extends React.Component {
         <Grid.Row>
           <Grid.Column>
             <SliderInfo>
-              <Header as={DarkText} fSize='small'>Design</Header>
-              <Header as={DarkText} fSize='small'>Days: {this.state.design.value.toFixed(1)}</Header>
+              <Header as={DarkText} fSize='small'>Project Management</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.projectManagement.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='projectManagement'

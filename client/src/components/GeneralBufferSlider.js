@@ -13,22 +13,22 @@ const GeneralBufferSlider = (props) => {
 
 
   useEffect( () => {
-    let gBV = props.nonDevTotal() * generalBufferMultiplier;
+    let gBV = Math.round((props.nonDevTotal() * generalBufferMultiplier) * 1e1) / 1e1;
     let subTotal = parseFloat(props.nonDevTotal()) + props.coreDevTime;
-    setGeneralBufferValue(gBV.toFixed(1));
+    setGeneralBufferValue(gBV);
     setNonDevTotal(props.nonDevTotal());
     setTotal(subTotal + gBV);
   },[props.nonDevTotal(), props.coreDevTime]);
   
   useEffect( () => {
-    props.getGeneralBufferData(generalBufferMultiplier)
-  },[generalBufferMultiplier])
+    props.getGeneralBufferData({multiplier: generalBufferMultiplier, value: generalBufferValue})
+  },[generalBufferMultiplier, generalBufferValue])
 
 
   const handleChange = (nonDevTime, multiplier, name) => {
     setGeneralBufferMultiplier(multiplier/100);
-    setGeneralBufferValue(nonDevTime.toFixed(1));
-    setTotal(parseFloat(props.nonDevTotal()) + props.coreDevTime + parseFloat(generalBufferValue));
+    setGeneralBufferValue(nonDevTime);
+    setTotal(props.nonDevTotal() + props.coreDevTime + generalBufferValue);
   };
 
     return(
