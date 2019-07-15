@@ -1,5 +1,7 @@
 import React from 'react';
-import {Grid, } from 'semantic-ui-react';
+import {Grid, Header} from 'semantic-ui-react';
+import DarkText from '../styles/DarkText';
+import MainTitle from '../styles/MainTitle';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
 import GeneralBufferSlider from './GeneralBufferSlider';
@@ -61,26 +63,23 @@ class NonDevAssumptions extends React.Component {
   render() {
     return(
       <div>
-        <Grid columns='two' stackable relaxed style={{padding: '20px'}}>
+        <Grid columns='one' stackable relaxed style={{padding: '20px 50px 20px 50px'}}>
         <Grid.Row>
           <Grid.Column centered>
             <SliderInfo>
-              <h4>Design</h4>
-              <h4>Days: {this.state.design.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Design</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.design.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='design'
               defaultValue={this.state.design.multiplier}
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
-              disabled={true}
               />
-          </Grid.Column>
             <br />
-          <Grid.Column>
             <SliderInfo>
-              <h4>Quality Assurance Testing</h4>
-              <h4>Days: {this.state.qaTesting.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Quality Assurance Testing</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.qaTesting.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='qaTesting'
@@ -88,14 +87,10 @@ class NonDevAssumptions extends React.Component {
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
               />
-          </Grid.Column>
             <br />
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
             <SliderInfo>
-              <h4>Deployment</h4>
-              <h4>Days: {this.state.deployment.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Deployment</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.deployment.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='deployment'
@@ -103,12 +98,10 @@ class NonDevAssumptions extends React.Component {
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
               />
-          </Grid.Column>
             <br />
-          <Grid.Column>
             <SliderInfo>
-              <h4>Post Deployment Development</h4>
-              <h4>Days: {this.state.postDeploymentDev.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Post Deployment Development</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.postDeploymentDev.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='postDeploymentDev'
@@ -122,8 +115,8 @@ class NonDevAssumptions extends React.Component {
         <Grid.Row>
           <Grid.Column>
             <SliderInfo>
-              <h4>Design</h4>
-              <h4>Days: {this.state.design.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Design</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.design.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='projectManagement'
@@ -147,10 +140,12 @@ class NonDevAssumptions extends React.Component {
 };
 
 const SliderInfo = styled.div`
+
+
   display: flex !important;
   align-items: baseline !important;
   justify-content: space-between !important;
-  margin-top: -30px !important;
+  margin-top: -1vh !important;
 `
 
 export default NonDevAssumptions;
