@@ -10,7 +10,11 @@ const EstimateHistory = () => {
   /////////////////////
   // Search Setup
   /////////////////
+
+  const [column, setColumn] = useState(null)
+  const [direction, setDirection] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [searchColumn, setSearchColumn] = useState(['customer_name', 'customer_email'])
   const [searchResults, setSearchResults] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [searchOptions] = useState([
@@ -24,27 +28,24 @@ const EstimateHistory = () => {
   }
 
   const resultRenderer = ({ customer_name }) => <Label content={customer_name} />
-
+  
   const handleSearchChange = (e, { value }) => {
-
-    // Show the spinner while user is typing
     setIsLoading(true)
 
-    // Echo the typed chars back to the search box
-    setSearchValue(value)
-
     setTimeout(() => {
-      if (searchValue.length < 1) return (
-        setIsLoading(false), setSearchResults([]), setSearchValue('')
-      )
+      if (value.length < 1) {
+        console.log('reset')
+        setIsLoading(false)
+        setSearchResults([])
+        return
+      }
 
-      const re = new RegExp(_.escapeRegExp(searchValue), 'i')
+      const re = new RegExp(_.escapeRegExp(value), 'i')
       const isMatch = result => re.test(result.customer_name)
 
       setIsLoading(false)
       setSearchResults(_.filter(estimates, isMatch))
-      console.log(searchResults)
-    }, 700)
+    }, 300)
   }
 
   useEffect(() => {
@@ -53,8 +54,8 @@ const EstimateHistory = () => {
   }, [])
 
   const estimate = (id, name, email, created) => (
-    <Modal trigger={
-      <Table.Row key={id} >
+    <Modal key={id} trigger={
+      <Table.Row  >
         <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
         <Table.Cell textAlign='center'>{name}</Table.Cell>
         <Table.Cell textAlign='center'>{email}</Table.Cell>
@@ -73,11 +74,12 @@ const EstimateHistory = () => {
 
   const searchForm = (
     <>
-    <Dropdown inline placeholder='Field' options={searchOptions} defaultValue={searchOptions[0].value}/>
+    <Dropdown inline placeholder='Field' options={searchOptions} defaultValue={searchOptions[0].value} onChange={(e)=>setSearchColumn(e.value)}/>
     <Search
       loading={isLoading}
       onResultSelect={handleResultSelect}
       onSearchChange={_.debounce(handleSearchChange, 500, { leading: true, })}
+      // onSearchChange={handleSearchChange}
       results={searchResults}
       resultRenderer={resultRenderer}
       value={searchValue}
@@ -85,19 +87,64 @@ const EstimateHistory = () => {
     </>
   )
 
+  const handleSort = clickedColumn => () => {
+
+    if (column !== clickedColumn) {
+      setColumn(clickedColumn)
+      setEstimates(_.sortBy(estimates, [clickedColumn]))
+      setDirection('ascending')
+
+      return
+    }
+    setEstimates(estimates.reverse())
+    setDirection(direction === 'ascending' ? 'descending' : 'ascending')
+  }
+
   return (
     <>
       <Navbar />
       <Segment style={{color: 'black'}}>
         Search: {searchForm}
-          <Table selectable striped stackable compact>
-            <Table.Header>
-              <Table.Row >
-                <Table.HeaderCell collapsing textAlign="center">Estimate No.</Table.HeaderCell>
-                <Table.HeaderCell textAlign='center'>Customer Name</Table.HeaderCell>
-                <Table.HeaderCell textAlign='center'>Customer Email</Table.HeaderCell>
-                <Table.HeaderCell textAlign='center'>DPL Sales Agent</Table.HeaderCell>
-                <Table.HeaderCell collapsing textAlign='center'>Created</Table.HeaderCell>
+          <Table sortable striped stackable compact>
+          <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell
+                  collapsing
+                  textAlign="center"
+                  sorted={column === 'id' ? direction : null}
+                  onClick={handleSort('id')}
+                >
+                  Estimate No.
+                </Table.HeaderCell>
+                <Table.HeaderCell
+                  textAlign='center'
+                  sorted={column === 'customer' ? direction : null}
+                  onClick={handleSort('customer')}
+                >
+                  Customer Name
+                </Table.HeaderCell>
+                <Table.HeaderCell 
+                  textAlign='center'
+                  sorted={column === 'email' ? direction : null}
+                  onClick={handleSort('email')}
+                >
+                  Customer Email
+                </Table.HeaderCell>
+                <Table.HeaderCell 
+                  textAlign='center'
+                  sorted={column === 'employee' ? direction : null}
+                  onClick={handleSort('employee')}
+                >
+                  DPL Sales Agent
+                </Table.HeaderCell>
+                <Table.HeaderCell 
+                  collapsing 
+                  textAlign='center'
+                  sorted={column === 'email' ? direction : null}
+                  onClick={handleSort('email')}
+                >
+                  Created
+                </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -106,10 +153,6 @@ const EstimateHistory = () => {
               }
             </Table.Body>
           </Table>
-
-
-
-
       </Segment>
     </>
   )
