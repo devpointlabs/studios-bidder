@@ -30,11 +30,9 @@ const Category = (props) => {
   const toggleEdit=()=>{
     setEditing(!editing)
     if(!editing){setName(props.name)}
-    console.log('click')
   }
 
   const handleSubmit=()=>{
-    // const exclusive = setIsExclusive
     axios.put(`/api/categories/${props.id}`,{category: {name, is_exclusive:isExclusive}})
     setEditing(false)
   }
@@ -87,6 +85,7 @@ const Category = (props) => {
                 </Button>
               }
             </Table.HeaderCell>
+            
             <Table.HeaderCell textAlign={editing?'left':'center'}>
               {
                 editing?
