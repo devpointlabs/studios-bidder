@@ -30,11 +30,9 @@ const Category = (props) => {
   const toggleEdit=()=>{
     setEditing(!editing)
     if(!editing){setName(props.name)}
-    console.log('click')
   }
 
   const handleSubmit=()=>{
-    // const exclusive = setIsExclusive
     axios.put(`/api/categories/${props.id}`,{category: {name, is_exclusive:isExclusive}})
     setEditing(false)
   }
@@ -67,7 +65,12 @@ const Category = (props) => {
           <Table.Row>
           <Table.HeaderCell collapsing>
               <Button size='small' icon color='purple' onClick={()=>setShowFeatures(!showFeatures)}>
-                <Icon name="eye"></Icon>
+                {
+                  showFeatures ?
+                  <Icon name="chevron up"></Icon>
+                    :
+                  <Icon name="chevron down"></Icon>
+                }
               </Button>
               {
                 <Button size='small' icon color={editing?"grey":"blue"} onClick={toggleEdit}>
@@ -82,12 +85,16 @@ const Category = (props) => {
                 </Button>
               }
             </Table.HeaderCell>
+            
             <Table.HeaderCell textAlign={editing?'left':'center'}>
               {
                 editing?
                 editForm
                 :
-                <h3>{name}</h3>
+                <h3>
+                  {name}
+                  {isExclusive&& <Icon size='tiny' color ='grey' name='exclamation'/>}
+                </h3>
               }
             </Table.HeaderCell>
             <Table.HeaderCell collapsing textAlign='right'>
@@ -117,15 +124,15 @@ const Category = (props) => {
         &&
         features.map((feature)=> 
           <Feature 
-          key={feature.id}
-          id={feature.id}
-          name={feature.name}
-          description={feature.description}
-          base_days={feature.base_days}
-          multiplier={feature.multiplier}
-          category={feature.category_id}
-          delete={deleteFeature}
-        />)
+            key={feature.id}
+            id={feature.id}
+            name={feature.name}
+            description={feature.description}
+            base_days={feature.base_days}
+            multiplier={feature.multiplier}
+            category={feature.category_id}
+            delete={deleteFeature}
+          />)
         }
         <p>{editing}</p>
     </Container>

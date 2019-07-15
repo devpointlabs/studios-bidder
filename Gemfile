@@ -1,6 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+<<<<<<< HEAD
+=======
+ruby '2.6.1'
+>>>>>>> 8af1b67eb98b6a5c4d07f06328dc69e44efbac2c
   gem 'faker'
   
 

@@ -4,24 +4,26 @@ import axios from 'axios'
 
 const Feature = (props) => {
   const [editing, setEditing] = useState(false)
-  const [name, ] = useState(props.name)
-  const [tempName, setTempName] = useState(props.name)
-  const [description, ] = useState(props.description)
-  const [tempDescription, setTempDescription] = useState(props.description)
-  const [tempBase_days, setTempBase_days] = useState(props.base_days)
-  const [tempMultiplier, setTempMultiplier] = useState(props.multiplier)
+  const [name, setName] = useState(props.name)
+  const [description, setDescription] = useState(props.description)
+  const [base_days, setBase_Days] = useState(props.base_days)
+  const [multiplier, setMultiplier] = useState(props.multiplier)
 
   const handleSubmit=()=>{
+    axios.put(`/api/features/${props.id}`,{feature:{name, description, base_days, multiplier}})
     setEditing(false)
-    axios.put(`/api/features/${props.id}`,{feature:{name:tempName, description:tempDescription, tempBase_days, tempMultiplier}})
   }
 
   const toggleEdit=()=>{
     setEditing(!editing)
 
-    // copy the current value into the temp values
-    setTempName(name)
-    setTempDescription(description)
+    // if the user cancels editing set the state back to the default
+    if (!editing){
+      setName(props.name)
+      setDescription(props.description)
+      setBase_Days(props.base_days)
+      setMultiplier(props.multiplier)
+    }
   }
 
     const Feature=(
@@ -38,28 +40,28 @@ const Feature = (props) => {
             </Table.Cell>
             <Table.Cell collapsing>
               {editing? 
-                <Form.Input label='Name' value={tempName} name="name" onChange={(e)=> setTempName((e.target.value))} required/> 
+                <Form.Input label='Name' value={name} name="name" onChange={(e)=> setName((e.target.value))} required/> 
                 :
                 props.name
               }        
             </Table.Cell>
             <Table.Cell>
               {editing?
-                <Form.Input label='Description' placeholder={tempDescription} value={tempDescription} name="description" onChange={(e)=> setTempDescription((e.target.value))} required/>
+                <Form.Input label='Description' placeholder={description} value={description} name="description" onChange={(e)=> setDescription((e.target.value))} required/>
                 :
                 props.description
               }
             </Table.Cell>
             <Table.Cell collapsing textAlign='right'>
               {editing?
-                <Form.Input label='Multiplier' value={tempMultiplier} name="multiplier" onChange={(e)=> setTempMultiplier((e.target.value))} required/> 
+                <Form.Input label='Multiplier' value={multiplier} name="multiplier" onChange={(e)=> setMultiplier((e.target.value))} required/> 
                 :
                 props.multiplier
               }
             </Table.Cell>
             <Table.Cell collapsing textAlign='right'>
               {editing?
-                <Form.Input label='Developer Days' value={tempBase_days} name="base_days" onChange={(e)=> setTempBase_days((e.target.value))} required/> 
+                <Form.Input label='Developer Days' value={base_days} name="base_days" onChange={(e)=> setBase_Days((e.target.value))} required/> 
                 :
                 props.base_days
               }
@@ -78,10 +80,9 @@ const Feature = (props) => {
     )
 
   return(
-   <Container>
+    <Container>
       {Feature}
-      </Container>
-   
+    </Container>
   )
 }
 
