@@ -48,13 +48,14 @@ const MainDisplay = () => {
     // const uniqFeatures = [ ...new Set(selectedFeatures) ]
     // featureIDsFromEstimate = [ ...new Set(featureIDsFromEstimate) ]
     // featureIDsFromEstimate.push(...uniqFeatures)
-    const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+      const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
 
-    axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: selectedFeatures}})
+
+      axios.post(`/api/estimates`, estimate)
       .then( res => {
         setEstimate_id(res.data)
         handleSelectedIDs()
-        }
+      }
       )
       .catch(error => console.log(error));
   };
@@ -67,11 +68,15 @@ const MainDisplay = () => {
   }
 
   const handleSaveModal = () => {
-    setEmail('')
-    setName('')
-    setSelectedFeatures([])
-    setRadioButtons([])
-    resetMath()
+    axios.post(`/api/features_estimates`, {selectedFeatures: selectedFeatures, estimate_id: estimate_id})
+      .then( res => {
+        debugger
+        setEmail('')
+        setName('')
+        setSelectedFeatures([])
+        setRadioButtons([])
+        resetMath()
+      })
   }
 
       
@@ -227,7 +232,7 @@ const MainDisplay = () => {
                     // closeOnDimmerClick={false} 
                     // closeOnEscape={false} 
                     // closeOnDocumentClick={false}
-                    trigger={  selectedFeatures.length > 0 || radioButtons.length > 0 &&
+                    trigger={ selectedFeatures.length > 0 || radioButtons.length > 0 &&
                     <Form.Button onClick={handleSubmit} basic>Submit for Estimate Summary</Form.Button>
                     }>
               <SummaryPage as={NoLine}eID={estimate_id} submit={handleSubmit} name={name} email={email}/>

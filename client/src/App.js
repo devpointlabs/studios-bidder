@@ -47,8 +47,8 @@ const AppContainer = styled.div`
 `;
 
 const MidContainer = styled.div`
-  margin-right: 80px;
-  margin-left: 80px;
+  margin-right: 8vw;
+  margin-left: 8vw;
 `;
 
 export default App;
