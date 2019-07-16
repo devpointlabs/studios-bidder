@@ -12,6 +12,7 @@ import Colors from "../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
 import {MathContext,} from '../providers/MathProvider';
+import {AuthContext,} from '../providers/AuthProvider';
 
 
 const MainDisplay = () => {
@@ -24,6 +25,7 @@ const MainDisplay = () => {
   const [nonDevAssumptions, setNonDevAssumptions] = useState();
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
+  const {authenticated} = useContext(AuthContext);
 
       // useEffect( () => {
   //   axios.get(`/api/platforms`)
@@ -182,6 +184,7 @@ const MainDisplay = () => {
       <TotalMath 
         getNonDevAssumptionsData={getNonDevAssumptionsData}
       />
+      {/* {authenticated && */}
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
           client's name and email to save estimate
@@ -204,6 +207,7 @@ const MainDisplay = () => {
           </Form>
         </FormBorder>
       </Segment>
+      {/* } */}
     </Segment.Group>
     </>
   )

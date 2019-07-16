@@ -5,8 +5,10 @@ class Api::EstimatesController < ApplicationController
   end
 
   def create
-    employee = current_user.first_name
-    estimate = Estimate.new(estimates_params.merge(:employee_name => employee))
+    # UNCOMMENT THESE TO ADD EMPLOYEE WITH ESTIMATE
+    # employee = current_user.first_name
+    # estimate = Estimate.new(estimates_params.merge(:employee_name => employee))
+    estimate = Estimate.new(estimates_params)
     if estimate.save
       FeatureEstimate.post_all_features(params[:selectedFeatures], estimate.id )
       render json: estimate.id
