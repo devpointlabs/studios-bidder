@@ -26,21 +26,29 @@ const MainDisplay = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [notFirstSubmit, setNotFirstSubmit] = useState(false)
   const [errorPopup, setErrorPopup] = useState(false)
+  // const [featuresLoaded, setFeaturesLoaded] = useState(false)
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
-  const { handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
+  const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
 
-    useEffect( () => {
+  useEffect( () => {
     // axios.get(`/api/platforms`)
     //   .then(res=>setPlatforms(res.data))
-  
-    axios.get(`/api/all_categories`)
-      .then( res  => handleCategories(res.data));
-
-    axios.get(`/api/all_features`)
-      .then(res => handleFeatures(res.data))
+    originalAxios()
   },[]);
 
+  const originalAxios = () => {
+    if (featuresLoaded === false) {
+      // debugger
+      axios.get(`/api/all_categories`)
+      .then( res  => {
+        setFeaturesLoaded()
+        handleCategories(res.data)});
+    
+      axios.get(`/api/all_features`)
+        .then(res => handleFeatures(res.data))
+    }
+  }
 
   const handleSubmit = () => {
     let newArray = []

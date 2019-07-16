@@ -20,7 +20,22 @@ export class FeatureProvider extends React.Component {
     selectedEstimate: [],
     platformFeatures: [],
     platformCategories: [],
+    featuresLoaded: false,
     };
+    
+      // toPlatformItems = (platformByNum) => {
+      //   // debugger
+      //   const {platformFeatures, platformCategories, featuresFromEstimate, categoriesFromEstimate} = this.state;
+      //   const pFeatures = featuresFromEstimate.filter(f => f.platform_id === platformByNum);
+      //   this.setState({platformFeatures: [...pFeatures]})
+      //   const pCategories = categoriesFromEstimate.filter(c => c.platform_id === platformByNum);
+      //   this.setState({platformCategories: [...pCategories]})
+      //   // platformCategories.push(...pCategories)
+      // };
+
+  setFeaturesLoaded = () => {
+    this.setState({featuresLoaded: true})
+  }
 
   handleFeatures = (features) => {
     const {allFeatures} = this.state;
@@ -35,16 +50,6 @@ export class FeatureProvider extends React.Component {
         this.setState({webFeatures: [...webFeatures, f]})};
     });
   }
-
-  // toPlatformItems = (platformByNum) => {
-  //   // debugger
-  //   const {platformFeatures, platformCategories, featuresFromEstimate, categoriesFromEstimate} = this.state;
-  //   const pFeatures = featuresFromEstimate.filter(f => f.platform_id === platformByNum);
-  //   this.setState({platformFeatures: [...pFeatures]})
-  //   const pCategories = categoriesFromEstimate.filter(c => c.platform_id === platformByNum);
-  //   this.setState({platformCategories: [...pCategories]})
-  //   // platformCategories.push(...pCategories)
-  // };
 
   handleCategories = (categories) => {
     const {allCategories} = this.state;
@@ -98,6 +103,7 @@ export class FeatureProvider extends React.Component {
        toPlatformItems: this.toPlatformItems,
        handleEstimate: this.handleEstimate,
        handleResetIDs: this.handleResetIDs,
+       setFeaturesLoaded: this.setFeaturesLoaded,
       }}>
         {this.props.children}
       </FeatureContext.Provider>
