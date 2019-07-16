@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash'
 import axios from 'axios'
-import { Table, Dropdown, Segment, Search, Label, Modal, Header } from 'semantic-ui-react'
+import { Table, Dropdown, Segment, Search, Label, Modal, Header, Button } from 'semantic-ui-react'
 import Navbar from './Navbar'
 
 const EstimateHistory = () => {
@@ -48,6 +48,10 @@ const EstimateHistory = () => {
       setIsLoading(false)
       setSearchResults(_.filter(estimates, isMatch))
     }, 300)
+  }
+
+  const sendMail =()=>{
+    axios.post(`/api/estimate_email`)
   }
 
   useEffect(() => {
@@ -156,6 +160,7 @@ const EstimateHistory = () => {
             </Table.Body>
           </Table>
       </Segment>
+      <Button onClick={sendMail}/>
     </>
   )
 };
