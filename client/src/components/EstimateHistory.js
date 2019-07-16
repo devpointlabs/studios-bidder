@@ -55,13 +55,13 @@ const EstimateHistory = () => {
       .then(res => setEstimates(res.data))
   }, [])
 
-  const estimate = (id, name, email, created) => (
+  const estimate = (id, name, email, created, employee_name) => (
     <Modal key={id} trigger={
       <Table.Row  >
         <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
         <Table.Cell textAlign='center'>{name}</Table.Cell>
         <Table.Cell textAlign='center'>{email}</Table.Cell>
-        <Table.Cell textAlign='center'></Table.Cell>
+        <Table.Cell textAlign='center'>{employee_name}</Table.Cell>
         <Table.Cell collapsing textAlign='center'>{created}</Table.Cell>
       </Table.Row> 
     }>
@@ -151,7 +151,7 @@ const EstimateHistory = () => {
             </Table.Header>
             <Table.Body>
               {
-                estimates.map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.created_at))
+                estimates.map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at))
               }
             </Table.Body>
           </Table>
