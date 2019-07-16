@@ -60,31 +60,31 @@ const SummaryPage = ({eID, name, email}) => {
           <Table singleLine>
             <Table.Row> 
               <Table.Cell>Design</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.design}</Table.Cell>
+              <Table.Cell textAlign='right'> Days {estimate.design_value}</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Deployment</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.deployment}</Table.Cell>
+              <Table.Cell textAlign='right'> Days {estimate.deployment_value}</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Quality Assurance Testing</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.qaTesting}</Table.Cell>
+              <Table.Cell textAlign='right'> Days {estimate.qaTesting_value}</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Post Deployment Development</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.postDeploymentDev}</Table.Cell>
+              <Table.Cell textAlign='right'> Days {estimate.postDeploymentDev_value}</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Non Dev Assumptions Total Days</Table.Cell>
-              <Table.Cell textAlign='right'> Days NUM</Table.Cell>
+              <Table.Cell textAlign='right'> Days {estimate.nonDevTotal}</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>General Buffer Time</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.generalBuffer}</Table.Cell>
+              <Table.Cell textAlign='right'> Days {estimate.generalBuffer_value}</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Total Days</Table.Cell>
-              <Table.Cell textAlign='right'> Days NUM </Table.Cell>
+              <Table.Cell textAlign='right'> Days {estimate.total}</Table.Cell>
             </Table.Row>
           </Table>
         </Segment>

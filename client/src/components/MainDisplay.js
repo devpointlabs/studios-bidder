@@ -18,7 +18,6 @@ import { FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
-<<<<<<< HEAD
   const [name, setName] = useState('a');
   const [email, setEmail] = useState('a@a');
   const [estimate_id, setEstimate_id] = useState('');
@@ -27,14 +26,6 @@ const MainDisplay = () => {
   const [radioButtons, setRadioButtons] = useState([]);
   const [nonDevAssumptions, setNonDevAssumptions] = useState([])
   // const [modalClose, setModalClose] = useState(true);
-=======
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  // const [platforms, setPlatforms] = useState([]);
-  const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const [radioButtons, setRadioButtons] = useState([]);
-  const [nonDevAssumptions, setNonDevAssumptions] = useState();
->>>>>>> 11f2941cd3277c86935af52fd4bbf6f023461ff8
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
   const { handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs} = useContext(FeatureContext);
