@@ -1,33 +1,19 @@
 import React,{ useState, useContext, useEffect } from 'react';
 import SummaryTable from './SummaryTable';
-import OSMath from '../OSMath';
-import TotalMath from '../TotalMath';
 import {Image, Segment, Header, Table} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
-import WhiteText from "../../styles/WhiteText";
-import MainTitle from '../../styles/MainTitle';
 import styled from "styled-components";
 import axios from 'axios';
-import {MathContext,} from '../../providers/MathProvider';
-import {FeatureContext,} from '../../providers/FeatureProvider';
 
 const SummaryPage = ({eID, name, email}) => {
-  // const [name, setName] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [eFeatures, setEFeatures] = useState([]);
-  // const [eCatagories, setECatagories] = useState([]);
-  // const [featuresEstimates, setFeatureEstimates] = useState([]);
   const [estimate, setEstimate] = useState([]);
-  const { toPlatformItems, featuresFromEstimate, categoriesFromEstimate } = useContext(FeatureContext);
-  const { exclusiveWebFeatures } = useContext(MathContext)
-
 
   useEffect( () => {
     // axios.get(`/api/features_estimates/${eID}`)
     //   .then( res  => //{debugger})
     //     setFeatureEstimates(res.data));
     axios.get(`/api/estimates/${eID}`)
-      .then(res => //console.log(res.data)
+      .then(res => 
         setEstimate(res.data)
         );
   },[eID]);

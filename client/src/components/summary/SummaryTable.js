@@ -1,13 +1,7 @@
 import React,{ useState, useContext, useEffect } from 'react';
-// import OSMath from './OSMath';
-// import TotalMath from './TotalMath';
-import { Container, Segment, Header, Table} from 'semantic-ui-react';
+import { Segment, Header, Table} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
-// import WhiteText from "../styles/WhiteText";
-// import MainTitle from '../styles/MainTitle';
 import styled from "styled-components";
-import axios from 'axios';
-import { MathContext,} from '../../providers/MathProvider';
 import { FeatureContext,} from '../../providers/FeatureProvider';
 
 
@@ -15,7 +9,7 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
   const [catagoriesEstimates, setCatagoriesEstimates] = useState([]);
   const [featuresEstimates, setFeaturesEstimates] = useState([]);
 
-  const { toPlatformItems, platformFeatures, platformCategories, featuresFromEstimate, categoriesFromEstimate } = useContext(FeatureContext);
+  const { featuresFromEstimate, categoriesFromEstimate } = useContext(FeatureContext);
 
   useEffect( () => {
     setCatagoriesEstimates(categoriesFromEstimate)
@@ -35,8 +29,6 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
 
   const exclusiveRendering = (platformByNum) => {
     const pCatagories = [ ...new Set(catagoriesEstimates.filter( f => platformByNum == f.platform_id)) ]
-    // const pFeatures = featuresEstimates.filter( f => pCatagories.id === f.catagory_id)
-
 
       return (
         pCatagories.map( c => {
@@ -58,7 +50,7 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
                     return (
                     <>
                       <Table.Row>
-                        <Table.Cell colSpan='2'>{f.name} ---- {f.id}</Table.Cell>
+                        <Table.Cell colSpan='2'>{f.name}</Table.Cell>
                         <Table.Cell textAlign='right'>{f.base_days}</Table.Cell>
                         <Table.Cell textAlign='right'>{f.multiplier}</Table.Cell>
                       </Table.Row>

@@ -8,13 +8,12 @@ import AndroidDisplay from './AndroidDisplay';
 import SummaryPage from './summary/SummaryPage';
 import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
-import {Icon, Segment, Header, Form, Modal, Button, Message, Container, Popup} from 'semantic-ui-react';
+import {Icon, Segment, Header, Form, Modal, Button} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
 import {MathContext,} from '../providers/MathProvider';
 import { FeatureContext} from '../providers/FeatureProvider';
-// import { handleSubmit, } from './MainHelper'
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
@@ -22,7 +21,6 @@ const MainDisplay = () => {
   const [email, setEmail] = useState('a@a');
   const [estimate_id, setEstimate_id] = useState('');
   const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const [intermediateFeatures, setIntermediateFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
   const [nonDevAssumptions, setNonDevAssumptions] = useState([])
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,7 +28,7 @@ const MainDisplay = () => {
   const [errorPopup, setErrorPopup] = useState(false)
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
-  const { handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs, setFeaturesFromEstimate} = useContext(FeatureContext);
+  const { handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
 
     useEffect( () => {
     // axios.get(`/api/platforms`)
@@ -68,7 +66,6 @@ const MainDisplay = () => {
   };
 
   const handleResubmit = () => {
-    // const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
     let newArray = []
     newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
     featureIDsFromEstimate.push(...newArray)
@@ -276,10 +273,6 @@ const MainDisplay = () => {
           </Form>
         </FormBorder>
         <Modal  
-                // closeIcon
-                // closeOnDimmerClick={false} 
-                // closeOnEscape={false} 
-                // closeOnDocumentClick={false}
                 open={modalOpen}>
           <SummaryPage as={NoLine} eID={estimate_id} submit={handleSaveModal} name={name} email={email}/>
           <Modal.Actions as={NoLine}>
