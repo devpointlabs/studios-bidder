@@ -1,18 +1,19 @@
-import React from 'react';
-import OSMath from './OSMath';
+import React, {useContext} from 'react';
 import Features from './Features';
-import TotalMath from './TotalMath';
 import {Container, Segment } from 'semantic-ui-react';
-import Colors from "../styles/Colors";
 import styled from "styled-components";
+import { FeatureContext} from '../providers/FeatureProvider';
 
 const AndroidDisplay = (props) => {
+  const {androidCategories, androidFeatures } = useContext(FeatureContext);
 
   return(
     <>
       <Segment as={NoLine}>
         <Container as={FeaturesContainer}>
           <Features 
+            osFeatures={androidFeatures}
+            osCategories={androidCategories}
             OS='android'
             setSelectedFeatures={props.setSelectedFeatures}
             selectedFeatures={props.selectedFeatures}

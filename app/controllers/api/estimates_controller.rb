@@ -4,10 +4,23 @@ class Api::EstimatesController < ApplicationController
     render json: Estimate.all
   end
 
+  def show
+    render json: Estimate.find(params[:id])
+  end 
+
+  def update 
+    @estimate = Estimate.find(params[:id])
+    if @estimate.update(estimates_params)
+        render json: @estimate
+    else
+        render json: @estimate.errors, status: 422
+    end
+  end
+
   def create
     estimate = Estimate.new(estimates_params)
     if estimate.save
-      FeatureEstimate.post_all_features(params[:selectedFeatures], estimate.id )
+      # FeatureEstimate.post_all_features(params[:selectedFeatures], estimate.id )
       render json: estimate.id
     else
       render json: estimate.errors, status:418

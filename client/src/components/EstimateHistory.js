@@ -156,6 +156,8 @@ const EstimateHistory = () => {
             </Table.Body>
           </Table>
       </Segment>
+
+      {/* </Segment.Group> */}
     </>
   )
 };

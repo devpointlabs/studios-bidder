@@ -1,5 +1,5 @@
 import React from "react";
-import NonDevAssumptions from './NonDevAssumptions';
+import NonDevAssumptions from './NonDevAssumptions/NonDevAssumptions';
 import { MathConsumer } from "../providers/MathProvider";
 import { Header } from 'semantic-ui-react';
 import DarkText from '../styles/DarkText';
