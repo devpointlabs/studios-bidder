@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Grid, Divider, Header } from 'semantic-ui-react';
-import DarkText from '../styles/DarkText';
-import MainTitle from '../styles/MainTitle';
+import DarkText from '../../styles/DarkText';
+import MainTitle from '../../styles/MainTitle';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
 
