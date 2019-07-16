@@ -26,13 +26,12 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
       </Card.Content>
     </Card>
   )
-
 };
 
 const CardSelectBorder = styled.div`
   border-radius: 4px !important;
   border: 5px solid !important; 
-  border-color: rgb(77, 247, 74) !important;
+  border-color: rgb(124, 245, 103) !important;
 `;
 
 const CardUnselectBorder = styled.div`
