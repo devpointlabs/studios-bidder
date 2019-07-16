@@ -11,7 +11,7 @@ class Api::EstimatesController < ApplicationController
   def create
     estimate = Estimate.new(estimates_params)
     if estimate.save
-      FeatureEstimate.post_all_features(params[:selectedFeatures], estimate.id )
+      # FeatureEstimate.post_all_features(params[:selectedFeatures], estimate.id )
       render json: estimate.id
     else
       render json: estimate.errors, status:418
