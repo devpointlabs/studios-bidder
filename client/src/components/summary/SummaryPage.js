@@ -21,10 +21,6 @@ const SummaryPage = ({eID, name, email}) => {
   const { toPlatformItems, featuresFromEstimate, categoriesFromEstimate } = useContext(FeatureContext);
   const { exclusiveWebFeatures } = useContext(MathContext)
 
-  // const ConvertState = () => {
-  //   eCatagories.push(...categoriesFromEstimate);
-  //   eFeatures.push(...featuresFromEstimate);
-  // }
 
   useEffect( () => {
     // axios.get(`/api/features_estimates/${eID}`)
@@ -37,7 +33,7 @@ const SummaryPage = ({eID, name, email}) => {
   },[eID]);
 
   return (
-    <Segment.Group Vertical as={Colors} colored="white">
+    <Segment.Group Vertical as={NoLine} color="white">
       <InternalPadding>
         <Segment vertical as={NoLine}>
           <Header as="h1" image>
@@ -60,36 +56,34 @@ const SummaryPage = ({eID, name, email}) => {
           <Table singleLine>
             <Table.Row> 
               <Table.Cell>Design</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.design_value}</Table.Cell>
+              <Table.Cell textAlign='right'>{estimate.design_value} Days</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Deployment</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.deployment_value}</Table.Cell>
+              <Table.Cell textAlign='right'>{estimate.deployment_value} Days</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Quality Assurance Testing</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.qaTesting_value}</Table.Cell>
+              <Table.Cell textAlign='right'>{estimate.qaTesting_value} Days</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Post Deployment Development</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.postDeploymentDev_value}</Table.Cell>
+              <Table.Cell textAlign='right'>{estimate.postDeploymentDev_value} Days</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Non Dev Assumptions Total Days</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.nonDevTotal}</Table.Cell>
+              <Table.Cell textAlign='right'>{estimate.nonDevTotal} Days</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>General Buffer Time</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.generalBuffer_value}</Table.Cell>
+              <Table.Cell textAlign='right'>{estimate.generalBuffer_value} Days</Table.Cell>
             </Table.Row>
             <Table.Row> 
               <Table.Cell>Total Days</Table.Cell>
-              <Table.Cell textAlign='right'> Days {estimate.total}</Table.Cell>
+              <Table.Cell textAlign='right'>{estimate.total} Days</Table.Cell>
             </Table.Row>
           </Table>
         </Segment>
-      {/* <Modal Button to close
-        resetMath() */}
       </InternalPadding>
     </Segment.Group>
   )
@@ -99,6 +93,8 @@ const NoLine = styled.div`
   border-bottom: 0px !important;
   border-bottom-width: 0px !important;
   border-color: white !important;
+  border-top: 0px !important;
+  border-top-width: 0px !important;
 `
 
 const InternalPadding = styled.div`
@@ -106,9 +102,4 @@ const InternalPadding = styled.div`
   background: white !important;
 `
 
-
-
 export default SummaryPage
-
-
- {/* features={eFeatures} catagories={eCatagories} */}

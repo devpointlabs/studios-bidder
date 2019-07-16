@@ -21,11 +21,10 @@ const MainDisplay = () => {
   const [name, setName] = useState('a');
   const [email, setEmail] = useState('a@a');
   const [estimate_id, setEstimate_id] = useState('');
-  // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
   const [nonDevAssumptions, setNonDevAssumptions] = useState([])
-  // const [modalClose, setModalClose] = useState(true);
+  // const [modalClose, setModalClose] = useState(false);
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
   const { handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs} = useContext(FeatureContext);
@@ -45,16 +44,14 @@ const MainDisplay = () => {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
 
     selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
-
+    featureIDsFromEstimate.push(...selectedFeatures)
+    // const uniqFeatures = [ ...new Set(selectedFeatures) ]
+    // featureIDsFromEstimate = [ ...new Set(featureIDsFromEstimate) ]
+    // featureIDsFromEstimate.push(...uniqFeatures)
     const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
 
     axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: selectedFeatures}})
       .then( res => {
-        // setEmail('')
-        // setName('')
-        // setSelectedFeatures([])
-        // setRadioButtons([])
-        // resetMath()
         setEstimate_id(res.data)
         handleSelectedIDs()
         }
@@ -62,13 +59,14 @@ const MainDisplay = () => {
       .catch(error => console.log(error));
   };
 
-  // const handleModal = () => {
-  //       setEmail('')
-  //       setName('')
-  //       setSelectedFeatures([])
-  //       setRadioButtons([])
-  //       resetMath()
-  //     }
+  const handleSaveModal = () => {
+    setEmail('')
+    setName('')
+    setSelectedFeatures([])
+    setRadioButtons([])
+    resetMath()
+  }
+
       
   const getNonDevAssumptionsData = (data) => {
     setNonDevAssumptions(data)
@@ -114,10 +112,9 @@ const MainDisplay = () => {
   return(
     <>
     <Segment.Group Vertical as={Colors} colored="white">
-    <Navbar />
+      <Navbar />
       {/* <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"></link> */}
       {/* <style>@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');</style> */}
-      {/* <Navbar/> */}
       <Header align="center" as={MainTitle} colored="dark-grey" fSize="large">
         Estimate Your App
       </Header>
@@ -219,7 +216,8 @@ const MainDisplay = () => {
               value={email}
             />
             <Modal  
-                    // closeIcon
+                    closeIcon
+                    
                     // closeOnDimmerClick={false} 
                     // closeOnEscape={false} 
                     // closeOnDocumentClick={false}
@@ -227,17 +225,17 @@ const MainDisplay = () => {
                     <Form.Button onClick={handleSubmit} basic>Submit for Estimate Summary</Form.Button>
                     }>
               <SummaryPage eID={estimate_id} submit={handleSubmit} name={name} email={email}/>
-              {/* <Modal.Actions>
+              <Modal.Actions as={NoLine}>
                 <Button>
                   <Icon name='remove' /> Go back and edit these choices
                 </Button>
                 <Button
-                  onClick={handleModal}
+                  onClick={handleSaveModal}
                   labelPosition='right'
                   icon='checkmark'
                   content='Save and close this estimate'
               />
-              </Modal.Actions> */}
+              </Modal.Actions>
             </Modal>
           </Form>
         </FormBorder>

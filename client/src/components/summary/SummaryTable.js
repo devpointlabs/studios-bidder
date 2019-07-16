@@ -12,14 +12,8 @@ import { FeatureContext,} from '../../providers/FeatureProvider';
 
 
 const SummaryTable = ({ platform, platformByNum, estimateID, features, catagories }) => {
-  // take pID pull categories with pID === c.platform_id
-  // take those catIDs and do the same with features
-  // const correctF = features.filter( f => catID === f.category_id);
-  // const [platformCategories, setPlatformCategories] = useState('');
-  // const [platformFeatures, setPlatformFeatures] = useState('');
   const [catagoriesEstimates, setCatagoriesEstimates] = useState([]);
   const [featuresEstimates, setFeaturesEstimates] = useState([]);
-  // const [f, setF] = useState([])
 
   const { toPlatformItems, platformFeatures, platformCategories, featuresFromEstimate, categoriesFromEstimate } = useContext(FeatureContext);
 
@@ -28,7 +22,6 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
     setCatagoriesEstimates(categoriesFromEstimate)
     setFeaturesEstimates(featuresFromEstimate)
   }, [categoriesFromEstimate])
-  // { platform, platformByNum, estimateID }
 
   const platformRendering = (platformByNum) => {
     if ((catagoriesEstimates.filter( f => platformByNum == f.platform_id)) != 0) {
@@ -42,12 +35,9 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
   }
 
   const exclusiveRendering = (platformByNum) => {
-    // const pCatagories = catagoriesEstimates.filter( f => platformByNum == f.platform_id);
     const pCatagories = [ ...new Set(catagoriesEstimates.filter( f => platformByNum == f.platform_id)) ]
     // const pFeatures = featuresEstimates.filter( f => pCatagories.id === f.catagory_id)
 
-    // console.log(pCatagories)
-    // if (category.platform_id == platformByNum) {
 
       return (
         pCatagories.map( c => {
@@ -56,7 +46,6 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
               <Table singleLine fixed>
                 <Table.Header>
                   <Table.HeaderCell colSpan='4' textAlign="center"> {c.name}</Table.HeaderCell>
-                  {/* <Table.HeaderCell colSpan='3'> */}
                   <Table.Row>
                     <Table.HeaderCell> Feature Name</Table.HeaderCell>
                     <Table.HeaderCell> </Table.HeaderCell>
