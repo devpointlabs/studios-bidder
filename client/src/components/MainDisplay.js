@@ -17,8 +17,8 @@ import { FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
-  const [name, setName] = useState('a');
-  const [email, setEmail] = useState('a@a');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [estimate_id, setEstimate_id] = useState('');
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
