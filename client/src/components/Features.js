@@ -10,7 +10,9 @@ const Features = (props) => {
   // const [platforms, setPlatforms] = useState([])
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
+  const [hover, setHover] = useState([]);
   // const [radioButtons, setRadioButtons] = useState([])
+
 
   const { handleSetDays, handleExclusiveDaysByFeature} = useContext(MathContext);
 
@@ -28,6 +30,16 @@ const Features = (props) => {
     axios.get(`/api/features_by_platform`, {params: {platform_id: os}})
       .then(res => setFeatures(res.data));
   },[props.OS]);
+
+  const hoverOn = () => {
+
+
+  }
+  
+  const hoverOff = () => {
+    this.setState({ hover: true });
+
+  }
   
   
   const handleCheckbox = (catID, value) => {
@@ -72,7 +84,13 @@ const Features = (props) => {
                 <>
                 <RowSpacing>
                   <Grid.Column centered>
-                    <FeatureCard onClickFunction={handleRadio} isSelected={isSelected} f={f}/>
+                    <FeatureCard 
+                      onClickFunction={handleRadio} 
+                      isSelected={isSelected} 
+                      f={f}
+                      onMouseEnter={hoverOn}
+                      onMouseLeave={hoverOff}
+                      />
                   </Grid.Column>
                 </RowSpacing>
               </>
@@ -80,7 +98,7 @@ const Features = (props) => {
             </Grid.Row>
           </Grid>
         </Spacing>
-        );
+      );
       }else {
         return (
           <Spacing>
@@ -130,6 +148,10 @@ const CategoryContainer = styled.div`
   margin-top:10px;
   border-radius: 4px;
   background: white;
+  /* &:hover {
+    background: #606060;
+    transition: background 0.2s ease;
+  } */
 `;
 
 const Spacing = styled.div`
