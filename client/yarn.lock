@@ -8124,7 +8124,7 @@ react-app-polyfill@^1.0.1:
     regenerator-runtime "0.13.2"
     whatwg-fetch "3.0.0"
 
-react-compound-slider@^2.1.0:
+react-compound-slider@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-compound-slider/-/react-compound-slider-2.2.0.tgz#d79adb60d3b42fb2f2e6a88d7630795244a434a2"
   integrity sha512-HFYKtbL1MZyrBrK29Y7KBRU2INnPqX0yODdcWd539sif7eLPoG2uEULloga2ju7l7zcIWzJcehO12WrieHDIiA==

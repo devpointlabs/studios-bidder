@@ -1,7 +1,7 @@
 import React,{ useState, useContext, useEffect } from 'react';
 // import OSMath from './OSMath';
 // import TotalMath from './TotalMath';
-import { Segment, Header, Table} from 'semantic-ui-react';
+import { Container, Segment, Header, Table} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
 // import WhiteText from "../styles/WhiteText";
 // import MainTitle from '../styles/MainTitle';
@@ -43,12 +43,13 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
         pCatagories.map( c => {
           return (
             <Segment vertical as={NoLine}>
-              <Table singleLine fixed>
+              <Table singleLine fixed stackable>
                 <Table.Header>
-                  <Table.HeaderCell colSpan='4' textAlign="center"> {c.name}</Table.HeaderCell>
+                    <Table.Row>
+                      <Table.HeaderCell colSpan='4' textAlign="center"> {c.name}</Table.HeaderCell>
+                    </Table.Row>
                   <Table.Row>
-                    <Table.HeaderCell> Feature Name</Table.HeaderCell>
-                    <Table.HeaderCell> </Table.HeaderCell>
+                    <Table.HeaderCell colSpan='2'> Feature Name</Table.HeaderCell>
                     <Table.HeaderCell textAlign='right'> Developer Days </Table.HeaderCell>
                     <Table.HeaderCell textAlign='right'> Multiplier</Table.HeaderCell>
                   </Table.Row>
@@ -58,8 +59,7 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
                     return (
                     <>
                       <Table.Row>
-                        <Table.Cell>{f.name}</Table.Cell>
-                        <Table.Cell></Table.Cell>
+                        <Table.Cell colSpan='2'>{f.name}</Table.Cell>
                         <Table.Cell textAlign='right'>{f.base_days}</Table.Cell>
                         <Table.Cell textAlign='right'>{f.multiplier}</Table.Cell>
                       </Table.Row>
@@ -73,7 +73,6 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
         })
       )
     }
-
 
   return (
     <Segment vertical as={NoLine}>
@@ -89,9 +88,6 @@ const NoLine = styled.div`
   border-color: white !important;
 `
 
-const CategoryHeader = styled.div`
-   text-decoration: underline !important;
-   color: rgb(94, 66, 150) !important
-`
+
 
 export default SummaryTable;

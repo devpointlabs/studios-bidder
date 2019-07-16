@@ -6,7 +6,6 @@ import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
 import SummaryPage from './summary/SummaryPage';
-import SummaryModal from './summary/SummaryModal';
 import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header, Form, Modal, Button} from 'semantic-ui-react';
@@ -217,14 +216,13 @@ const MainDisplay = () => {
             />
             <Modal  
                     closeIcon
-                    
                     // closeOnDimmerClick={false} 
                     // closeOnEscape={false} 
                     // closeOnDocumentClick={false}
-                    trigger={
+                    trigger={  selectedFeatures.length > 0 || radioButtons.length > 0 &&
                     <Form.Button onClick={handleSubmit} basic>Submit for Estimate Summary</Form.Button>
                     }>
-              <SummaryPage eID={estimate_id} submit={handleSubmit} name={name} email={email}/>
+              <SummaryPage as={NoLine}eID={estimate_id} submit={handleSubmit} name={name} email={email}/>
               <Modal.Actions as={NoLine}>
                 <Button>
                   <Icon name='remove' /> Go back and edit these choices
@@ -248,6 +246,7 @@ const MainDisplay = () => {
 const NoLine = styled.div`
   border-top: none !important;
   border-top-width: 0px !important;
+  background: white !important;
 `
 
 const FormBorder = styled.div`
