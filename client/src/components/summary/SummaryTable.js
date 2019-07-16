@@ -18,7 +18,6 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
   const { toPlatformItems, platformFeatures, platformCategories, featuresFromEstimate, categoriesFromEstimate } = useContext(FeatureContext);
 
   useEffect( () => {
-
     setCatagoriesEstimates(categoriesFromEstimate)
     setFeaturesEstimates(featuresFromEstimate)
   }, [categoriesFromEstimate])
@@ -59,7 +58,7 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
                     return (
                     <>
                       <Table.Row>
-                        <Table.Cell colSpan='2'>{f.name}</Table.Cell>
+                        <Table.Cell colSpan='2'>{f.name} ---- {f.id}</Table.Cell>
                         <Table.Cell textAlign='right'>{f.base_days}</Table.Cell>
                         <Table.Cell textAlign='right'>{f.multiplier}</Table.Cell>
                       </Table.Row>

@@ -75,6 +75,10 @@ export class FeatureProvider extends React.Component {
     })
   }
 
+  handleResetIDs = () => {
+    this.setState({featureIDsFromEstimate: [], featuresFromEstimate: [], categoriesFromEstimate: []})
+  }
+
   handleEstimate = (ID) => {
     const {featureIDsFromEstimate} = this.state;
     this.setState({featureIDsFromEstimate: []}) 
@@ -88,13 +92,12 @@ export class FeatureProvider extends React.Component {
     return (
       <FeatureContext.Provider value={{
        ...this.state,
-      //  handleSelected: this.handleSelected,
-      //  handleAll: this.handleAll,
        handleFeatures: this.handleFeatures,
        handleCategories: this.handleCategories,
        handleSelectedIDs: this.handleSelectedIDs,
        toPlatformItems: this.toPlatformItems,
        handleEstimate: this.handleEstimate,
+       handleResetIDs: this.handleResetIDs,
       }}>
         {this.props.children}
       </FeatureContext.Provider>

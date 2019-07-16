@@ -8,6 +8,15 @@ class Api::EstimatesController < ApplicationController
     render json: Estimate.find(params[:id])
   end 
 
+  def update 
+    @estimate = Estimate.find(params[:id])
+    if @estimate.update(estimates_params)
+        render json: @estimate
+    else
+        render json: @estimate.errors, status: 422
+    end
+  end
+
   def create
     estimate = Estimate.new(estimates_params)
     if estimate.save

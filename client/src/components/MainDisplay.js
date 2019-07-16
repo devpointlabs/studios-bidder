@@ -30,7 +30,7 @@ const MainDisplay = () => {
   const [errorPopup, setErrorPopup] = useState(false)
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
-  const { handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs} = useContext(FeatureContext);
+  const { handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs, setFeaturesFromEstimate} = useContext(FeatureContext);
 
     useEffect( () => {
     // axios.get(`/api/platforms`)
@@ -48,24 +48,13 @@ const MainDisplay = () => {
     let newArray = []
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
     
-    selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
-    // newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
-    // const featureIDsFromEstimate = selectedFeatures
+    newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
 
     const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
     
-    // axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: newArray}})
-    
-    
-    // selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
-    featureIDsFromEstimate.push(...selectedFeatures)
+    featureIDsFromEstimate.push(...newArray)
     setNotFirstSubmit(true)
     setModalOpen(true)
-    // // const uniqFeatures = [ ...new Set(selectedFeatures) ]
-    // // featureIDsFromEstimate = [ ...new Set(featureIDsFromEstimate) ]
-    // // featureIDsFromEstimate.push(...uniqFeatures)
-    // const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
-    
     
     axios.post(`/api/estimates`, estimate)
       .then( res => {
@@ -78,18 +67,18 @@ const MainDisplay = () => {
     console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
   };
 
-  const handleResubmit = () => { 
-    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
-    intermediateFeatures.push(...selectedFeatures, ...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
-    setSelectedFeatures([...new Set(intermediateFeatures)])
-    const featureIDsFromEstimate = selectedFeatures
-    console.log("handle resubmit", selectedFeatures, featureIDsFromEstimate, estimate_id)
+  const handleResubmit = () => {
+    // const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
+    let newArray = []
+    newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
+    featureIDsFromEstimate.push(...newArray)
+
     setNotFirstSubmit(true)
     setModalOpen(true)
+    handleSelectedIDs()
   }
 
   const handleSaveModal = () => {
-    console.log("handle save modal", selectedFeatures, featureIDsFromEstimate, estimate_id)
     axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id})
       .then( res => {
         setEmail('')
@@ -99,6 +88,7 @@ const MainDisplay = () => {
         resetMath()
         setNotFirstSubmit(false)
         setModalOpen(false)
+        handleResetIDs()
       })
   }
 
@@ -109,22 +99,29 @@ const MainDisplay = () => {
   const handleFormButton = () => {
     if (selectedFeatures.length > 0 || radioButtons.length > 0) {
       if (notFirstSubmit === false) {
-        console.log("handle submit")
         handleSubmit()
         setModalOpen(true)
       } 
       if (notFirstSubmit === true) {
-        console.log("handle RE - submit")
         handleResubmit()
+        updateEstimate()
         setModalOpen(true)
       }
     } else {
-      console.log("a;lksdjf;")
       setErrorPopup(true)
     }
   }
 
+  const updateEstimate = () => {
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
+    const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+    console.log(estimate)
+    axios.put(`/api/estimates/${estimate_id}`, estimate)
+      .then(console.log(estimate))
+  }
+
   const handleCloseModal = () => {
+    handleResetIDs()
     setModalOpen(false)
   }
       
@@ -275,14 +272,11 @@ const MainDisplay = () => {
               label='Email'
               value={email}
             />
-            {/* <Container> */}
-              <Form.Button onClick={handleFormButton} basic>Submit for Estimate Summary
-              </Form.Button>
-            {/* </Container> */}
+              <Form.Button onClick={handleFormButton} basic>Submit for Estimate Summary</Form.Button>
           </Form>
         </FormBorder>
         <Modal  
-                closeIcon
+                // closeIcon
                 // closeOnDimmerClick={false} 
                 // closeOnEscape={false} 
                 // closeOnDocumentClick={false}
@@ -302,11 +296,9 @@ const MainDisplay = () => {
         </Modal>
         <Modal
           open={errorPopup}
-          // open={this.state.modalOpen}
           basic
           size='small'
         >
-          {/* <Header icon='browser' content='Cookies policy' /> */}
           <Modal.Content>
             <h3>You did not select any features...</h3>
           </Modal.Content>
@@ -317,12 +309,6 @@ const MainDisplay = () => {
           </Modal.Actions>
         </Modal> 
       </Segment>
-      {/* <Popup
-        trigger={errorPopup}
-        content="You didn't select any features."
-        // on='click'
-        // hideOnScroll
-      /> */}
     </Segment.Group>
     </>
   )
@@ -346,5 +332,4 @@ const FormBorder = styled.div`
   background: white !important;
 `
 
-export default MainDisplay;
-
+export default MainDisplay
