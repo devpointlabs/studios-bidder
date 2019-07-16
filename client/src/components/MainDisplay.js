@@ -21,6 +21,7 @@ const MainDisplay = () => {
   const [email, setEmail] = useState('a@a');
   const [estimate_id, setEstimate_id] = useState('');
   const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [intermediateFeatures, setIntermediateFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
   const [nonDevAssumptions, setNonDevAssumptions] = useState([])
   // const [modalClose, setModalClose] = useState(false);
@@ -57,6 +58,13 @@ const MainDisplay = () => {
       )
       .catch(error => console.log(error));
   };
+
+  const handleResubmit = () => { 
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
+    intermediateFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
+    const selectedFeatures = [...new Set(intermediateFeatures)]; 
+    featureIDsFromEstimate.push(...selectedFeatures)
+  }
 
   const handleSaveModal = () => {
     setEmail('')
