@@ -8,12 +8,13 @@ import AndroidDisplay from './AndroidDisplay';
 import SummaryPage from './summary/SummaryPage';
 import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
-import {Icon, Segment, Header, Form, Modal, Button} from 'semantic-ui-react';
+import {Icon, Segment, Header, Form, Modal, Button, Message, Container, Popup} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
 import {MathContext,} from '../providers/MathProvider';
 import { FeatureContext} from '../providers/FeatureProvider';
+// import { handleSubmit, } from './MainHelper'
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
@@ -24,7 +25,9 @@ const MainDisplay = () => {
   const [intermediateFeatures, setIntermediateFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
   const [nonDevAssumptions, setNonDevAssumptions] = useState([])
-  // const [modalClose, setModalClose] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [notFirstSubmit, setNotFirstSubmit] = useState(false)
+  const [errorPopup, setErrorPopup] = useState(false)
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
   const { handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs} = useContext(FeatureContext);
@@ -40,45 +43,90 @@ const MainDisplay = () => {
       .then(res => handleFeatures(res.data))
   },[]);
 
+
   const handleSubmit = () => {
+    let newArray = []
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
-
+    
     selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
+    // newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
+    // const featureIDsFromEstimate = selectedFeatures
+
+    const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+    
+    // axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: newArray}})
+    
+    
+    // selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
     featureIDsFromEstimate.push(...selectedFeatures)
-    // const uniqFeatures = [ ...new Set(selectedFeatures) ]
-    // featureIDsFromEstimate = [ ...new Set(featureIDsFromEstimate) ]
-    // featureIDsFromEstimate.push(...uniqFeatures)
-      const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
-
-
-      axios.post(`/api/estimates`, estimate)
+    setNotFirstSubmit(true)
+    setModalOpen(true)
+    // // const uniqFeatures = [ ...new Set(selectedFeatures) ]
+    // // featureIDsFromEstimate = [ ...new Set(featureIDsFromEstimate) ]
+    // // featureIDsFromEstimate.push(...uniqFeatures)
+    // const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+    
+    
+    axios.post(`/api/estimates`, estimate)
       .then( res => {
         setEstimate_id(res.data)
         handleSelectedIDs()
       }
       )
       .catch(error => console.log(error));
+    
+    console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
   };
 
   const handleResubmit = () => { 
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
-    intermediateFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
-    const selectedFeatures = [...new Set(intermediateFeatures)]; 
-    featureIDsFromEstimate.push(...selectedFeatures)
+    intermediateFeatures.push(...selectedFeatures, ...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
+    setSelectedFeatures([...new Set(intermediateFeatures)])
+    const featureIDsFromEstimate = selectedFeatures
+    console.log("handle resubmit", selectedFeatures, featureIDsFromEstimate, estimate_id)
+    setNotFirstSubmit(true)
+    setModalOpen(true)
   }
 
   const handleSaveModal = () => {
-    axios.post(`/api/features_estimates`, {selectedFeatures: selectedFeatures, estimate_id: estimate_id})
+    console.log("handle save modal", selectedFeatures, featureIDsFromEstimate, estimate_id)
+    axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id})
       .then( res => {
-        debugger
         setEmail('')
         setName('')
         setSelectedFeatures([])
         setRadioButtons([])
         resetMath()
+        setNotFirstSubmit(false)
+        setModalOpen(false)
       })
   }
 
+  const errorModalClose = () => {
+    setErrorPopup(false)
+  }
+
+  const handleFormButton = () => {
+    if (selectedFeatures.length > 0 || radioButtons.length > 0) {
+      if (notFirstSubmit === false) {
+        console.log("handle submit")
+        handleSubmit()
+        setModalOpen(true)
+      } 
+      if (notFirstSubmit === true) {
+        console.log("handle RE - submit")
+        handleResubmit()
+        setModalOpen(true)
+      }
+    } else {
+      console.log("a;lksdjf;")
+      setErrorPopup(true)
+    }
+  }
+
+  const handleCloseModal = () => {
+    setModalOpen(false)
+  }
       
   const getNonDevAssumptionsData = (data) => {
     setNonDevAssumptions(data)
@@ -227,30 +275,54 @@ const MainDisplay = () => {
               label='Email'
               value={email}
             />
-            <Modal  
-                    closeIcon
-                    // closeOnDimmerClick={false} 
-                    // closeOnEscape={false} 
-                    // closeOnDocumentClick={false}
-                    trigger={ selectedFeatures.length > 0 || radioButtons.length > 0 &&
-                    <Form.Button onClick={handleSubmit} basic>Submit for Estimate Summary</Form.Button>
-                    }>
-              <SummaryPage as={NoLine}eID={estimate_id} submit={handleSubmit} name={name} email={email}/>
-              <Modal.Actions as={NoLine}>
-                <Button>
-                  <Icon name='remove' /> Go back and edit these choices
-                </Button>
-                <Button
-                  onClick={handleSaveModal}
-                  labelPosition='right'
-                  icon='checkmark'
-                  content='Save and close this estimate'
-              />
-              </Modal.Actions>
-            </Modal>
+            {/* <Container> */}
+              <Form.Button onClick={handleFormButton} basic>Submit for Estimate Summary
+              </Form.Button>
+            {/* </Container> */}
           </Form>
         </FormBorder>
+        <Modal  
+                closeIcon
+                // closeOnDimmerClick={false} 
+                // closeOnEscape={false} 
+                // closeOnDocumentClick={false}
+                open={modalOpen}>
+          <SummaryPage as={NoLine} eID={estimate_id} submit={handleSaveModal} name={name} email={email}/>
+          <Modal.Actions as={NoLine}>
+            <Button onClick={handleCloseModal}>
+              <Icon name='remove' /> Go back and edit these choices
+            </Button>
+            <Button
+              onClick={handleSaveModal}
+              labelPosition='right'
+              icon='checkmark'
+              content='Save and close this estimate'
+            />
+          </Modal.Actions>
+        </Modal>
+        <Modal
+          open={errorPopup}
+          // open={this.state.modalOpen}
+          basic
+          size='small'
+        >
+          {/* <Header icon='browser' content='Cookies policy' /> */}
+          <Modal.Content>
+            <h3>You did not select any features...</h3>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button color='green' inverted onClick={errorModalClose}>
+              <Icon name='checkmark' /> Got it
+            </Button>
+          </Modal.Actions>
+        </Modal> 
       </Segment>
+      {/* <Popup
+        trigger={errorPopup}
+        content="You didn't select any features."
+        // on='click'
+        // hideOnScroll
+      /> */}
     </Segment.Group>
     </>
   )
