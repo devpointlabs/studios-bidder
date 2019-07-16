@@ -8,7 +8,7 @@ class Feature < ApplicationRecord
 
   def self.get_features_by_platform(platform_id)
     Feature.find_by_sql("
-      SELECT *
+      SELECT id, name, description, base_days, multiplier, category_id, platform_id, created_at
       FROM features
       WHERE platform_id = #{platform_id}
     ")

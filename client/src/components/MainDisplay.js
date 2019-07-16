@@ -21,7 +21,7 @@ const MainDisplay = () => {
   // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
-  const [nonDevAssumptions, setNonDevAssumptions] = useState([])
+  const [nonDevAssumptions, setNonDevAssumptions] = useState();
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
 
@@ -31,9 +31,12 @@ const MainDisplay = () => {
   // });
 
   const handleSubmit = () => {
-    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer} = nonDevAssumptions
-    selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
-    const estimate = {customer_name: name, customer_email: email, design: design, qaTesting: qaTesting, deployment: deployment, postDeploymentDev: postDeploymentDev, projectManagement: projectManagement, generalBuffer: generalBuffer};
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
+
+    selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), );
+
+    const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+
     axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: selectedFeatures}})
       .then( res => {
         setEmail('')
@@ -176,7 +179,9 @@ const MainDisplay = () => {
           <OSMath OS='android'/>
         </Segment>
       </Segment.Group>
-      <TotalMath getNonDevAssumptionsData={getNonDevAssumptionsData}/>
+      <TotalMath 
+        getNonDevAssumptionsData={getNonDevAssumptionsData}
+      />
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
           client's name and email to save estimate
