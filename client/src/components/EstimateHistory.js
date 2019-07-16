@@ -31,6 +31,7 @@ const EstimateHistory = () => {
   
   const handleSearchChange = (e, { value }) => {
     setIsLoading(true)
+    setSearchValue(value)
 
     setTimeout(() => {
       if (value.length < 1) {
@@ -39,6 +40,7 @@ const EstimateHistory = () => {
         setSearchResults([])
         return
       }
+      
 
       const re = new RegExp(_.escapeRegExp(value), 'i')
       const isMatch = result => re.test(result.customer_name)
