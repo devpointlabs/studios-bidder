@@ -2,8 +2,8 @@ import React from "react";
 import NonDevAssumptions from './NonDevAssumptions';
 import { MathConsumer } from "../providers/MathProvider";
 import { Header } from 'semantic-ui-react';
-import DarkText from '../styles/DarkText'
-import MainTitle from "../styles/MainTitle";
+import DarkText from '../styles/DarkText';
+import MainTitle from '../styles/MainTitle';
 
 class TotalMath extends React.Component {
 
@@ -15,9 +15,9 @@ class TotalMath extends React.Component {
   render() {
     return(
       <>
-        <Header align="center" as={DarkText} fSize="medium">Subtotal Days: {this.coreDevTime()}</Header>
+        <Header align="center" as={DarkText} fSize="medium"><span style={{fontSize: '.6em'}}>*</span>Subtotal Days: {this.coreDevTime()}</Header>
         <Header align="center" as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
-          Combined price of Web, iOs, and Android.
+          *Combined total of Web, iOs, and Android.
         </Header>
         {this.coreDevTime() > 1 &&
         <NonDevAssumptions 

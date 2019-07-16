@@ -1,18 +1,21 @@
 import React from 'react';
-import {Grid, } from 'semantic-ui-react';
+import {Grid, Header} from 'semantic-ui-react';
+import DarkText from '../styles/DarkText';
+import MainTitle from '../styles/MainTitle';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
 import GeneralBufferSlider from './GeneralBufferSlider';
 
 class NonDevAssumptions extends React.Component {
   state = {
-    design: {multiplier: .10, value: this.props.coreDevTime * .1},
-    qaTesting: {multiplier: .10, value: this.props.coreDevTime * .1},
-    deployment: {multiplier: .03, value: this.props.coreDevTime * .03},
-    postDeploymentDev: {multiplier: .15, value: this.props.coreDevTime * .15},
-    projectManagement: {multiplier: .10, value: this.props.coreDevTime * .1},
-    generalBuffer: .05,
+    design: {multiplier: .10, value: Math.round((this.props.coreDevTime * .1) * 1e1) / 1e1},
+    qaTesting: {multiplier: .10, value: Math.round((this.props.coreDevTime * .1) * 1e1) / 1e1},
+    deployment: {multiplier: .03, value: Math.round((this.props.coreDevTime * .03) * 1e1) / 1e1},
+    postDeploymentDev: {multiplier: .15, value: Math.round((this.props.coreDevTime * .15) * 1e1) / 1e1},
+    projectManagement: {multiplier: .10, value: Math.round((this.props.coreDevTime * .1) * 1e1) / 1e1},
+    generalBuffer: {multiplier: .05, value: null},
     nonDevTotal: 0,
+    total: 0,
     coreDevTime: this.props.coreDevTime,
   };
   
@@ -20,17 +23,17 @@ class NonDevAssumptions extends React.Component {
   handleChange = (nonDevTime, multiplier, name) => {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = this.state   
     this.setState({[name]: {multiplier: (multiplier / 100), value: nonDevTime}})
-    this.setState({nonDevTotal: (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)})
+    this.setState({nonDevTotal: Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value)* 1e1) / 1e1})
   };
   
   componentDidMount() {
     const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
-    this.setState({nonDevTotal: (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)});
+    this.setState({nonDevTotal: Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value) * 1e1) / 1e1});
   };
   
   componentDidUpdate(prevProps, prevState) {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = prevState;
-    const {coreDevTime} = this.props;
+    const {coreDevTime, getNonDevAssumptionsData} = this.props;
     let dt = this.props.coreDevTime;
     if (this.state.coreDevTime !== dt ) {
       this.setState({
@@ -43,44 +46,43 @@ class NonDevAssumptions extends React.Component {
       });
       this.updateNonDevTotal();
     };
-    if (this.state.nonDevTotal !== prevState.nonDevTotal){
-    const dataToSendToMainDisplay = {design: this.state.design.multiplier, qaTesting: this.state.qaTesting.multiplier, deployment: this.state.deployment.multiplier, postDeploymentDev: this.state.postDeploymentDev.multiplier, projectManagement: this.state.projectManagement.multiplier, generalBuffer: this.state.generalBuffer};
-    this.props.getNonDevAssumptionsData(dataToSendToMainDisplay);
+    if (this.state.nonDevTotal !== prevState.nonDevTotal || this.state.generalBuffer !== prevState.generalBuffer){
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = this.state;
+    const dataToSendToMainDisplay = {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total}
+    getNonDevAssumptionsData(dataToSendToMainDisplay);
     }
   };
   
   updateNonDevTotal = () => {
     const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
-    return (design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value).toFixed(1)
+    return (Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value) * 1e1) / 1e1)
   };
 
-  getGeneralBufferData = (data) => {
-    this.setState({generalBuffer: data})
+  getGeneralBufferData = (total, data) => {
+    const {generalBuffer} = data
+    this.setState({generalBuffer: generalBuffer,total })
   }
   
   render() {
     return(
       <div>
-        <Grid columns='two' stackable relaxed style={{padding: '20px'}}>
+        <Grid columns='one' stackable relaxed style={{padding: '20px 50px 20px 50px'}}>
         <Grid.Row>
           <Grid.Column centered>
             <SliderInfo>
-              <h4>Design</h4>
-              <h4>Days: {this.state.design.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Design</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.design.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='design'
               defaultValue={this.state.design.multiplier}
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
-              disabled={true}
               />
-          </Grid.Column>
             <br />
-          <Grid.Column>
             <SliderInfo>
-              <h4>Quality Assurance Testing</h4>
-              <h4>Days: {this.state.qaTesting.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Quality Assurance Testing</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.qaTesting.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='qaTesting'
@@ -88,14 +90,10 @@ class NonDevAssumptions extends React.Component {
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
               />
-          </Grid.Column>
             <br />
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
             <SliderInfo>
-              <h4>Deployment</h4>
-              <h4>Days: {this.state.deployment.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Deployment</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.deployment.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='deployment'
@@ -103,12 +101,10 @@ class NonDevAssumptions extends React.Component {
               coreDevTime={this.props.coreDevTime}
               handleChange={this.handleChange}
               />
-          </Grid.Column>
             <br />
-          <Grid.Column>
             <SliderInfo>
-              <h4>Post Deployment Development</h4>
-              <h4>Days: {this.state.postDeploymentDev.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Post Deployment Development</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.postDeploymentDev.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='postDeploymentDev'
@@ -122,8 +118,8 @@ class NonDevAssumptions extends React.Component {
         <Grid.Row>
           <Grid.Column>
             <SliderInfo>
-              <h4>Design</h4>
-              <h4>Days: {this.state.design.value.toFixed(1)}</h4>
+              <Header as={DarkText} fSize='small'>Project Management</Header>
+              <Header as={DarkText} fSize='small'>Days: {this.state.projectManagement.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='projectManagement'
@@ -147,10 +143,12 @@ class NonDevAssumptions extends React.Component {
 };
 
 const SliderInfo = styled.div`
+
+
   display: flex !important;
   align-items: baseline !important;
   justify-content: space-between !important;
-  margin-top: -30px !important;
+  margin-top: -1vh !important;
 `
 
 export default NonDevAssumptions;

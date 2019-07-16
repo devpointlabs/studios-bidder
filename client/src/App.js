@@ -19,15 +19,21 @@ const App = () => (
   <AppContainer>
     <MidContainer>
         <Switch>
-          <Route exact path ='/' component={MainDisplay} />
-          <Route exact path ='/History' component={EstimateHistory} />
+          {/* REMOVE ROUTES BELOW BEFORE PRODUCTION */}
+          {/*  */}
+          {/*  */}
           <Route exact path ='/Admin' component={AdminDisplay} />
+          <Route exact path ='/History' component={EstimateHistory} />
+          {/*  */}
+          {/*  */}
+          {/* REMOVE ABOVE ROUTES BEFORE PRODUCTION */}
+          <Route exact path ='/' component={MainDisplay} />
           <Route exact path ='/Android' component={AndroidDisplay} />
-          {/* <Route exact path ='/Summary' component={SummaryPage} /> */}
           <Route exact path ='/iOS' component={iOSDisplay} />
           <Route exact path ='/Web' component={WebDisplay} />
           <Route exact path="/api/features" component={Features} />
           <Route exact path ='/login' component={Login} />
+          <ProtectedRoute exact path ='/History' component={EstimateHistory} />
           <ProtectedRoute exact path ='/admin' component={AdminDisplay} />
           <Route component={NoMatch} />
         </Switch>

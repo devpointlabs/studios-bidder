@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_12_065651) do
+ActiveRecord::Schema.define(version: 2019_07_16_010158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,12 +35,20 @@ ActiveRecord::Schema.define(version: 2019_07_12_065651) do
     t.integer "designer_day_rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "design"
-    t.float "qaTesting"
-    t.float "deployment"
-    t.float "postDeploymentDev"
-    t.float "projectManagement"
-    t.float "generalBuffer"
+    t.float "design_multiplier"
+    t.float "qaTesting_multiplier"
+    t.float "deployment_multiplier"
+    t.float "postDeploymentDev_multiplier"
+    t.float "projectManagement_multiplier"
+    t.float "generalBuffer_multiplier"
+    t.float "design_value"
+    t.float "qaTesting_value"
+    t.float "deployment_value"
+    t.float "postDeploymentDev_value"
+    t.float "projectManagement_value"
+    t.float "generalBuffer_value"
+    t.float "total"
+    t.float "nonDevTotal"
   end
 
   create_table "feature_estimates", force: :cascade do |t|

@@ -8,6 +8,9 @@ import { MathProvider, } from './providers/MathProvider';
 import { FeatureProvider, } from './providers/FeatureProvider';
 import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
+import { initMiddleware, } from 'devise-axios';
+
+initMiddleware();
 
 ReactDOM.render(
 <AuthProvider>
