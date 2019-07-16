@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     
 
     resources :sessions, only: [:show, :update]
-    resources :estimates, only: [:index, :create, :update]
+    resources :estimates, only: [:index, :show, :create, :update]
     resources :features_estimates, only: [:index, :show, :create]
 
     get 'all_categories', to: 'categories#all_categories'

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import _ from 'lodash'
 import axios from 'axios'
 import { Table, Form, Header, Segment, Search, Label } from 'semantic-ui-react'
+import Navbar from './Navbar'
 
 const EstimateHistory = () => {
   const [estimates, setEstimates] = useState([])
@@ -47,7 +48,7 @@ const EstimateHistory = () => {
   }, [])
 
   const estimate = (id, name, email, created) => (
-    <Table.Row>
+    <Table.Row key={id}>
       <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
       <Table.Cell textAlign='center'>{name}</Table.Cell>
       <Table.Cell textAlign='center'>{email}</Table.Cell>
@@ -68,6 +69,11 @@ const EstimateHistory = () => {
   )
   return (
     <>
+      {/* <Segment.Group vertical> */}
+        {/* <Segment> */}
+      <Navbar />
+
+        {/* </Segment> */}
       <Segment style={{color: 'black'}}>
         Search: {searchForm}
         <Table striped>
@@ -82,11 +88,13 @@ const EstimateHistory = () => {
           </Table.Header>
           <Table.Body>
             {
-              estimates.map((e) => estimate(e.id, e.customer_name, e.customer_email, e.created_at))
+              estimates.map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.created_at))
             }
           </Table.Body>
         </Table>
       </Segment>
+
+      {/* </Segment.Group> */}
     </>
   )
 };

@@ -5,7 +5,7 @@ import AdminDisplay from './components/AdminDisplay';
 import EstimateHistory from './components/EstimateHistory';
 import iOSDisplay from './components/iOSDisplay';
 import AndroidDisplay from './components/AndroidDisplay';
-import SummaryPage from './components/SummaryPage';
+import SummaryPage from './components/summary/SummaryPage';
 import Features from './components/Features';
 import Login from './components/Login';
 import NoMatch from './components/NoMatch';
@@ -23,7 +23,7 @@ const App = () => (
           <Route exact path ='/History' component={EstimateHistory} />
           <Route exact path ='/Admin' component={AdminDisplay} />
           <Route exact path ='/Android' component={AndroidDisplay} />
-          <Route exact path ='/Summary' component={SummaryPage} />
+          {/* <Route exact path ='/Summary' component={SummaryPage} /> */}
           <Route exact path ='/iOS' component={iOSDisplay} />
           <Route exact path ='/Web' component={WebDisplay} />
           <Route exact path="/api/features" component={Features} />

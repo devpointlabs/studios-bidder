@@ -4,6 +4,10 @@ class Api::EstimatesController < ApplicationController
     render json: Estimate.all
   end
 
+  def show
+    render json: Estimate.find(params[:id])
+  end 
+
   def create
     estimate = Estimate.new(estimates_params)
     if estimate.save

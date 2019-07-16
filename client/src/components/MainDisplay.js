@@ -5,8 +5,8 @@ import TotalMath from './TotalMath';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
-import SummaryPage from './SummaryPage';
-import SummaryModal from './SummaryModal';
+import SummaryPage from './summary/SummaryPage';
+import SummaryModal from './summary/SummaryModal';
 import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header, Form, Modal, Button} from 'semantic-ui-react';
@@ -18,8 +18,8 @@ import { FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('a');
+  const [email, setEmail] = useState('a@a');
   const [estimate_id, setEstimate_id] = useState('');
   // const [platforms, setPlatforms] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
@@ -28,12 +28,7 @@ const MainDisplay = () => {
   // const [modalClose, setModalClose] = useState(true);
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
-  const { handleFeatures, handleCategories } = useContext(FeatureContext);
-
-      // useEffect( () => {
-  //   axios.get(`/api/platforms`)
-  //   .then(res=>setPlatforms(res.data))
-  // });
+  const { handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs} = useContext(FeatureContext);
 
     useEffect( () => {
     // axios.get(`/api/platforms`)
@@ -49,6 +44,7 @@ const MainDisplay = () => {
   const handleSubmit = () => {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer} = nonDevAssumptions
     selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
+    featureIDsFromEstimate.push(...selectedFeatures) 
     const estimate = {customer_name: name, customer_email: email, design: design, qaTesting: qaTesting, deployment: deployment, postDeploymentDev: postDeploymentDev, projectManagement: projectManagement, generalBuffer: generalBuffer};
     axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: selectedFeatures}})
       .then( res => {
@@ -57,10 +53,8 @@ const MainDisplay = () => {
         // setSelectedFeatures([])
         // setRadioButtons([])
         // resetMath()
-        // console.log(res.data)
         setEstimate_id(res.data)
-        // console.log(res.data)
-        // debugger
+        handleSelectedIDs()
         }
       )
       .catch(error => console.log(error));
@@ -117,8 +111,8 @@ const MainDisplay = () => {
 
   return(
     <>
-    <Navbar />
     <Segment.Group Vertical as={Colors} colored="white">
+    <Navbar />
       {/* <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"></link> */}
       {/* <style>@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');</style> */}
       {/* <Navbar/> */}

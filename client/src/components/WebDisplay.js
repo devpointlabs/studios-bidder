@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Features from './Features';
 import {Container, Segment, } from 'semantic-ui-react';
 import styled from "styled-components";
-
+import { FeatureContext} from '../providers/FeatureProvider';
 
 const WebDisplay = (props) => {
+  const {webCategories, webFeatures} = useContext(FeatureContext);
   
   return (
   <>
     <Segment as={NoLine}>
       <Container as={FeaturesContainer}>
-        <Features 
+        <Features
+          osFeatures={webFeatures}
+          osCategories={webCategories}
           OS='web'
           selectedFeatures={props.selectedFeatures}
           setSelectedFeatures={props.setSelectedFeatures}

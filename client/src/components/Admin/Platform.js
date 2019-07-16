@@ -65,12 +65,16 @@ const [tempName, setTempName] = useState('')
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell collapsing>
-              <Button icon color='purple' onClick={()=>setShowCategories(!showCategories)}>
-                <Icon name="eye"></Icon>
+              <Button size='massive' icon color='purple' onClick={()=>setShowCategories(!showCategories)}>
+              {showCategories?
+                <Icon name="chevron up"></Icon>
+                :
+                <Icon name="chevron down"></Icon>
+              }
               </Button>
               {
                 showCategories&&
-                <Button icon color={newCategory?"grey":"green"} onClick={()=>setNewCategory(!newCategory)}>
+                <Button size='massive' icon color={newCategory?"grey":"green"} onClick={()=>setNewCategory(!newCategory)}>
                   <Icon name={newCategory?"cancel":"plus"}/>
                 </Button>
               }
@@ -79,7 +83,7 @@ const [tempName, setTempName] = useState('')
               <h1>{props.name}</h1>
             </Table.HeaderCell>
             <Table.HeaderCell collapsing textAlign='right'>
-              <Button icon color="blue" onClick={()=>setEditing(true)}>
+              <Button size='massive' icon color="blue" onClick={()=>setEditing(true)}>
                 <Icon name="pencil"/>
               </Button>
             </Table.HeaderCell>
