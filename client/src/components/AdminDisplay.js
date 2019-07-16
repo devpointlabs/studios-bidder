@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import Navbar from './Navbar';
-import Platform from './Platform'
+import Platform from './Admin/Platform'
 
 const AdminDisplay = (props) => {
   const [categories, setCategories] = useState([])
@@ -23,7 +23,7 @@ const AdminDisplay = (props) => {
   
   return(
     <>
-      <Navbar/>
+      <Navbar />
       {platforms.map((platform)=> <Platform key={platform.id} name={platform.name} id={platform.id}  history={props.history}/>)}
     </>
   )

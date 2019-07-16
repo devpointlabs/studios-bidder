@@ -14,3 +14,5 @@ class Feature < ApplicationRecord
     ")
   end
 end
+
+# id, name, description, base_days, multiplier, category_id, platform_id, created_at

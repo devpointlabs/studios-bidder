@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const ColorStyled = (colored) => {
     switch(colored) {
+      case 'super-light-purple':
+        return 'rgb(197, 182, 227)';
       case 'light':
         return 'rgb(129, 104, 177)';
       case 'medium':

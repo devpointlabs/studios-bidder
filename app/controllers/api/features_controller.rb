@@ -10,6 +10,10 @@ before_action :set_feature, only: [:update, :destroy]
     render json: Feature.get_features_by_platform(params[:platform_id])
   end
 
+  def all_features
+    render json: Feature.all
+  end
+
   def create
     feature = @category.features.new(feature_params)
     if feature.save

@@ -17,11 +17,12 @@ Rails.application.routes.draw do
     
 
     resources :sessions, only: [:show, :update]
-    resources :estimates, only: [:index, :create, :update]
-    resources :features_estimates, only: [:create]
+    resources :estimates, only: [:index, :show, :create, :update]
+    resources :features_estimates, only: [:index, :show, :create]
 
     get 'all_categories', to: 'categories#all_categories'
+    get 'all_features', to: 'features#all_features'
     get 'features_by_platform', to: 'features#features_by_platform'
   end
-
+  get '*other', to: 'static#index'
 end
