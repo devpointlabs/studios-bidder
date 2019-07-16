@@ -14,6 +14,7 @@ gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 # User authentication
 gem 'devise_token_auth', '~>1.0.0'
+gem 'faker'
 
 #
 gem 'figaro'
