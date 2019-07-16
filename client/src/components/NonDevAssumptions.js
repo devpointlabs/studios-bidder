@@ -15,6 +15,7 @@ class NonDevAssumptions extends React.Component {
     projectManagement: {multiplier: .10, value: Math.round((this.props.coreDevTime * .1) * 1e1) / 1e1},
     generalBuffer: {multiplier: .05, value: null},
     nonDevTotal: 0,
+    total: 0,
     coreDevTime: this.props.coreDevTime,
   };
   
@@ -22,12 +23,12 @@ class NonDevAssumptions extends React.Component {
   handleChange = (nonDevTime, multiplier, name) => {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement} = this.state   
     this.setState({[name]: {multiplier: (multiplier / 100), value: nonDevTime}})
-    this.setState({nonDevTotal: Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value))})
+    this.setState({nonDevTotal: Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value)* 1e1) / 1e1})
   };
   
   componentDidMount() {
     const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
-    this.setState({nonDevTotal: Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value) * 5) / 5});
+    this.setState({nonDevTotal: Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value) * 1e1) / 1e1});
   };
   
   componentDidUpdate(prevProps, prevState) {
@@ -45,9 +46,9 @@ class NonDevAssumptions extends React.Component {
       });
       this.updateNonDevTotal();
     };
-    if (this.state.nonDevTotal !== prevState.nonDevTotal){
-    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal} = this.state;
-    const dataToSendToMainDisplay = {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer: {multiplier: generalBuffer, value: nonDevTotal * generalBuffer}}
+    if (this.state.nonDevTotal !== prevState.nonDevTotal || this.state.generalBuffer !== prevState.generalBuffer){
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = this.state;
+    const dataToSendToMainDisplay = {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total}
     getNonDevAssumptionsData(dataToSendToMainDisplay);
     }
   };
@@ -57,8 +58,9 @@ class NonDevAssumptions extends React.Component {
     return (Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value) * 1e1) / 1e1)
   };
 
-  getGeneralBufferData = (data) => {
-    this.setState({generalBuffer: data})
+  getGeneralBufferData = (total, data) => {
+    const {generalBuffer} = data
+    this.setState({generalBuffer: generalBuffer,total })
   }
   
   render() {

@@ -14,14 +14,14 @@ const GeneralBufferSlider = (props) => {
 
   useEffect( () => {
     let gBV = Math.round((props.nonDevTotal() * generalBufferMultiplier) * 1e1) / 1e1;
-    let subTotal = parseFloat(props.nonDevTotal()) + props.coreDevTime;
+    let subTotal = props.nonDevTotal() + props.coreDevTime;
     setGeneralBufferValue(gBV);
     setNonDevTotal(props.nonDevTotal());
-    setTotal(subTotal + gBV);
+    setTotal(Math.round((subTotal + gBV) * 1e1) / 1e1);
   },[props.nonDevTotal(), props.coreDevTime]);
   
   useEffect( () => {
-    props.getGeneralBufferData({multiplier: generalBufferMultiplier, value: generalBufferValue})
+    props.getGeneralBufferData(total, {generalBuffer: {multiplier: generalBufferMultiplier, value: generalBufferValue}})
   },[generalBufferMultiplier, generalBufferValue])
 
 
