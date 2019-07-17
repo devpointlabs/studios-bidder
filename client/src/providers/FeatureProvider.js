@@ -21,6 +21,7 @@ export class FeatureProvider extends React.Component {
     platformFeatures: [],
     platformCategories: [],
     featuresLoaded: false,
+    featureIDsFromHistory: [],
     };
     
       // toPlatformItems = (platformByNum) => {
@@ -90,6 +91,11 @@ export class FeatureProvider extends React.Component {
     axios.get(`/api/features_estimates/${ID}`)
       .then( res  => featureIDsFromEstimate.push(...res.data));
   }
+
+  handleHistoryClick = (estimate_id) => {
+    axios.get(`/api/features_estimates`, {estimate_id: estimate_id})
+      .then( res => featureIDsFromHistory.push(...res.data))
+  }
   
 
   render() {
@@ -104,6 +110,7 @@ export class FeatureProvider extends React.Component {
        handleEstimate: this.handleEstimate,
        handleResetIDs: this.handleResetIDs,
        setFeaturesLoaded: this.setFeaturesLoaded,
+       handleHistoryClick: this.handleHistoryClick,
       }}>
         {this.props.children}
       </FeatureContext.Provider>

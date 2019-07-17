@@ -26,7 +26,6 @@ const MainDisplay = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [notFirstSubmit, setNotFirstSubmit] = useState(false)
   const [errorPopup, setErrorPopup] = useState(false)
-  // const [featuresLoaded, setFeaturesLoaded] = useState(false)
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
   const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
@@ -39,7 +38,6 @@ const MainDisplay = () => {
 
   const originalAxios = () => {
     if (featuresLoaded === false) {
-      // debugger
       axios.get(`/api/all_categories`)
       .then( res  => {
         setFeaturesLoaded()
@@ -84,6 +82,7 @@ const MainDisplay = () => {
   }
 
   const handleSaveModal = () => {
+    setModalOpen(false)
     axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id})
       .then( res => {
         setEmail('')
@@ -92,7 +91,6 @@ const MainDisplay = () => {
         setRadioButtons([])
         resetMath()
         setNotFirstSubmit(false)
-        setModalOpen(false)
         handleResetIDs()
       })
   }
@@ -145,6 +143,7 @@ const MainDisplay = () => {
   const handleAndroid = () => {
     setFocus('android');
   };
+
 
   const displayForm = () => {
     switch(focus){
@@ -283,7 +282,7 @@ const MainDisplay = () => {
         </FormBorder>
         <Modal  
                 open={modalOpen}>
-          <SummaryPage as={NoLine} eID={estimate_id} submit={handleSaveModal} name={name} email={email}/>
+          <SummaryPage as={NoLine} eID={estimate_id} submit={handleSaveModal} name={name} email={email} fromHistory={false}/>
           <Modal.Actions as={NoLine}>
             <Button onClick={handleCloseModal}>
               <Icon name='remove' /> Go back and edit these choices

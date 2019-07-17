@@ -1,30 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import _ from 'lodash'
 import axios from 'axios'
 import { Table, Dropdown, Segment, Search, Label, Modal, Header, Button } from 'semantic-ui-react'
 import Navbar from './Navbar'
+import SummaryPage from './summary/SummaryPage';
+import styled from "styled-components";
+import { FeatureContext} from '../providers/FeatureProvider';
 
 const EstimateHistory = () => {
   const [estimates, setEstimates] = useState([])
-
+  
   /////////////////////
   // Search Setup
   /////////////////
-
+  
   const [column, setColumn] = useState(null)
   const [direction, setDirection] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [searchColumn, setSearchColumn] = useState(['customer_name', 'customer_email'])
   const [searchResults, setSearchResults] = useState([])
   const [searchValue, setSearchValue] = useState('')
+  const [modalOpen, setModalOpen] = useState(false);
   const [searchOptions] = useState([
     {key:'name',text:'Name',value:'Name'},
     {key:'email',text:'Email', value:'Email'},
     {key:'employee', text:'Employee', value:'Employee'}
   ])
+  const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
+
 
   const handleResultSelect = (e, { result }) => {
     setSearchValue(result.customer_name)
+  }
+
+  const handleCloseModal = () => {
+    setModalOpen(false)
+  }
+  const handleOpenModal = () => {
+    setModalOpen(true)
   }
 
   const resultRenderer = ({ customer_name }) => <Label content={customer_name} />
@@ -60,8 +73,8 @@ const EstimateHistory = () => {
   }, [])
 
   const estimate = (id, name, email, created, employee_name) => (
-    <Modal key={id} trigger={
-      <Table.Row  >
+    <Modal open={modalOpen} key={id} trigger={
+      <Table.Row onClick={handleOpenModal}>
         <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
         <Table.Cell textAlign='center'>{name}</Table.Cell>
         <Table.Cell textAlign='center'>{email}</Table.Cell>
@@ -69,12 +82,15 @@ const EstimateHistory = () => {
         <Table.Cell collapsing textAlign='center'>{created}</Table.Cell>
       </Table.Row> 
     }>
-      <Modal.Header>Estimate No. {id} - {name}</Modal.Header>
-      <Modal.Content>
-        <Modal.Description>
-          <Header></Header>
-        </Modal.Description>
-      </Modal.Content>
+      <SummaryPage as={NoLine} eID={id} name={name} email={email} fromHistory={true}/>
+      <Modal.Actions as={NoLine}> 
+        <Button
+          onClick={handleCloseModal}
+          labelPosition='right'
+          icon='checkmark'
+          content='clost estimate'
+        />
+      </Modal.Actions>
     </Modal>
   )
 
@@ -167,4 +183,9 @@ const EstimateHistory = () => {
   )
 };
 
+const NoLine = styled.div`
+  border-top: none !important;
+  border-top-width: 0px !important;
+  background: white !important;
+`
 export default EstimateHistory;

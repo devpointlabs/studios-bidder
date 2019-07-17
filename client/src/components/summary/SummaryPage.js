@@ -5,7 +5,7 @@ import Colors from "../../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
 
-const SummaryPage = ({eID, name, email}) => {
+const SummaryPage = ({eID, name, email, fromHistory}) => {
   const [estimate, setEstimate] = useState([]);
 
   useEffect( () => {
@@ -34,9 +34,9 @@ const SummaryPage = ({eID, name, email}) => {
             </Header.Content>
           </Header>
         </Segment>
-          <SummaryTable platform={'web'} platformByNum={'3'} estimateID={eID}/> 
-          <SummaryTable platform={'ios'} platformByNum={'1'} estimateID={eID}/>
-          <SummaryTable platform={'android'} platformByNum={'2'} estimateID={eID}/>
+          <SummaryTable platform={'web'} platformByNum={'3'} estimateID={eID} fromHistory={fromHistory}/> 
+          <SummaryTable platform={'ios'} platformByNum={'1'} estimateID={eID}  fromHistory={fromHistory}/>
+          <SummaryTable platform={'android'} platformByNum={'2'} estimateID={eID}  fromHistory={fromHistory}/>
         <Segment vertical as={NoLine}>
           <Header size="huge" as={Colors} colored="light-grey" inverted textAlign="center">Estimate Totals</Header>
           <Table singleLine>

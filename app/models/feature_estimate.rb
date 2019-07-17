@@ -16,4 +16,14 @@ class FeatureEstimate < ApplicationRecord
       }])
     end
   end
+
+  def get_feature_IDs(estimate_id)
+    FeatureEstimate.find_by_sql(["
+      SELECT feature_id
+      FROM feature_estimates
+      where estimate_id=(:estimate_id)",
+      {estimate_id: estimate_id}])
+  end
+
+
 end
