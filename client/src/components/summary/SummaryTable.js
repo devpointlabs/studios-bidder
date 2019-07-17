@@ -8,16 +8,19 @@ import { FeatureContext,} from '../../providers/FeatureProvider';
 const SummaryTable = ({ platform, platformByNum, estimateID, features, catagories, fromHistory}) => {
   const [catagoriesEstimates, setCatagoriesEstimates] = useState([]);
   const [featuresEstimates, setFeaturesEstimates] = useState([]);
-  const { featuresFromEstimate, categoriesFromEstimate } = useContext(FeatureContext);
+  const { featuresFromHistory, categoriesFromHistory, categoriesFromEstimate, featuresFromEstimate } = useContext(FeatureContext);
 
   useEffect( () => {
-    
-    setCatagoriesEstimates(categoriesFromEstimate)
-    setFeaturesEstimates(featuresFromEstimate)
+    if (fromHistory === true) {
+      setCatagoriesEstimates(categoriesFromHistory)
+      setFeaturesEstimates(featuresFromHistory)
+    }
+    if (fromHistory === false) {
+        setCatagoriesEstimates(categoriesFromEstimate)
+        setFeaturesEstimates(featuresFromEstimate)
+      }
   }, [categoriesFromEstimate])
   
-  if (fromHistory === true) {
-  }
       if (fromHistory === false) {
     
       }

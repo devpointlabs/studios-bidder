@@ -72,7 +72,7 @@ const EstimateHistory = () => {
       .then(res => setEstimates(res.data))
   }, [])
 
-  const estimate = (id, name, email, created, employee_name) => (
+  const estimate = ({id, name, email, employee_name, created}) => (
     <Modal open={modalOpen} key={id} trigger={
       <Table.Row onClick={handleOpenModal}>
         <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>

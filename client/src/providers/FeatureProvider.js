@@ -22,6 +22,8 @@ export class FeatureProvider extends React.Component {
     platformCategories: [],
     featuresLoaded: false,
     featureIDsFromHistory: [],
+    featuresFromHistory: [],
+    categoriesFromHistory: [],
     };
     
       // toPlatformItems = (platformByNum) => {
@@ -93,8 +95,23 @@ export class FeatureProvider extends React.Component {
   }
 
   handleHistoryClick = (estimate_id) => {
+    const {featureIDsFromHistory} = this.state;
     axios.get(`/api/features_estimates`, {estimate_id: estimate_id})
-      .then( res => featureIDsFromHistory.push(...res.data))
+      .then( res => featureIDsFromHistory.push(...res.data)) 
+  }
+
+  handleHistoryIDs = () => {
+    const {allFeatures, allCategories, featureIDsFromHistory, featuresFromHistory, categoriesFromHistory} = this.state;
+    featureIDsFromHistory.map(fe => {
+      const finalFeatures = allFeatures.filter(f => f.id === fe)
+      featuresFromHistory.push(...finalFeatures)
+      this.setState({featuresFromHistory})
+    })
+    featureIDsFromHistory.map(f => {
+      const finalCategories = allCategories.filter(c => c.id === f.category_id)
+      categoriesFromHistory.push(...finalCategories)
+      this.setState({categoriesFromHistory})
+    })
   }
   
 
