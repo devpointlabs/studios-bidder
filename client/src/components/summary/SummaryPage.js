@@ -95,39 +95,6 @@ class SummaryPage extends Component {
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
-// // = ({eID, name, email, fromHistory}) => {
-//   const [estimate, setEstimate] = useState([]);
-//   // const [loaded, setLoaded] = useState(false);
-//   const { estimateLoaded, setEstimateLoaded } = useContext(FeatureContext);
-  
-
-//   useEffect( () => {
-//     // axios.get(`/api/features_estimates/${eID}`)
-//     //   .then( res  => //{debugger})
-//     //     setFeatureEstimates(res.data));
-//     axios.get(`/api/estimates/${eID}`)
-//       .then(res => 
-//         setEstimate(res.data))
-//         // setLoaded(true)})
-//     return () => { setEstimateLoaded() }
-//     },[estimateLoaded]);
-
-//     const promiseNotMet = () => {
-//       return (<Loader active inline='centered' />)
-//     }
-
-//     if (estimateLoaded === true) {
-//     return (
-        
-//     )} else {
-//       return (<Loader inverted content='Loading' inline='centered' />)
-//     }
-//     // return ( 
-//     //   /// promise is met do X not met do Y 
-//     // )
-// }
-
 
 const NoLine = styled.div`
   border-bottom: 0px !important;
