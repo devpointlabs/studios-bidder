@@ -22,8 +22,8 @@ const App = () => (
           {/* REMOVE ROUTES BELOW BEFORE PRODUCTION */}
           {/*  */}
           {/*  */}
-          <Route exact path ='/Admin' component={AdminDisplay} />
-          <Route exact path ='/History' component={EstimateHistory} />
+          {/* <Route exact path ='/Admin' component={AdminDisplay} /> */}
+          {/* <Route exact path ='/History' component={EstimateHistory} /> */}
           {/*  */}
           {/*  */}
           {/* REMOVE ABOVE ROUTES BEFORE PRODUCTION */}
