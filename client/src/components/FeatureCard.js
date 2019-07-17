@@ -16,15 +16,6 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
   },[isSelected])
 
   return (
-    // <Segment className="iconImage"
-    // onClick={() => handleSubmit(f.category_id, f.id)} 
-    // as={isSelectedState ? CardSelectBorder : CardUnselectBorder} 
-    // key={f.id} value={f.id}
-    // >
-    //   <Image className="iconImage"
-    //       src={require('../images/dpl-logo.png')}
-    //       size="small" />
-    // </Segment>
     <Card 
           onClick={() => handleSubmit(f.category_id, f.id)} 
           as={isSelectedState ? CardSelectBorder : CardUnselectBorder} 
@@ -32,15 +23,15 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
           >
       <Card.Content content={f.id} className={f.id} value={f.id}>
         <Card.Header>{f.name}</Card.Header>
+          <Card.Meta>
+          Base Days: {f.base_days}
+          </Card.Meta>
         {/* <Card.Description>{f.description}</Card.Description> */}
         <Card.Meta as={StyledHover} class="ui button" data-inverted="" data-tooltip={f.description} data-position="bottom center">
           <Image className="iconImage"
           src={require('../images/dpl-logo.png')}
           size="small"
           />
-        </Card.Meta>
-        <Card.Meta>
-        Base Days: {f.base_days}
         </Card.Meta>
       </Card.Content>
     </Card>
