@@ -1,19 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash'
 import axios from 'axios'
-import { Table, Dropdown, Segment, Search, Label, Modal, Header, Button } from 'semantic-ui-react'
+import { Table, Dropdown, Segment, Search, Label, Modal, Header, Button, Dimmer, Loader } from 'semantic-ui-react'
 import Navbar from './Navbar'
 
 const EstimateHistory = () => {
+  /////////////////////
+  // Estimates Setup
+  /////////////////
   const [estimates, setEstimates] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    axios.get(`/api/estimates`)
+      .then(res => setEstimates(res.data))
+      setIsLoading(false)
+  }, [])
+
+  const estimate = (id, name, email, employee_name, created, ) => (
+    <Modal key={id} trigger={
+      <Table.Row  >
+        <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
+        <Table.Cell textAlign='center'>{name}</Table.Cell>
+        <Table.Cell textAlign='center'>{email}</Table.Cell>
+        <Table.Cell textAlign='center'>{employee_name}</Table.Cell>
+        <Table.Cell collapsing textAlign='center'>{created}</Table.Cell>
+      </Table.Row> 
+    }>
+      <Modal.Header>Estimate No. {id} - {name}</Modal.Header>
+      <Modal.Content>
+        <Modal.Description>
+          <Header></Header>
+        </Modal.Description>
+      </Modal.Content>
+    </Modal>
+  )
 
   /////////////////////
   // Search Setup
   /////////////////
-
-  const [column, setColumn] = useState(null)
-  const [direction, setDirection] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
   const [searchColumn, setSearchColumn] = useState(['customer_name', 'customer_email'])
   const [searchResults, setSearchResults] = useState([])
   const [searchValue, setSearchValue] = useState('')
@@ -41,7 +66,6 @@ const EstimateHistory = () => {
         return
       }
       
-
       const re = new RegExp(_.escapeRegExp(value), 'i')
       const isMatch = result => re.test(result.customer_name)
 
@@ -49,34 +73,6 @@ const EstimateHistory = () => {
       setSearchResults(_.filter(estimates, isMatch))
     }, 300)
   }
-
-  const sendMail =()=>{
-    axios.post(`/api/estimate_email`)
-  }
-
-  useEffect(() => {
-    axios.get(`/api/estimates`)
-      .then(res => setEstimates(res.data))
-  }, [])
-
-  const estimate = (id, name, email, created, employee_name) => (
-    <Modal key={id} trigger={
-      <Table.Row  >
-        <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
-        <Table.Cell textAlign='center'>{name}</Table.Cell>
-        <Table.Cell textAlign='center'>{email}</Table.Cell>
-        <Table.Cell textAlign='center'>{employee_name}</Table.Cell>
-        <Table.Cell collapsing textAlign='center'>{created}</Table.Cell>
-      </Table.Row> 
-    }>
-      <Modal.Header>Estimate No. {id} - {name}</Modal.Header>
-      <Modal.Content>
-        <Modal.Description>
-          <Header></Header>
-        </Modal.Description>
-      </Modal.Content>
-    </Modal>
-  )
 
   const searchForm = (
     <>
@@ -93,6 +89,19 @@ const EstimateHistory = () => {
     </>
   )
 
+  /////////////////////
+  // Mail Setup
+  /////////////////
+  const sendMail =()=>{
+    axios.post(`/api/estimate_email`)
+  }
+
+  /////////////////////
+  // Sort Setup
+  /////////////////
+  const [column, setColumn] = useState(null)
+  const [direction, setDirection] = useState(null)
+
   const handleSort = clickedColumn => () => {
 
     if (column !== clickedColumn) {
@@ -106,10 +115,18 @@ const EstimateHistory = () => {
     setDirection(direction === 'ascending' ? 'descending' : 'ascending')
   }
 
+  /////////////////////
+  // Render History
+  /////////////////
   return (
     <>
       <Navbar />
       <Segment style={{color: 'black'}}>
+      {isLoading?
+      <Dimmer active><Loader>Loading</Loader></Dimmer>
+      :
+      <Dimmer inactive><Loader>Loading</Loader></Dimmer>
+      }
         Search: {searchForm}
           <Table sortable striped stackable compact>
           <Table.Header>
