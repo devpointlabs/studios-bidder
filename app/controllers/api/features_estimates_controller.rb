@@ -10,6 +10,10 @@ class Api::FeaturesEstimatesController < ApplicationController
     render json: FeatureEstimate.post_all_features(params[:selectedFeatures], params[:estimate_id])
   end
 
+  def featureIDs_from_estimate
+    render json: FeatureEstimate.get_feature_IDs(params[:estimate_id])
+  end
+
   private 
   def set_estimate
     @estimate = Estimate.find(params[:estimate_id])

@@ -27,7 +27,6 @@ const MainDisplay = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [notFirstSubmit, setNotFirstSubmit] = useState(false)
   const [errorPopup, setErrorPopup] = useState(false)
-  // const [featuresLoaded, setFeaturesLoaded] = useState(false)
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
   const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
@@ -41,7 +40,6 @@ const MainDisplay = () => {
 
   const originalAxios = () => {
     if (featuresLoaded === false) {
-      // debugger
       axios.get(`/api/all_categories`)
       .then( res  => {
         setFeaturesLoaded()
@@ -53,7 +51,9 @@ const MainDisplay = () => {
   }
 
   const handleSubmit = () => {
+
     let newArray = []
+    
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
     
     newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
@@ -62,17 +62,19 @@ const MainDisplay = () => {
     
     featureIDsFromEstimate.push(...newArray)
     setNotFirstSubmit(true)
-    setModalOpen(true)
     
     axios.post(`/api/estimates`, estimate)
       .then( res => {
         setEstimate_id(res.data)
         handleSelectedIDs()
-      }
-      )
+        setModalOpen(true)
+      })
+      
+      // .then({if (estimate_id) {setModalOpen(true)}})
       .catch(error => console.log(error));
     
-    console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
+      console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
+      
   };
 
   const handleResubmit = () => {
@@ -86,6 +88,7 @@ const MainDisplay = () => {
   }
 
   const handleSaveModal = () => {
+    setModalOpen(false)
     axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id})
       .then( res => {
         setEmail('')
@@ -94,7 +97,6 @@ const MainDisplay = () => {
         setRadioButtons([])
         resetMath()
         setNotFirstSubmit(false)
-        setModalOpen(false)
         handleResetIDs()
       })
   }
@@ -107,7 +109,7 @@ const MainDisplay = () => {
     if (selectedFeatures.length > 0 || radioButtons.length > 0) {
       if (notFirstSubmit === false) {
         handleSubmit()
-        setModalOpen(true)
+        // setModalOpen(true)
       } 
       if (notFirstSubmit === true) {
         handleResubmit()
@@ -147,6 +149,7 @@ const MainDisplay = () => {
   const handleAndroid = () => {
     setFocus('android');
   };
+
 
   const displayForm = () => {
     switch(focus){
@@ -261,7 +264,7 @@ const MainDisplay = () => {
       <TotalMath 
         getNonDevAssumptionsData={getNonDevAssumptionsData}
       />
-      {authenticated &&
+      {/* {authenticated && */}
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
           client's name and email to save estimate
@@ -284,8 +287,8 @@ const MainDisplay = () => {
           </Form>
         </FormBorder>
         <Modal  
-                open={modalOpen}>
-          <SummaryPage as={NoLine} eID={estimate_id} submit={handleSaveModal} name={name} email={email}/>
+            open={modalOpen}>
+          <SummaryPage as={NoLine} eID={estimate_id} submit={handleSaveModal} name={name} email={email} fromHistory={false}/>
           <Modal.Actions as={NoLine}>
             <Button onClick={handleCloseModal}>
               <Icon name='remove' /> Go back and edit these choices
@@ -313,7 +316,7 @@ const MainDisplay = () => {
           </Modal.Actions>
         </Modal> 
       </Segment>
-       } 
+       {/* }  */}
     </Segment.Group>
     </>
   )
