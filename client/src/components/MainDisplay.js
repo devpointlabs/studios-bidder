@@ -13,6 +13,7 @@ import Colors from "../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
 import {MathContext,} from '../providers/MathProvider';
+import {AuthContext,} from '../providers/AuthProvider';
 import { FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
@@ -29,6 +30,7 @@ const MainDisplay = () => {
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
   const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
+  const {authenticated} = useContext(AuthContext)
 
   useEffect( () => {
     // axios.get(`/api/platforms`)
@@ -49,6 +51,7 @@ const MainDisplay = () => {
   }
 
   const handleSubmit = () => {
+
     let newArray = []
     
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
@@ -59,17 +62,19 @@ const MainDisplay = () => {
     
     featureIDsFromEstimate.push(...newArray)
     setNotFirstSubmit(true)
-    setModalOpen(true)
     
     axios.post(`/api/estimates`, estimate)
       .then( res => {
         setEstimate_id(res.data)
         handleSelectedIDs()
-      }
-      )
+        setModalOpen(true)
+      })
+      
+      // .then({if (estimate_id) {setModalOpen(true)}})
       .catch(error => console.log(error));
     
-    console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
+      console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
+      
   };
 
   const handleResubmit = () => {
@@ -104,7 +109,7 @@ const MainDisplay = () => {
     if (selectedFeatures.length > 0 || radioButtons.length > 0) {
       if (notFirstSubmit === false) {
         handleSubmit()
-        setModalOpen(true)
+        // setModalOpen(true)
       } 
       if (notFirstSubmit === true) {
         handleResubmit()
@@ -282,7 +287,7 @@ const MainDisplay = () => {
           </Form>
         </FormBorder>
         <Modal  
-                open={modalOpen}>
+            open={modalOpen}>
           <SummaryPage as={NoLine} eID={estimate_id} submit={handleSaveModal} name={name} email={email} fromHistory={false}/>
           <Modal.Actions as={NoLine}>
             <Button onClick={handleCloseModal}>
@@ -311,7 +316,7 @@ const MainDisplay = () => {
           </Modal.Actions>
         </Modal> 
       </Segment>
-      {/* } */}
+       {/* }  */}
     </Segment.Group>
     </>
   )

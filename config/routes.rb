@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     get 'all_features', to: 'features#all_features'
     get 'features_by_platform', to: 'features#features_by_platform'
     get 'featureIDs_from_estimate', to: 'features_estimates#fe_by_eid'
-    post 'estimate_email', to: 'estimates#estimate_email'
+    # post 'estimate_email', to: 'estimates#estimate_email'
   end
   get '*other', to: 'static#index'
 

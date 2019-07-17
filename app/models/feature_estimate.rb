@@ -2,7 +2,7 @@ class FeatureEstimate < ApplicationRecord
   validates :feature_id, uniqueness: {scope: :estimate_id}
 
   belongs_to :feature
-  belongs_to :estimate
+  belongs_to :estimate, optional: true
 
   def self.post_all_features(feature_id, estimate_id)
     feature_id.each do |id|

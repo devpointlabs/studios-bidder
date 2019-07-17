@@ -21,6 +21,7 @@ export class FeatureProvider extends React.Component {
     platformFeatures: [],
     platformCategories: [],
     featuresLoaded: false,
+    estimateLoaded: false,
     featureIDsFromHistory: [],
     featuresFromHistory: [],
     categoriesFromHistory: [],
@@ -38,6 +39,10 @@ export class FeatureProvider extends React.Component {
 
   setFeaturesLoaded = () => {
     this.setState({featuresLoaded: true})
+  }
+
+  setEstimateLoaded = () => {
+    this.setState({estimateLoaded: true})
   }
 
   handleFeatures = (features) => {
@@ -128,6 +133,7 @@ export class FeatureProvider extends React.Component {
        handleResetIDs: this.handleResetIDs,
        setFeaturesLoaded: this.setFeaturesLoaded,
        handleHistoryClick: this.handleHistoryClick,
+       setEstimateLoaded: this.setEstimateLoaded,
       }}>
         {this.props.children}
       </FeatureContext.Provider>

@@ -5,6 +5,7 @@ class Api::EstimatesController < ApplicationController
   end
 
   def show
+    # binding.pry
     render json: Estimate.find(params[:id])
   end 
 
@@ -25,16 +26,16 @@ class Api::EstimatesController < ApplicationController
     if estimate.save
       # FeatureEstimate.post_all_features(params[:selectedFeatures], estimate.id )
       render json: estimate.id
-      estimate_email(estimate)
+      # estimate_email(estimate)
     else
       render json: estimate.errors, status:418
     end
   end
 
-  def estimate_email(estimate)
-    EstimateMailer.estimate_email(current_user, estimate).deliver_now
-    # render json: "Succesfully emailed"
-  end
+  # def estimate_email(estimate)
+  #   EstimateMailer.estimate_email(current_user, estimate).deliver_now
+  #   # render json: "Succesfully emailed"
+  # end
 
   private
 

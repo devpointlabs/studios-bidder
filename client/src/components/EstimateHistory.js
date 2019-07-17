@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import _ from 'lodash'
 import axios from 'axios'
-import { Table, Dropdown, Segment, Search, Label, Modal, Header, Button } from 'semantic-ui-react'
+import { Table, Dropdown, Segment, Search, Label, Modal, Header, Button, Dimmer, Loader } from 'semantic-ui-react'
 import Navbar from './Navbar'
 import SummaryPage from './summary/SummaryPage';
 import styled from "styled-components";
 import { FeatureContext} from '../providers/FeatureProvider';
 
 const EstimateHistory = () => {
+  /////////////////////
+  // Estimates Setup
+  /////////////////
   const [estimates, setEstimates] = useState([])
   
   /////////////////////
@@ -54,7 +57,6 @@ const EstimateHistory = () => {
         return
       }
       
-
       const re = new RegExp(_.escapeRegExp(value), 'i')
       const isMatch = result => re.test(result.customer_name)
 
@@ -109,6 +111,19 @@ const EstimateHistory = () => {
     </>
   )
 
+  /////////////////////
+  // Mail Setup
+  /////////////////
+  // const sendMail =()=>{
+  //   axios.post(`/api/estimate_email`)
+  // }
+
+  /////////////////////
+  // Sort Setup
+  /////////////////
+  // const [column, setColumn] = useState(null)
+  // const [direction, setDirection] = useState(null)
+
   const handleSort = clickedColumn => () => {
 
     if (column !== clickedColumn) {
@@ -122,10 +137,18 @@ const EstimateHistory = () => {
     setDirection(direction === 'ascending' ? 'descending' : 'ascending')
   }
 
+  /////////////////////
+  // Render History
+  /////////////////
   return (
     <>
       <Navbar />
       <Segment style={{color: 'black'}}>
+      {isLoading?
+      <Dimmer active><Loader>Loading</Loader></Dimmer>
+      :
+      <Dimmer inactive><Loader>Loading</Loader></Dimmer>
+      }
         Search: {searchForm}
           <Table sortable striped stackable compact>
           <Table.Header>
@@ -176,7 +199,7 @@ const EstimateHistory = () => {
             </Table.Body>
           </Table>
       </Segment>
-      <Button onClick={sendMail}/>
+      {/* <Button onClick={sendMail}/> */}
       {/* </Segment.Group> */}
 
     </>
