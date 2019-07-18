@@ -30,7 +30,6 @@ const Login = (props) => {
           />
           <Form.Input
             label="Password"
-            autoFocus
             required
             type="password"
             name='password'

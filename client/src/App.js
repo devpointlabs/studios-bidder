@@ -5,12 +5,13 @@ import AdminDisplay from './components/AdminDisplay';
 import EstimateHistory from './components/EstimateHistory';
 import iOSDisplay from './components/iOSDisplay';
 import AndroidDisplay from './components/AndroidDisplay';
+import SummaryPage from './components/summary/SummaryPage';
 import Features from './components/Features';
 import Login from './components/Login';
 import NoMatch from './components/NoMatch';
 import ProtectedRoute from './components/ProtectedRoute';
 import {Switch, Route, } from 'react-router-dom';
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 
 const App = () => (
@@ -21,8 +22,8 @@ const App = () => (
           {/* REMOVE ROUTES BELOW BEFORE PRODUCTION */}
           {/*  */}
           {/*  */}
-          <Route exact path ='/Admin' component={AdminDisplay} />
-          <Route exact path ='/History' component={EstimateHistory} />
+          {/* <Route exact path ='/Admin' component={AdminDisplay} /> */}
+          {/* <Route exact path ='/History' component={EstimateHistory} /> */}
           {/*  */}
           {/*  */}
           {/* REMOVE ABOVE ROUTES BEFORE PRODUCTION */}
@@ -46,8 +47,8 @@ const AppContainer = styled.div`
 `;
 
 const MidContainer = styled.div`
-  margin-right: 80px;
-  margin-left: 80px;
+  margin-right: 8vw;
+  margin-left: 8vw;
 `;
 
 export default App;

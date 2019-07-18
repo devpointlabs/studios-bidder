@@ -27,7 +27,7 @@ const Navbar = ({history}) => {
     </Menu.Menu>
     {/* /////////////////////////////////////////////// */}
     {/* NAVBAR CODE BELOW IS FOR EASE OF DEVELOPMENT  */}
-    <Menu.Menu position="right">
+    {/* <Menu.Menu position="right">
     <Link to="/History">
       <Menu.Item>
         <br/>
@@ -47,45 +47,45 @@ const Navbar = ({history}) => {
       </Menu.Item>
     </Link>
     </Menu.Menu>
-  </Menu>
-    // {/* REMOVE ABOVE BEFORE PRODUCTION AND USE CODE BELOW */}
+  </Menu> */}
+     {/* REMOVE ABOVE BEFORE PRODUCTION AND USE CODE BELOW */}
 
-  //   <Menu.Menu position="right">
-  //   <Link to="/History">
-  //     <Menu.Item>
-  //       <br/>
-  //       { authenticated &&
-  //       <Header align="center" as={NavRight}> History</Header>
-  //       }
-  //     </Menu.Item>
-  //   </Link>
-  //   <Link to="/Admin">
-  //     <Menu.Item>
-  //       <br/>
-  //       { authenticated &&
-  //       <Header align="center" as={NavRight}> Admin</Header>
-  //       }
-  //     </Menu.Item>
-  //   </Link>
-  //     { authenticated ? 
-  //     <Link to="/">
-  //       <Menu.Item>
-  //         <br/>
-  //         <Header align='center' as={NavRight} onClick={() => handleLogout(history)}>
-  //           Logout
-  //         </Header> 
-  //       </Menu.Item>
-  //     </Link>
-  //     : 
-  //     <Link to="/Login">
-  //       <Menu.Item>
-  //         <br/>
-  //         <Header align="center" as={NavRight}> Login </Header>
-  //     </Menu.Item>
-  //     </Link>
-  //     }
-  //   </Menu.Menu>
-  // </Menu>
+    <Menu.Menu position="right">
+    <Link to="/History">
+      <Menu.Item>
+        <br/>
+        { authenticated &&
+        <Header align="center" as={NavRight}> History</Header>
+        }
+      </Menu.Item>
+    </Link>
+    <Link to="/Admin">
+      <Menu.Item>
+        <br/>
+        { authenticated &&
+        <Header align="center" as={NavRight}> Admin</Header>
+        }
+      </Menu.Item>
+    </Link>
+      { authenticated ? 
+      <Link to="/">
+        <Menu.Item>
+          <br/>
+          <Header align='center' as={NavRight} onClick={() => handleLogout(history)}>
+            Logout
+          </Header> 
+        </Menu.Item>
+      </Link>
+      : 
+      <Link to="/Login">
+        <Menu.Item>
+          <br/>
+          <Header align="center" as={NavRight}> Login </Header>
+      </Menu.Item>
+      </Link>
+      }
+    </Menu.Menu>
+  </Menu>
   );
 };
 

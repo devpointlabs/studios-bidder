@@ -99,8 +99,8 @@ platforms.each do |a|
 end
 
 
-# puts "Seeded 3 platforms, with categories (exclusive and non) and features"
-# puts "Seeded 5 estimates with features"
+puts "Seeded 3 platforms, with categories (exclusive and non) and features"
+puts "Seeded 5 estimates with features"
 
 
 
@@ -122,15 +122,15 @@ end
 # puts("updated is_exclusive for category")
 
 
-102.times do |j| 
-  Feature.update((j+1),
-    description: "description for feature # #{j+1}"
-  )
-end
-
+# 102.times do |j| 
+#   Feature.update((j+1),
+#     description: "description for feature # #{j+1}"
+#   )
 # end
 
-puts("features updated")
+# # end
+
+# puts("features updated")
 
 
 # 10.times do |i|

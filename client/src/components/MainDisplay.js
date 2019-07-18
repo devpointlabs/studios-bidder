@@ -1,53 +1,137 @@
-import React,{useState, useContext,} from 'react';
+import React,{useState, useContext, useEffect} from 'react';
 import Navbar from './Navbar';
 import OSMath from './OSMath';
 import TotalMath from './TotalMath';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
+import SummaryPage from './summary/SummaryPage';
 import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
-import {Icon, Segment, Header, Form} from 'semantic-ui-react';
+import {Icon, Segment, Header, Form, Modal, Button} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
 import {MathContext,} from '../providers/MathProvider';
-
+import {AuthContext,} from '../providers/AuthProvider';
+import {FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  // const [platforms, setPlatforms] = useState([]);
+  const [estimate_id, setEstimate_id] = useState('');
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
   const [nonDevAssumptions, setNonDevAssumptions] = useState([])
+  const [modalOpen, setModalOpen] = useState(false);
+  const [notFirstSubmit, setNotFirstSubmit] = useState(false)
+  const [errorPopup, setErrorPopup] = useState(false)
+  // const [featuresLoaded, setFeaturesLoaded] = useState(false)
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
+  const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
+  const {authenticated} = useContext(AuthContext)
 
-      // useEffect( () => {
-  //   axios.get(`/api/platforms`)
-  //   .then(res=>setPlatforms(res.data))
-  // });
+  useEffect( () => {
+    // axios.get(`/api/platforms`)
+    //   .then(res=>setPlatforms(res.data))
+    originalAxios()
+  },[]);
+
+  const originalAxios = () => {
+    if (featuresLoaded === false) {
+      // debugger
+      axios.get(`/api/all_categories`)
+      .then( res  => {
+        setFeaturesLoaded()
+        handleCategories(res.data)});
+    
+      axios.get(`/api/all_features`)
+        .then(res => handleFeatures(res.data))
+    }
+  }
 
   const handleSubmit = () => {
-    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer} = nonDevAssumptions
-    selectedFeatures.push(...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
-    const estimate = {customer_name: name, customer_email: email, design: design, qaTesting: qaTesting, deployment: deployment, postDeploymentDev: postDeploymentDev, projectManagement: projectManagement, generalBuffer: generalBuffer};
-    axios.post(`/api/estimates`, estimate, {params: { selectedFeatures: selectedFeatures}})
+    let newArray = []
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
+    
+    newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
+
+    const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+    
+    featureIDsFromEstimate.push(...newArray)
+    setNotFirstSubmit(true)
+    setModalOpen(true)
+    
+    axios.post(`/api/estimates`, estimate)
+      .then( res => {
+        setEstimate_id(res.data)
+        handleSelectedIDs()
+      }
+      )
+      .catch(error => console.log(error));
+    
+    console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
+  };
+
+  const handleResubmit = () => {
+    let newArray = []
+    newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
+    featureIDsFromEstimate.push(...newArray)
+
+    setNotFirstSubmit(true)
+    setModalOpen(true)
+    handleSelectedIDs()
+  }
+
+  const handleSaveModal = () => {
+    axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id})
       .then( res => {
         setEmail('')
         setName('')
         setSelectedFeatures([])
         setRadioButtons([])
         resetMath()
-        console.log(res)
-        }
-      )
-      .catch(error => console.log(error));
-      
-  };
+        setNotFirstSubmit(false)
+        setModalOpen(false)
+        handleResetIDs()
+      })
+  }
 
+  const errorModalClose = () => {
+    setErrorPopup(false)
+  }
+
+  const handleFormButton = () => {
+    if (selectedFeatures.length > 0 || radioButtons.length > 0) {
+      if (notFirstSubmit === false) {
+        handleSubmit()
+        setModalOpen(true)
+      } 
+      if (notFirstSubmit === true) {
+        handleResubmit()
+        updateEstimate()
+        setModalOpen(true)
+      }
+    } else {
+      setErrorPopup(true)
+    }
+  }
+
+  const updateEstimate = () => {
+    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
+    const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+    console.log(estimate)
+    axios.put(`/api/estimates/${estimate_id}`, estimate)
+      .then(console.log(estimate))
+  }
+
+  const handleCloseModal = () => {
+    handleResetIDs()
+    setModalOpen(false)
+  }
+      
   const getNonDevAssumptionsData = (data) => {
     setNonDevAssumptions(data)
   }
@@ -91,12 +175,10 @@ const MainDisplay = () => {
 
   return(
     <>
-    <Navbar />
-
     <Segment.Group Vertical as={Colors} colored="white">
+      <Navbar />
       {/* <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"></link> */}
       {/* <style>@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');</style> */}
-      {/* <Navbar/> */}
       <Header align="center" as={MainTitle} colored="dark-grey" fSize="large">
         Estimate Your App
       </Header>
@@ -107,7 +189,7 @@ const MainDisplay = () => {
         All estimates are approximate but should give you a rough idea of what it will take to build your app.
       </Header>
       <Segment.Group horizontal as={NoLine}>
-        <Segment onClick={handleWeb} style={{cursor:'pointer',borderColor: 'transparent'}} as={Colors} colored="light">
+        <Segment onClick={handleWeb} style={{cursor:'pointer'}} as={Colors} colored="light">
             <br/>
             <Header align="center" as={WhiteText} fSize="medium">
               <Icon name="computer"/>  Web App
@@ -141,7 +223,7 @@ const MainDisplay = () => {
       </Segment.Group>
       {displayForm()}
       <Segment.Group horizontal as={NoLine}>
-        <Segment onClick={handleWeb} style={{cursor:'pointer',borderColor: 'transparent'}} as={Colors} colored="light">
+        <Segment onClick={handleWeb} style={{cursor:'pointer'}} as={Colors} colored="light">
             <br/>
             <Header align="center" as={WhiteText} fSize="medium">
               <Icon name="computer"/>  Add a Web App?
@@ -162,7 +244,7 @@ const MainDisplay = () => {
               An iPhone/ iPad app 
               <br/>(Excluding back-end)
           </Header>
-          <OSMath OS='ios'/>
+          <OSMath OS='iOS'/>
         </Segment>
         <Segment onClick={handleAndroid} style={{cursor:'pointer'}} as={Colors} colored="dark">
           <br/> 
@@ -176,7 +258,10 @@ const MainDisplay = () => {
           <OSMath OS='android'/>
         </Segment>
       </Segment.Group>
-      <TotalMath getNonDevAssumptionsData={getNonDevAssumptionsData}/>
+      <TotalMath 
+        getNonDevAssumptionsData={getNonDevAssumptionsData}
+      />
+      {authenticated &&
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
           client's name and email to save estimate
@@ -195,10 +280,40 @@ const MainDisplay = () => {
               label='Email'
               value={email}
             />
-            <Form.Button onClick={handleSubmit} basic>Submit for Quote</Form.Button>
+              <Form.Button onClick={handleFormButton} basic>Submit for Estimate Summary</Form.Button>
           </Form>
         </FormBorder>
+        <Modal  
+                open={modalOpen}>
+          <SummaryPage as={NoLine} eID={estimate_id} submit={handleSaveModal} name={name} email={email}/>
+          <Modal.Actions as={NoLine}>
+            <Button onClick={handleCloseModal}>
+              <Icon name='remove' /> Go back and edit these choices
+            </Button>
+            <Button
+              onClick={handleSaveModal}
+              labelPosition='right'
+              icon='checkmark'
+              content='Save and close this estimate'
+            />
+          </Modal.Actions>
+        </Modal>
+        <Modal
+          open={errorPopup}
+          basic
+          size='small'
+        >
+          <Modal.Content>
+            <h3>You did not select any features...</h3>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button color='green' inverted onClick={errorModalClose}>
+              <Icon name='checkmark' /> Got it
+            </Button>
+          </Modal.Actions>
+        </Modal> 
       </Segment>
+       } 
     </Segment.Group>
     </>
   )
@@ -207,6 +322,7 @@ const MainDisplay = () => {
 const NoLine = styled.div`
   border-top: none !important;
   border-top-width: 0px !important;
+  background: white !important;
 `
 
 const FormBorder = styled.div`
@@ -221,5 +337,4 @@ const FormBorder = styled.div`
   background: white !important;
 `
 
-export default MainDisplay;
-
+export default MainDisplay
