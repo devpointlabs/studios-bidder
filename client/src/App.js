@@ -13,6 +13,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import {Switch, Route, } from 'react-router-dom';
 import styled from "styled-components";
 
+import HistoryPaginated from './components/HistoryPaginated';
+
 
 const App = () => (
   <>

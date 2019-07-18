@@ -1,6 +1,6 @@
 class Api::CategoriesController < ApplicationController
   before_action :set_platform, only: [:index, :create]
-  before_action :set_category, only: [:destroy, :update]
+  before_action :set_category, only: [:destroy, :update, :update_active_category]
 
   def index
     render json: @platform.categories
@@ -11,6 +11,18 @@ class Api::CategoriesController < ApplicationController
   end
 
   def show
+  end
+
+  def all_active_categories
+    render json: Category.get_categories_active
+  end
+
+  def update_active_category
+    if @category.update(is_active: false) && @category.features.update(is_active: false)
+      render json: @category
+    else
+      render json: @category.errors, status:422
+    end
   end
 
   def create

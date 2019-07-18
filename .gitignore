@@ -24,3 +24,4 @@
 
 #ignore this testing file from steph's comp
 testers.js
+/src/components/HistoryPaginated.js

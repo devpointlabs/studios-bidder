@@ -1,3 +1,20 @@
+numF = Feature.count
+numF.times do |a|
+  Feature.update((a+1), is_active: true)
+end
+
+numC = Category.count
+numC.times do |a|
+  Category.update((a+1), is_active: true)
+end
+
+names = ["Michael Scott", "Winnie The Pooh", "Leslie Knope", "Mario"]
+numE = Estimate.count
+numE.times do |a|
+  Estimate.update((a+1), employee_name: names.sample, customer_email: "test#{a+1}@test.com", customer_name: "test#{a+1}" )
+end
+
+p ("category active, feature active, estimates seeded")
 
 # platforms = ['iOS', 'Android', 'Web']
 
@@ -55,52 +72,52 @@
 #   end
 # end
 
-platforms = ['iOS', 'Android', 'Web']
+# platforms = ['iOS', 'Android', 'Web']
 
-platforms.each do |a|
-  p = Platform.create(name: a)
-  5.times do |i|
-    category = Category.create(
-      name: "#{a} category #{i +1}",
-      is_exclusive: false,
-      platform_id: p.id
-    )
-    5.times do |j|
-    Feature.create(
-      name: "#{a} Feature #{i+1}/#{j+1}",
-      description: Faker::TvShows::MichaelScott.quote,
-      list_location: rand(10),
-      base_days: rand(1..10),
-      multiplier: 1,
-      category_id: category.id,
-      platform_id: p.id
-    )
-    end
-  end
+# platforms.each do |a|
+#   p = Platform.create(name: a)
+#   5.times do |i|
+#     category = Category.create(
+#       name: "#{a} category #{i +1}",
+#       is_exclusive: false,
+#       platform_id: p.id
+#     )
+#     5.times do |j|
+#     Feature.create(
+#       name: "#{a} Feature #{i+1}/#{j+1}",
+#       description: Faker::TvShows::MichaelScott.quote,
+#       list_location: rand(10),
+#       base_days: rand(1..10),
+#       multiplier: 1,
+#       category_id: category.id,
+#       platform_id: p.id
+#     )
+#     end
+#   end
 
-  3.times do |k| 
-    category = Category.create(
-      name: "#{a} exclusive category #{k+1}",
-      is_exclusive: true,
-      platform_id: p.id
-      )
-      3.times do |l|
-      Feature.create(
-        name: "#{a} exclusive Feature #{k+1}/#{l+1}",
-        description: Faker::TvShows::MichaelScott.quote,
-        list_location: rand(10),
-        base_days: rand(1..10),
-        multiplier: 1,
-        category_id: category.id,
-        platform_id: p.id
-      )
-    end
-  end
-end
+#   3.times do |k| 
+#     category = Category.create(
+#       name: "#{a} exclusive category #{k+1}",
+#       is_exclusive: true,
+#       platform_id: p.id
+#       )
+#       3.times do |l|
+#       Feature.create(
+#         name: "#{a} exclusive Feature #{k+1}/#{l+1}",
+#         description: Faker::TvShows::MichaelScott.quote,
+#         list_location: rand(10),
+#         base_days: rand(1..10),
+#         multiplier: 1,
+#         category_id: category.id,
+#         platform_id: p.id
+#       )
+#     end
+#   end
+# end
 
 
-puts "Seeded 3 platforms, with categories (exclusive and non) and features"
-puts "Seeded 5 estimates with features"
+# puts "Seeded 3 platforms, with categories (exclusive and non) and features"
+# puts "Seeded 5 estimates with features"
 
 
 

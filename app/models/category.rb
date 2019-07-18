@@ -24,4 +24,12 @@ class Category < ApplicationRecord
   #   end
   # end
 
+  def self.get_categories_active
+    Category.find_by_sql("
+      SELECT *
+      FROM categories
+      WHERE is_active = true
+    ")
+  end
+
 end
