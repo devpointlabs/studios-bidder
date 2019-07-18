@@ -13,6 +13,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import {Switch, Route, } from 'react-router-dom';
 import styled from "styled-components";
 
+import HistoryPaginated from './components/HistoryPaginated';
+
 
 const App = () => (
   <>
@@ -22,8 +24,8 @@ const App = () => (
           {/* REMOVE ROUTES BELOW BEFORE PRODUCTION */}
           {/*  */}
           {/*  */}
-          {/* <Route exact path ='/Admin' component={AdminDisplay} /> */}
-          {/* <Route exact path ='/History' component={EstimateHistory} /> */}
+          <Route exact path ='/Admin' component={AdminDisplay} />
+          <Route exact path ='/History' component={EstimateHistory} />
           {/*  */}
           {/*  */}
           {/* REMOVE ABOVE ROUTES BEFORE PRODUCTION */}
@@ -49,6 +51,11 @@ const AppContainer = styled.div`
 const MidContainer = styled.div`
   margin-right: 8vw;
   margin-left: 8vw;
+
+  @media only screen and (max-width: 500px){
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 `;
 
 export default App;

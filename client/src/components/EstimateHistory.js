@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import _ from 'lodash'
 import axios from 'axios'
-import { Table, Dropdown, Segment, Search, Label, Modal, Header, Button, Dimmer, Loader } from 'semantic-ui-react'
+import { Table, Dropdown, Segment, Search, Label, Modal, Icon, Header, Menu, Button, Dimmer, Loader, Pagination } from 'semantic-ui-react'
 import Navbar from './Navbar'
+import { FeatureContext} from '../providers/FeatureProvider';
+import SummaryPage from './summary/SummaryPage';
+import styled from "styled-components";
+
+// import { FeatureContext} from '../providers/FeatureProvider';
 
 const EstimateHistory = () => {
+  const {fullEstimates, resetEstimate, handleEstimates } = useContext(FeatureContext)
+
   /////////////////////
   // Estimates Setup
   /////////////////
@@ -12,13 +19,16 @@ const EstimateHistory = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    // resetEstimate()
     axios.get(`/api/estimates`)
       .then(res => setEstimates(res.data))
-      setIsLoading(false)
+    handleEstimates()
+      // .then(fullEstimates.push(...estimates))
+    setIsLoading(false)
   }, [])
 
   const estimate = (id, name, email, employee_name, created, ) => (
-    <Modal key={id} trigger={
+    <Modal open={modalOpen} key={id} trigger={
       <Table.Row  >
         <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
         <Table.Cell textAlign='center'>{name}</Table.Cell>
@@ -27,14 +37,65 @@ const EstimateHistory = () => {
         <Table.Cell collapsing textAlign='center'>{created}</Table.Cell>
       </Table.Row> 
     }>
-      <Modal.Header>Estimate No. {id} - {name}</Modal.Header>
-      <Modal.Content>
-        <Modal.Description>
-          <Header></Header>
-        </Modal.Description>
-      </Modal.Content>
+       <SummaryPage as={NoLine} eID={id} name={name} email={email} fromHistory={true}/>
+       <Modal.Actions as={NoLine}> 
+         <Button
+          onClick={handleCloseModal}
+          labelPosition='right'
+          icon='checkmark'
+          content='clost estimate'
+        />
+      </Modal.Actions>
     </Modal>
   )
+  ////////////////////////
+  // Modal Set Up
+  ////////////////////////
+  const [modalOpen, setModalOpen] = useState(false);
+  
+  const handleCloseModal = () => {
+    setModalOpen(false)
+  }
+  const handleOpenModal = () => {
+    setModalOpen(true)
+  }
+
+  /////////////////////////
+  // pagination set up
+  ////////////////////////
+  const [displayedEstimates, setDisplayedEstimates] = useState([]);
+  const [startNum, setStartNum] = useState(0)
+  const [endNum, setEndNum] = useState(25)
+  // const es = estimates.slice(0,25)
+  // displayedEstimates.push(...es)
+
+  const nextPage = () => {
+    if (endNum <= estimates.length) {
+      const start = (startNum + 25)
+      setStartNum(start)
+      const end = (endNum +25)
+      setEndNum(end)
+    }
+  }
+
+  const backPage = () => {
+    if (startNum >=25) {
+      const start = (startNum - 25)
+      setStartNum(start)
+      const end = (endNum - 25)
+      setEndNum(end)
+    }
+  }
+
+  const getSlice = () => {
+    // setIsLoading(false)
+    console.log(estimates)
+    console.log(fullEstimates)
+    const es = fullEstimates.slice(0,25)
+    console.log(es)
+    displayedEstimates.push(...es)
+    console.log(displayedEstimates)
+  }
 
   /////////////////////
   // Search Setup
@@ -50,6 +111,7 @@ const EstimateHistory = () => {
 
   const handleResultSelect = (e, { result }) => {
     setSearchValue(result.customer_name)
+    handleOpenModal()
   }
 
   const resultRenderer = ({ customer_name }) => <Label content={customer_name} />
@@ -92,9 +154,9 @@ const EstimateHistory = () => {
   /////////////////////
   // Mail Setup
   /////////////////
-  const sendMail =()=>{
-    axios.post(`/api/estimate_email`)
-  }
+  // const sendMail =()=>{
+  //   axios.post(`/api/estimate_email`)
+  // }
 
   /////////////////////
   // Sort Setup
@@ -134,7 +196,7 @@ const EstimateHistory = () => {
                 <Table.HeaderCell
                   collapsing
                   textAlign="center"
-                  sorted={column === 'id' ? direction : null}
+                  sorted="ascending" //{column === 'id' ? direction : null}
                   onClick={handleSort('id')}
                 >
                   Estimate No.
@@ -172,16 +234,37 @@ const EstimateHistory = () => {
             </Table.Header>
             <Table.Body>
               {
-                estimates.map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at))
+                estimates.slice(startNum,endNum).map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at))
+                // displayedEstimates.map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at))
               }
             </Table.Body>
+             <Table.Footer>
+               <Table.Row>
+                 <Table.HeaderCell colSpan='5'>
+                   <Menu floated='right' pagination>
+                     <Menu.Item icon onClick={backPage}>
+                       <Icon name='chevron left' onClick={backPage}/>
+                     </Menu.Item>
+                     <Menu.Item icon onClick={nextPage}>
+                    <Icon name='chevron right' onClick={nextPage}/>
+                     </Menu.Item>
+                   </Menu>
+                 </Table.HeaderCell>
+               </Table.Row>
+              </Table.Footer>
           </Table>
       </Segment>
-      <Button onClick={sendMail}/>
+      {/* <Button onClick={sendMail}/> */}
       {/* </Segment.Group> */}
 
     </>
   )
 };
+
+const NoLine = styled.div`
+  border-top: none !important;
+  border-top-width: 0px !important;
+  background: white !important;
+`
 
 export default EstimateHistory;

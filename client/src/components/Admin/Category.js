@@ -23,7 +23,7 @@ const Category = (props) => {
   }
 
   const deleteFeature =(f_id)=>{
-    axios.delete(`/api/features/${f_id}`)
+    axios.put(`/api/update_active_feature/${f_id}`)
     setFeatures(features.filter(f => f.id !== f_id))
   }
 

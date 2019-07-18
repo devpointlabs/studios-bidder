@@ -21,6 +21,11 @@ export class FeatureProvider extends React.Component {
     platformFeatures: [],
     platformCategories: [],
     featuresLoaded: false,
+    estimateLoaded: false,
+    featureIDsFromHistory: [],
+    featuresFromHistory: [],
+    categoriesFromHistory: [],
+    fullEstimates: [],
     };
     
       // toPlatformItems = (platformByNum) => {
@@ -35,6 +40,10 @@ export class FeatureProvider extends React.Component {
 
   setFeaturesLoaded = () => {
     this.setState({featuresLoaded: true})
+  }
+
+  setEstimateLoaded = () => {
+    this.setState({estimateLoaded: true})
   }
 
   handleFeatures = (features) => {
@@ -90,6 +99,39 @@ export class FeatureProvider extends React.Component {
     axios.get(`/api/features_estimates/${ID}`)
       .then( res  => featureIDsFromEstimate.push(...res.data));
   }
+
+  handleEstimates = () => {
+    const {fullEstimates} = this.state;
+    this.setState({fullEstimates: []})
+    axios.get(`/api/estimates`)
+      .then(res => fullEstimates.push(...res.data))
+      .then(this.setState({fullEstimates}))
+    console.log(fullEstimates)
+  }
+
+  handleHistoryClick = (estimate_id) => {
+    const {featureIDsFromHistory} = this.state;
+    axios.get(`/api/features_estimates`, {estimate_id: estimate_id})
+      .then( res => featureIDsFromHistory.push(...res.data)) 
+  }
+
+  handleHistoryIDs = () => {
+    const {allFeatures, allCategories, featureIDsFromHistory, featuresFromHistory, categoriesFromHistory} = this.state;
+    featureIDsFromHistory.map(fe => {
+      const finalFeatures = allFeatures.filter(f => f.id === fe)
+      featuresFromHistory.push(...finalFeatures)
+      this.setState({featuresFromHistory})
+    })
+    featureIDsFromHistory.map(f => {
+      const finalCategories = allCategories.filter(c => c.id === f.category_id)
+      categoriesFromHistory.push(...finalCategories)
+      this.setState({categoriesFromHistory})
+    })
+  }
+
+  ResetEstimate = () => {
+    this.setState({fullEstimates: []})
+  }
   
 
   render() {
@@ -104,6 +146,10 @@ export class FeatureProvider extends React.Component {
        handleEstimate: this.handleEstimate,
        handleResetIDs: this.handleResetIDs,
        setFeaturesLoaded: this.setFeaturesLoaded,
+       handleHistoryClick: this.handleHistoryClick,
+       setEstimateLoaded: this.setEstimateLoaded,
+       handleEstimates: this.handleEstimates,
+       ResetEstimate: this.ResetEstimate,
       }}>
         {this.props.children}
       </FeatureContext.Provider>

@@ -44,8 +44,8 @@ const GeneralBufferSlider = (props) => {
         <Grid.Row>
           <Grid.Column centered>
           <SliderInfo>
-            <Header as={DarkText} fSize='small'><span style={{fontSize: '0.6em'}}>**</span>General Buffer Time</Header>
-            <Header as={DarkText} fSize='small'>Days: {generalBufferValue}</Header>
+            <Header as={DarkText} fSize='ndv'><span style={{fontSize: '0.6em'}}>**</span>General Buffer Time</Header>
+            <Header as={DarkText} fSize='ndv'>Days: {generalBufferValue}</Header>
           </SliderInfo>
           <br />
           <SliderBar 
@@ -54,7 +54,7 @@ const GeneralBufferSlider = (props) => {
             coreDevTime={props.nonDevTotal()}
             handleChange={handleChange}
             />
-          <Header as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
+          <Header as={MainTitle} colored="light-grey" padding="tiny" fSize="micro">
             **Percentage of non dev asumptions total days
           </Header>
           </Grid.Column>

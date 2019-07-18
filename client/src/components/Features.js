@@ -80,19 +80,17 @@ const Features = (props) => {
     
     if (is_exclusive === true) {
       return (
-        <Spacing>
-          <Grid columns={3} centered>
-            <Grid.Row columns="3">
+        // <Spacing>
+          <Grid columns={3} centered stackable>
+            <Grid.Row columns={3}>
               {correctF.map( f => (
                 <>
                 <RowSpacing>
-                  <Grid.Column centered>
+                  <Grid.Column centered as={RowCentered}>
                     <FeatureCard 
                       onClickFunction={handleRadio} 
                       isSelected={isSelected} 
                       f={f}
-                      onMouseEnter={hoverOn}
-                      onMouseLeave={hoverOff}
                       />
                   </Grid.Column>
                 </RowSpacing>
@@ -100,23 +98,29 @@ const Features = (props) => {
               ))}
             </Grid.Row>
           </Grid>
-        </Spacing>
+        // </Spacing>
       );
       }else {
         return (
-          <Spacing>
-            <Grid columns={3} >
-              <Grid.Row columns={3} textAlign="center" as={RowCentered}>
+          // <Spacing>
+            <Grid columns={3} centered stackable >
+              <Grid.Row columns={3} textAlign="center">
                 {correctF.map( f => (
                   <>
-                      <Grid.Column centered as={RowSpacing}>
-                        <FeatureCard onClickFunction={handleCheckbox} isSelected={isSelected} f={f}/>
+                    <RowSpacing>
+                      <Grid.Column centered as={RowCentered}>
+                        <FeatureCard 
+                          onClickFunction={handleCheckbox} 
+                          isSelected={isSelected} 
+                          f={f}
+                        />
                       </Grid.Column>
+                    </RowSpacing>
                   </>
                 ))}
               </Grid.Row>
             </Grid>
-          </Spacing>
+          // </Spacing>
         );
       };
     };
@@ -143,93 +147,24 @@ const Features = (props) => {
 };
 
 const CategoryContainer = styled.div`
-  padding: 50px 20px 50px 20px;
+  padding: 4.167em 1.25em 4.167em 1.25em;
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  margin-bottom: 20px;
-  margin-top:10px;
+  margin-bottom: 1.25em;
+  margin-top: .625em;
   border-radius: 4px;
   background: white;
-  /* &:hover {
-    background: #606060;
-    transition: background 0.2s ease;
-  } */
 `;
 
 const Spacing = styled.div`
-  padding: 5px 30px 30px 30px !important;
+  padding: 5px 2.5em 2.5em 2.5em !important;
 `;
 
 const RowCentered = styled.div`
-  padding: 30px 10px 10px 10px !important;
-`
+  padding: .625em !important;
+`;
 
 const RowSpacing = styled.div`
-  padding: 30px 10px 10px 10px !important;
+  padding: .625em !important;
 `;
 
 export default Features;
-
-
-
-
-
-
-
-//           <Spacing>
-//             <Grid columns={3} centered>
-//               <Grid.Row columns={3}>
-//                 {correctF.map( f => (
-//                   <>
-//                     <RowSpacing>
-//                       <Grid.Column centered>
-//                         <FeatureCard onClickFunction={handleCheckbox} isSelected={isSelected} f={f}/>
-//                       </Grid.Column>
-//                     </RowSpacing>
-//                   </>
-//                 ))}
-//               </Grid.Row>
-//             </Grid>
-//           </Spacing>
-//         );
-//       };
-//     };
-
-//   return (
-//     <Container textAlign="center">
-//         <br/>
-//         <br/>
-//         <Form>
-//           {allCategories.map(c => 
-//           <>
-//             <Container textAlign="center" key={c.id} id={c.id}>
-//               <CategoryContainer>
-//               <Header as={DarkText} fSize="medium">{c.name}</Header>
-//               {exclusiveRendering(c.id, c.is_exclusive)}
-//               </CategoryContainer>
-//             </Container>
-//             <Spacing/>
-//           </>
-//           )}
-//         </Form >
-//     </Container>
-//   )
-// };
-
-// const CategoryContainer = styled.div`
-//   padding: 50px 20px 50px 20px;
-//   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-//   margin-bottom: 20px;
-//   margin-top:10px;
-//   border-radius: 4px;
-//   background: white;
-// `;
-
-// const Spacing = styled.div`
-//   padding: 5px 30px 30px 30px !important;
-// `;
-
-// const RowSpacing = styled.div`
-//   padding: 30px 10px 10px 10px !important;
-// `;
-
-// export default Features;
