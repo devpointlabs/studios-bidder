@@ -1,6 +1,6 @@
 import React, {useContext, } from "react";
 import { Link,} from "react-router-dom";
-import { Menu, Image, Header } from "semantic-ui-react";
+import { Menu, Image, Header, Responsive } from "semantic-ui-react";
 import styled from 'styled-components';
 import {AuthContext, } from '../providers/AuthProvider';
 
@@ -21,7 +21,7 @@ const Navbar = ({history}) => {
       <Link to="/">
         <Menu.Item>
           <br/>
-          <Header align="center" as={NavHeader}>DevPoint Labs</Header>
+          <Responsive align="center" as={NavHeader} {...Responsive.onlyComputer}>DevPoint Labs</Responsive>
         </Menu.Item>
       </Link>
     </Menu.Menu>

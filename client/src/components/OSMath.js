@@ -21,7 +21,7 @@ const OSMath = (props) => {
 
   return(
     <>
-      <Header align="center" as={WhiteText} fSize="medium">{props.OS} Days: {renderPriceDisplay()}</Header>
+      <Header align="center" as={WhiteText} > Days: {renderPriceDisplay()}</Header>
     </>
   );
 };

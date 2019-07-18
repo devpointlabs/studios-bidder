@@ -49,6 +49,11 @@ const AppContainer = styled.div`
 const MidContainer = styled.div`
   margin-right: 8vw;
   margin-left: 8vw;
+
+  @media only screen and (max-width: 500px){
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 `;
 
 export default App;
