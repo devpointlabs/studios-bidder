@@ -5,6 +5,7 @@ class Api::EstimatesController < ApplicationController
   end
 
   def show
+    # binding.pry
     render json: Estimate.find(params[:id])
   end 
 
