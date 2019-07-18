@@ -12,7 +12,7 @@ const fontSize = (size) => {
       case 'tiny':
         return '17px';
       case 'micro':
-        return '9px';
+        return '1em';
       default:
         return '20px';
     }

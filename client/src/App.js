@@ -26,7 +26,6 @@ const App = () => (
           {/*  */}
           <Route exact path ='/Admin' component={AdminDisplay} />
           <Route exact path ='/History' component={EstimateHistory} />
-          <Route exact path ='/Paginated' component={HistoryPaginated}/>
           {/*  */}
           {/*  */}
           {/* REMOVE ABOVE ROUTES BEFORE PRODUCTION */}
@@ -52,6 +51,11 @@ const AppContainer = styled.div`
 const MidContainer = styled.div`
   margin-right: 8vw;
   margin-left: 8vw;
+
+  @media only screen and (max-width: 500px){
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 `;
 
 export default App;

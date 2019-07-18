@@ -9,9 +9,9 @@ import { FeatureProvider, } from './providers/FeatureProvider';
 import { HistoryProvider, } from './providers/HistoryProvider';
 import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
-import { initMiddleware, } from 'devise-axios';
+// import { initMiddleware, } from 'devise-axios';
 
-initMiddleware();
+// initMiddleware();
 
 ReactDOM.render(
 <AuthProvider>

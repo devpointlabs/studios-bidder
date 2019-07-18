@@ -6,6 +6,7 @@ import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
 import SummaryPage from './summary/SummaryPage';
+import PlatformTabs from './PlatformTabs';
 import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header, Form, Modal, Button} from 'semantic-ui-react';
@@ -14,7 +15,7 @@ import styled from "styled-components";
 import axios from 'axios';
 import {MathContext,} from '../providers/MathProvider';
 import {AuthContext,} from '../providers/AuthProvider';
-import { FeatureContext} from '../providers/FeatureProvider';
+import {FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
@@ -200,74 +201,19 @@ const MainDisplay = () => {
         All estimates are approximate but should give you a rough idea of what it will take to build your app.
       </Header>
       <Segment.Group horizontal as={NoLine}>
-        <Segment onClick={handleWeb} style={{cursor:'pointer'}} as={Colors} colored="light">
-            <br/>
-            <Header align="center" as={WhiteText} fSize="medium">
-              <Icon name="computer"/>  Web App
-            </Header>
-            <Header align="center" as={WhiteText} fSize="small">
-              A web app or a 
-              <br/>back-end to a mobile app
-            </Header>
-            <br/>
-        </Segment>
-        <Segment onClick={handleiOS} style={{cursor:'pointer'}} as={Colors} colored="medium-dark">
-          <br/>
-          <Header align="center" as={WhiteText} fSize="medium">
-            <Icon name="apple"/>  iOS App
-          </Header>
-          <Header align="center" as={WhiteText} fSize="small">
-              An iPhone/ iPad app 
-              <br/>(Excluding back-end)
-          </Header>
-        </Segment>
-        <Segment onClick={handleAndroid} style={{cursor:'pointer'}} as={Colors} colored="dark">
-          <br/> 
-          <Header align="center" as={WhiteText} fSize="medium">
-            <Icon name="android"/>Android App
-          </Header>
-          <Header align="center" as={WhiteText} fSize="small">
-              An Android/ Tablet App
-              <br/>(Excluding back-end)
-          </Header>
-        </Segment>
+        <PlatformTabs 
+          handleWeb={handleWeb}
+          handleiOS={handleiOS}
+          handleAndroid={handleAndroid}
+        />
       </Segment.Group>
       {displayForm()}
       <Segment.Group horizontal as={NoLine}>
-        <Segment onClick={handleWeb} style={{cursor:'pointer'}} as={Colors} colored="light">
-            <br/>
-            <Header align="center" as={WhiteText} fSize="medium">
-              <Icon name="computer"/>  Add a Web App?
-            </Header>
-            <Header align="center" as={WhiteText} fSize="small">
-              A web app or a 
-              <br/>back-end to a mobile app
-            </Header>
-            <OSMath OS='web'/>
-            <br/>
-        </Segment>
-        <Segment onClick={handleiOS} style={{cursor:'pointer'}} as={Colors} colored="medium-dark">
-          <br/>
-          <Header align="center" as={WhiteText} fSize="medium">
-            <Icon name="apple"/>  Add an iOS App?
-          </Header>
-          <Header align="center" as={WhiteText} fSize="small">
-              An iPhone/ iPad app 
-              <br/>(Excluding back-end)
-          </Header>
-          <OSMath OS='ios'/>
-        </Segment>
-        <Segment onClick={handleAndroid} style={{cursor:'pointer'}} as={Colors} colored="dark">
-          <br/> 
-          <Header align="center" as={WhiteText} fSize="medium">
-            <Icon name="android"/>Add an Android App?
-          </Header>
-          <Header align="center" as={WhiteText} fSize="small">
-              An Android/ Tablet App
-              <br/>(Excluding back-end)
-          </Header>
-          <OSMath OS='android'/>
-        </Segment>
+        <PlatformTabs 
+            handleWeb={handleWeb}
+            handleiOS={handleiOS}
+            handleAndroid={handleAndroid}
+            />
       </Segment.Group>
       <TotalMath 
         getNonDevAssumptionsData={getNonDevAssumptionsData}

@@ -11,9 +11,38 @@ const Features = (props) => {
   const [platforms, setPlatforms] = useState([])
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
+  const [hover, setHover] = useState([]);
+  // const [radioButtons, setRadioButtons] = useState([])
   const [radioButtons, setRadioButtons] = useState([])
 
+
   const { handleSetDays, handleExclusiveDaysByFeature} = useContext(MathContext);
+
+  useEffect( () => {
+    // axios.get(`/api/platforms`)
+    //   .then(res=>setPlatforms(res.data))
+    var os = '';
+    if (props.OS === 'web') os = 3;
+    else if (props.OS === 'ios') os = 1;
+    else if (props.OS === 'android') os = 2;
+
+    axios.get(`/api/platforms/${os}/categories`)
+      .then( res  => setCategories(res.data));
+
+    axios.get(`/api/features_by_platform`, {params: {platform_id: os}})
+      .then(res => setFeatures(res.data));
+  },[props.OS]);
+
+  const hoverOn = () => {
+
+
+  }
+  
+  const hoverOff = () => {
+    this.setState({ hover: true });
+
+  }
+  
   
   const handleCheckbox = (catID, value) => {
     // debugger
@@ -51,37 +80,47 @@ const Features = (props) => {
     
     if (is_exclusive === true) {
       return (
-        <Spacing>
-          <Grid columns={3} centered>
-            <Grid.Row columns="3">
+        // <Spacing>
+          <Grid columns={3} centered stackable>
+            <Grid.Row columns={3}>
               {correctF.map( f => (
                 <>
                 <RowSpacing>
-                  <Grid.Column centered>
-                    <FeatureCard onClickFunction={handleRadio} isSelected={isSelected} f={f}/>
+                  <Grid.Column centered as={RowCentered}>
+                    <FeatureCard 
+                      onClickFunction={handleRadio} 
+                      isSelected={isSelected} 
+                      f={f}
+                      />
                   </Grid.Column>
                 </RowSpacing>
               </>
               ))}
             </Grid.Row>
           </Grid>
-        </Spacing>
-        );
+        // </Spacing>
+      );
       }else {
         return (
-          <Spacing>
-            <Grid columns={3} >
-              <Grid.Row columns={3} textAlign="center" as={RowCentered}>
+          // <Spacing>
+            <Grid columns={3} centered stackable >
+              <Grid.Row columns={3} textAlign="center">
                 {correctF.map( f => (
                   <>
-                      <Grid.Column centered as={RowSpacing}>
-                        <FeatureCard onClickFunction={handleCheckbox} isSelected={isSelected} f={f}/>
+                    <RowSpacing>
+                      <Grid.Column centered as={RowCentered}>
+                        <FeatureCard 
+                          onClickFunction={handleCheckbox} 
+                          isSelected={isSelected} 
+                          f={f}
+                        />
                       </Grid.Column>
+                    </RowSpacing>
                   </>
                 ))}
               </Grid.Row>
             </Grid>
-          </Spacing>
+          // </Spacing>
         );
       };
     };
@@ -108,24 +147,24 @@ const Features = (props) => {
 };
 
 const CategoryContainer = styled.div`
-  padding: 50px 20px 50px 20px;
+  padding: 4.167em 1.25em 4.167em 1.25em;
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  margin-bottom: 20px;
-  margin-top:10px;
+  margin-bottom: 1.25em;
+  margin-top: .625em;
   border-radius: 4px;
   background: white;
 `;
 
 const Spacing = styled.div`
-  padding: 5px 30px 30px 30px !important;
+  padding: 5px 2.5em 2.5em 2.5em !important;
 `;
 
 const RowCentered = styled.div`
-  padding: 30px 10px 10px 10px !important;
-`
+  padding: .625em !important;
+`;
 
 const RowSpacing = styled.div`
-  padding: 30px 10px 10px 10px !important;
+  padding: .625em !important;
 `;
 
 export default Features;

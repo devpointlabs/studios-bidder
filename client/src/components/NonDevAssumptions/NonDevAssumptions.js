@@ -70,8 +70,8 @@ class NonDevAssumptions extends React.Component {
         <Grid.Row>
           <Grid.Column centered>
             <SliderInfo>
-              <Header as={DarkText} fSize='small'>Design</Header>
-              <Header as={DarkText} fSize='small'>Days: {this.state.design.value.toFixed(1)}</Header>
+              <Header as={DarkText} fSize='ndv'>Design</Header>
+              <Header as={DarkText} fSize='ndv'>Days: {this.state.design.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='design'
@@ -81,8 +81,8 @@ class NonDevAssumptions extends React.Component {
               />
             <br />
             <SliderInfo>
-              <Header as={DarkText} fSize='small'>Quality Assurance Testing</Header>
-              <Header as={DarkText} fSize='small'>Days: {this.state.qaTesting.value.toFixed(1)}</Header>
+              <Header as={DarkText} fSize='ndv'>Quality Assurance Testing</Header>
+              <Header as={DarkText} fSize='ndv'>Days: {this.state.qaTesting.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='qaTesting'
@@ -92,8 +92,8 @@ class NonDevAssumptions extends React.Component {
               />
             <br />
             <SliderInfo>
-              <Header as={DarkText} fSize='small'>Deployment</Header>
-              <Header as={DarkText} fSize='small'>Days: {this.state.deployment.value.toFixed(1)}</Header>
+              <Header as={DarkText} fSize='ndv'>Deployment</Header>
+              <Header as={DarkText} fSize='ndv'>Days: {this.state.deployment.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='deployment'
@@ -103,8 +103,8 @@ class NonDevAssumptions extends React.Component {
               />
             <br />
             <SliderInfo>
-              <Header as={DarkText} fSize='small'>Post Deployment Development</Header>
-              <Header as={DarkText} fSize='small'>Days: {this.state.postDeploymentDev.value.toFixed(1)}</Header>
+              <Header as={DarkText} fSize='ndv'>Post Deployment Development</Header>
+              <Header as={DarkText} fSize='ndv'>Days: {this.state.postDeploymentDev.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='postDeploymentDev'
@@ -118,8 +118,8 @@ class NonDevAssumptions extends React.Component {
         <Grid.Row>
           <Grid.Column>
             <SliderInfo>
-              <Header as={DarkText} fSize='small'>Project Management</Header>
-              <Header as={DarkText} fSize='small'>Days: {this.state.projectManagement.value.toFixed(1)}</Header>
+              <Header as={DarkText} fSize='ndv'>Project Management</Header>
+              <Header as={DarkText} fSize='ndv'>Days: {this.state.projectManagement.value.toFixed(1)}</Header>
             </SliderInfo>
             <SliderBar 
               name='projectManagement'
