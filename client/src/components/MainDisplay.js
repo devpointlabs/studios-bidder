@@ -14,7 +14,7 @@ import styled from "styled-components";
 import axios from 'axios';
 import {MathContext,} from '../providers/MathProvider';
 import {AuthContext,} from '../providers/AuthProvider';
-import { FeatureContext} from '../providers/FeatureProvider';
+import {FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
@@ -258,7 +258,7 @@ const MainDisplay = () => {
               An iPhone/ iPad app 
               <br/>(Excluding back-end)
           </Header>
-          <OSMath OS='ios'/>
+          <OSMath OS='iOS'/>
         </Segment>
         <Segment onClick={handleAndroid} style={{cursor:'pointer'}} as={Colors} colored="dark">
           <br/> 
