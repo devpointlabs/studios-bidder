@@ -205,6 +205,7 @@ const MainDisplay = () => {
           handleWeb={handleWeb}
           handleiOS={handleiOS}
           handleAndroid={handleAndroid}
+          position='top'
         />
       </Segment.Group>
       {displayForm()}
@@ -213,6 +214,7 @@ const MainDisplay = () => {
             handleWeb={handleWeb}
             handleiOS={handleiOS}
             handleAndroid={handleAndroid}
+            position='bottom'
             />
       </Segment.Group>
       <TotalMath 
