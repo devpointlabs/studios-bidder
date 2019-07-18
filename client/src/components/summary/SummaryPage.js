@@ -4,7 +4,7 @@ import {Image, Segment, Header, Table, Loader, Dimmer} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
-import { FeatureContext} from '../../providers/FeatureProvider';
+// import { FeatureContext} from '../../providers/FeatureProvider';
 
 class SummaryPage extends Component {
   state = {
@@ -17,12 +17,10 @@ class SummaryPage extends Component {
     axios.get(`/api/estimates/${this.props.eID}`)
     .then(res => 
       this.setState({estimate: res.data}, this.setLoaded()),
-      // this.setState()
-      )
+    )
   }
 
   setLoaded = () => {
-    // debugger 
     this.setState({loaded: true})
   }
 
@@ -47,9 +45,9 @@ class SummaryPage extends Component {
                 </Header.Content>
               </Header>
             </Segment>
-              <SummaryTable platform={'web'} platformByNum={'3'} estimateID={eID} fromHistory={fromHistory}/> 
-              <SummaryTable platform={'ios'} platformByNum={'1'} estimateID={eID}  fromHistory={fromHistory}/>
-              <SummaryTable platform={'android'} platformByNum={'2'} estimateID={eID}  fromHistory={fromHistory}/>
+            <SummaryTable platform={'web'} platformByNum={'3'} estimateID={eID} fromHistory={fromHistory}/> 
+            <SummaryTable platform={'ios'} platformByNum={'1'} estimateID={eID}  fromHistory={fromHistory}/>
+            <SummaryTable platform={'android'} platformByNum={'2'} estimateID={eID}  fromHistory={fromHistory}/>
             <Segment vertical as={NoLine}>
               <Header size="huge" as={Colors} colored="light-grey" inverted textAlign="center">Estimate Totals</Header>
               <Table singleLine>

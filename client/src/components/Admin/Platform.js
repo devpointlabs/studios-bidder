@@ -29,7 +29,7 @@ const [tempName, setTempName] = useState('')
 
 
   const deleteCategory =(c_id)=>{
-    axios.delete(`/api/categories/${c_id}`)
+    axios.put(`/api/update_active_category/${c_id}`)
     setCategories(categories.filter(c => c.id !== c_id))
   }
   

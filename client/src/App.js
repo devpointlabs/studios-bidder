@@ -13,6 +13,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import {Switch, Route, } from 'react-router-dom';
 import styled from "styled-components";
 
+import HistoryPaginated from './components/HistoryPaginated';
+
 
 const App = () => (
   <>
@@ -24,6 +26,7 @@ const App = () => (
           {/*  */}
           <Route exact path ='/Admin' component={AdminDisplay} />
           <Route exact path ='/History' component={EstimateHistory} />
+          <Route exact path ='/Paginated' component={HistoryPaginated}/>
           {/*  */}
           {/*  */}
           {/* REMOVE ABOVE ROUTES BEFORE PRODUCTION */}

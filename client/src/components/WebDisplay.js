@@ -27,7 +27,7 @@ const WebDisplay = (props) => {
 };
 
 const FeaturesContainer = styled.div`
-  padding: 20px;
+  padding: 2px;
 `;
 
 const NoLine = styled.div`

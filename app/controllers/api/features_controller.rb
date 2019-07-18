@@ -14,6 +14,19 @@ before_action :set_feature, only: [:update, :destroy]
     render json: Feature.all
   end
 
+  def all_active_features
+    render json: Feature.get_features_active
+  end
+
+  def update_active_feature
+    @feature = Feature.find(params[:id])
+    if @feature.update(is_active: false)
+      render json: @feature
+    else
+      render json: @feature.errors, status:422
+    end
+  end
+
   def create
     feature = @category.features.new(feature_params)
     if feature.save
