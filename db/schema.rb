@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_16_174336) do
+ActiveRecord::Schema.define(version: 2019_07_16_235927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 2019_07_16_174336) do
     t.boolean "is_web"
     t.integer "list_location"
     t.bigint "platform_id"
+    t.string "image_url"
     t.index ["category_id"], name: "index_features_on_category_id"
     t.index ["platform_id"], name: "index_features_on_platform_id"
   end

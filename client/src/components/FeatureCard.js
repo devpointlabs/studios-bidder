@@ -98,7 +98,7 @@ const Image = styled.div`
   border: 3px solid #f2f2f2;
   cursor: pointer;
   &:hover {
-    border: 3px solid green;
+    border-color: 3px rgb(76, 175, 80);
     color:#000;
     opacity:0.7;
     transistion: background 0.3s ease;
