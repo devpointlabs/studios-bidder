@@ -234,7 +234,7 @@ const EstimateHistory = () => {
             </Table.Header>
             <Table.Body>
               {
-                estimates.slice(startNum,endNum).map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at))
+                estimates.slice(startNum,endNum).map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at.slice(0, 10)))
                 // displayedEstimates.map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at))
               }
             </Table.Body>

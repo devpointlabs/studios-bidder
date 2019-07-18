@@ -21,8 +21,6 @@ class Feature < ApplicationRecord
       WHERE is_active = true
     ")
   end
-  
-end
 
   def self.get_all_features
     Feature.find_by_sql("
@@ -31,4 +29,5 @@ end
     
     ")
   end
+  
 end
