@@ -17,12 +17,6 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
     setIsSelectedState(isSelected(f.id)) 
   },[isSelected])
 
-  // <Popup
-  //         trigger={<Icon name='heart' color='red' size='large' circular />}
-  //         content='I am positioned to the top center'
-  //         position='top center'
-  //       />
-
   return (
     <Card 
       key={f.id} value={f.id}
@@ -69,10 +63,6 @@ const Card = styled.div`
     height: 10em;
   }
   `;
-
-
-
-
 const Image = styled.div`
   
   background: url(${picture});
