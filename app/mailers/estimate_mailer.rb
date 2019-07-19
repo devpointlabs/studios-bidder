@@ -5,6 +5,6 @@ class EstimateMailer < ApplicationMailer
 
   def estimate_email(user, estimate)
     @estimate = estimate
-    mail(to: user.email, subject: 'Sample Email')
+    mail(to: user, subject: 'Sample Email')
   end
 end

@@ -28,6 +28,7 @@ const MainDisplay = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [notFirstSubmit, setNotFirstSubmit] = useState(false)
   const [errorPopup, setErrorPopup] = useState(false)
+  const [estimate, setEstimate] = useState({})
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
   const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
@@ -63,8 +64,7 @@ const MainDisplay = () => {
         featureIDsFromEstimate.push(...newArray)
         
         const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
-
-        // console.log('waited 5 seconds for shit to finish')
+        setEstimate(estimate)
         resolve (estimate)
       }, );
     });
@@ -98,7 +98,7 @@ const MainDisplay = () => {
 
   const handleSaveModal = () => {
     setModalOpen(false)
-    axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id})
+    axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id, estimate})
       .then( res => {
         setEmail('')
         setName('')
