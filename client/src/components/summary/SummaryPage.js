@@ -13,7 +13,7 @@ class SummaryPage extends Component {
   };
 
   componentDidMount = () => {
-    console.log(this.props.eID)
+    // console.log(this.props.eID)
     axios.get(`/api/estimates/${this.props.eID}`)
     .then(res => 
       this.setState({estimate: res.data}, this.setLoaded()),
