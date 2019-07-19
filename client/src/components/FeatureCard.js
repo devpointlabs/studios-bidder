@@ -31,6 +31,7 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
       {/* <p>Base Days: {f.base_days}</p> */}
       <Popup 
         trigger={<Image 
+                    // style={{backgroundImage: `url${f.image_url}`}}
                     as={isSelectedState ? CardSelectBorder : CardUnselectBorder} 
                     onClick={() => handleSubmit(f.category_id, f.id)} />}
         content={f.description}
