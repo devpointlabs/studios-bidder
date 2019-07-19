@@ -18,14 +18,10 @@ export class FeatureProvider extends React.Component {
     webFeatures: [],
     androidFeatures: [],
     selectedEstimate: [],
-    platformFeatures: [],
-    platformCategories: [],
+    // platformFeatures: [],
+    // platformCategories: [],
     featuresLoaded: false,
     estimateLoaded: false,
-    featureIDsFromHistory: [],
-    featuresFromHistory: [],
-    categoriesFromHistory: [],
-    fullEstimates: [],
     };
     
       // toPlatformItems = (platformByNum) => {
@@ -93,41 +89,25 @@ export class FeatureProvider extends React.Component {
     this.setState({featureIDsFromEstimate: [], featuresFromEstimate: [], categoriesFromEstimate: []})
   }
 
-  handleEstimate = (ID) => {
-    const {featureIDsFromEstimate} = this.state;
-    this.setState({featureIDsFromEstimate: []}) 
-    axios.get(`/api/features_estimates/${ID}`)
-      .then( res  => featureIDsFromEstimate.push(...res.data));
-  }
+  // handleHistoryClick = (estimate_id) => {
+  //   const {featureIDsFromHistory} = this.state;
+  //   axios.get(`/api/features_estimates`, {estimate_id: estimate_id})
+  //     .then( res => featureIDsFromHistory.push(...res.data)) 
+  // }
 
-  handleEstimates = () => {
-    const {fullEstimates} = this.state;
-    this.setState({fullEstimates: []})
-    axios.get(`/api/estimates`)
-      .then(res => fullEstimates.push(...res.data))
-      .then(this.setState({fullEstimates}))
-    console.log(fullEstimates)
-  }
-
-  handleHistoryClick = (estimate_id) => {
-    const {featureIDsFromHistory} = this.state;
-    axios.get(`/api/features_estimates`, {estimate_id: estimate_id})
-      .then( res => featureIDsFromHistory.push(...res.data)) 
-  }
-
-  handleHistoryIDs = () => {
-    const {allFeatures, allCategories, featureIDsFromHistory, featuresFromHistory, categoriesFromHistory} = this.state;
-    featureIDsFromHistory.map(fe => {
-      const finalFeatures = allFeatures.filter(f => f.id === fe)
-      featuresFromHistory.push(...finalFeatures)
-      this.setState({featuresFromHistory})
-    })
-    featureIDsFromHistory.map(f => {
-      const finalCategories = allCategories.filter(c => c.id === f.category_id)
-      categoriesFromHistory.push(...finalCategories)
-      this.setState({categoriesFromHistory})
-    })
-  }
+  // handleHistoryIDs = () => {
+  //   const {allFeatures, allCategories, featureIDsFromHistory, featuresFromHistory, categoriesFromHistory} = this.state;
+  //   featureIDsFromHistory.map(fe => {
+  //     const finalFeatures = allFeatures.filter(f => f.id === fe)
+  //     featuresFromHistory.push(...finalFeatures)
+  //     this.setState({featuresFromHistory})
+  //   })
+  //   featureIDsFromHistory.map(f => {
+  //     const finalCategories = allCategories.filter(c => c.id === f.category_id)
+  //     categoriesFromHistory.push(...finalCategories)
+  //     this.setState({categoriesFromHistory})
+  //   })
+  // }
 
   ResetEstimate = () => {
     this.setState({fullEstimates: []})
@@ -143,7 +123,7 @@ export class FeatureProvider extends React.Component {
        handleCategories: this.handleCategories,
        handleSelectedIDs: this.handleSelectedIDs,
        toPlatformItems: this.toPlatformItems,
-       handleEstimate: this.handleEstimate,
+      //  handleEstimate: this.handleEstimate,
        handleResetIDs: this.handleResetIDs,
        setFeaturesLoaded: this.setFeaturesLoaded,
        handleHistoryClick: this.handleHistoryClick,

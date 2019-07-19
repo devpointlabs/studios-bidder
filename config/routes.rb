@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     put 'update_active_category/:id', to: 'categories#update_active_category'
     get 'all_features', to: 'features#all_features'
     get 'features_by_platform', to: 'features#features_by_platform'
-    get 'featureIDs_from_estimate', to: 'features_estimates#fe_by_eid'
+    get 'featureIDs_from_estimate/:estimate_id', to: 'features_estimates#featureIDs_from_estimate'
     # post 'estimate_email', to: 'estimates#estimate_email'
   end
   get '*other', to: 'static#index'
