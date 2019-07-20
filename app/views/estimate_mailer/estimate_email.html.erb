@@ -4,14 +4,12 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1><%= @estimate.customer_name %></h1>
-    <h1><%= @estimate.customer_email %></h1>
-    <p>
-    <% @estimate.features.map do |f| %>
-      <p><%= f.name %></p>
-    <% end %>
 
-    <h1>Total Days:<%= @estimate.total %></h1>
+    <h1><%= @estimate[:customer_name] %></h1>
+    <h1><%= @estimate[:customer_email] %></h1>
+    <p>
+   
+    
       Sample mail sent using smtp.
     </p>
   </body>

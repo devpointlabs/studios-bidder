@@ -3,8 +3,8 @@ class EstimateMailer < ApplicationMailer
 
   layout "mailer"
 
-  def estimate_email(user, estimate)
+  def estimate_email(estimate)
     @estimate = estimate
-    mail(to: user, subject: 'Sample Email')
+    mail(to: estimate[:customer_email], subject: 'Sample Email')
   end
 end

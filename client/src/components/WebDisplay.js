@@ -8,7 +8,7 @@ const WebDisplay = (props) => {
   const {webCategories, webFeatures} = useContext(FeatureContext);
   
   return (
-  <>
+    <>
     <Segment as={NoLine}>
       <Container as={FeaturesContainer }>
         <Features
@@ -40,9 +40,9 @@ const NoLine = styled.div`
   border-top-width: 0px !important;
   background-color: rgb(129, 104, 177) !important;
 
-  @media (max-width: 500px){
+  /* @media (max-width: 500px){
 
-  }
+  } */
 `
 
 export default WebDisplay;

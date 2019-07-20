@@ -41,14 +41,23 @@ const Features = (props) => {
     return selected.includes(id);
   };
 
-  const exclusiveRendering = (catID, is_exclusive) => {
+  // const getCorrectFeatures = (catID) => {
+  //   return new Promise((resolve, ) => {
+  //     console.log(catID)
+  //     resolve([correctF])
+  //     const correctF = props.osFeatures.filter( f => catID === f.category_id);
+  //   })
+  // }
+  
+  const exclusiveRendering =  (catID, is_exclusive) => {
     const correctF = props.osFeatures.filter( f => catID === f.category_id);
-    
+    // const correctF = await getCorrectFeatures(catID)
+
     if (is_exclusive === true) {
       return (
         // <Spacing>
           <Grid columns={3} centered stackable>
-            <Grid.Row columns={3}>
+            <Grid.Row columns={3} textAlign="center">
               {correctF.map( f => (
                 <>
                 <RowSpacing>

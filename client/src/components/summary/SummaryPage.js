@@ -26,7 +26,7 @@ class SummaryPage extends Component {
 
   render () { 
     const { estimate, loaded } = this.state;
-    const { name, email, eID, fromHistory } = this.props;
+    const { name, email, eID, fromHistory, ndt } = this.props;
 
     if (loaded)
       return (
@@ -68,8 +68,12 @@ class SummaryPage extends Component {
                   <Table.Cell textAlign='right'>{estimate.postDeploymentDev_value} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
+                  <Table.Cell>Project Management</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.projectManagement_value} Days</Table.Cell>
+                </Table.Row>
+                <Table.Row> 
                   <Table.Cell>Non Dev Assumptions Total Days</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.nonDevTotal} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{ndt} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>General Buffer Time</Table.Cell>

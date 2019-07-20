@@ -1,4 +1,4 @@
-import React,{useState, useContext, useEffect} from 'react';
+import React,{useState, useContext, useEffect, useReducer} from 'react';
 import Navbar from './Navbar';
 import OSMath from './OSMath';
 import TotalMath from './TotalMath';
@@ -30,12 +30,15 @@ const MainDisplay = () => {
   const [errorPopup, setErrorPopup] = useState(false)
   const [estimate, setEstimate] = useState({})
 
-  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays} = useContext(MathContext);
+  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, nonDevTotal} = useContext(MathContext);
   const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
   const {authenticated} = useContext(AuthContext)
 
   useEffect( () => {
     originalAxios()
+    return () => {
+      resetMath();
+    }
   },[]);
 
   const originalAxios = () => {
@@ -52,10 +55,8 @@ const MainDisplay = () => {
 
   const buildEstimate = () => {
     return new Promise((resolve,) => {
-      console.log('waiting')
-      setTimeout( () => {
 
-        const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = nonDevAssumptions;
+        const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, total} = nonDevAssumptions;
         
         let newArray = []
         
@@ -66,9 +67,9 @@ const MainDisplay = () => {
         const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBuffer.value, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
         setEstimate(estimate)
         resolve (estimate)
-      }, );
     });
   };
+
 
   const handleSubmit = async () => {
     const estimate = await buildEstimate()
@@ -89,6 +90,7 @@ const MainDisplay = () => {
   const handleResubmit = () => {
     let newArray = []
     newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
+
     featureIDsFromEstimate.push(...newArray)
 
     setNotFirstSubmit(true)
@@ -144,6 +146,7 @@ const MainDisplay = () => {
   }
       
   const getNonDevAssumptionsData = (data) => {
+    console.log(data)
     setNonDevAssumptions(data)
   }
 
@@ -223,7 +226,7 @@ const MainDisplay = () => {
       {/* {authenticated && */}
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
-          client's name and email to save estimate
+          Client's name and email to save estimate
         </Header>
         <FormBorder>
           <Form widths='equal'>
@@ -244,7 +247,15 @@ const MainDisplay = () => {
         </FormBorder>
         <Modal  
             open={modalOpen}>
-          <SummaryPage as={NoLine} eID={estimate_id} submit={handleSaveModal} name={name} email={email} fromHistory={false}/>
+          <SummaryPage 
+            as={NoLine} 
+            eID={estimate_id} 
+            submit={handleSaveModal} 
+            name={name} 
+            email={email} 
+            fromHistory={false}
+            ndt={nonDevTotal}
+          />
           <Modal.Actions as={NoLine}>
             <Button onClick={handleCloseModal}>
               <Icon name='remove' /> Go back and edit these choices

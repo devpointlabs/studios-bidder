@@ -26,8 +26,7 @@ class Api::FeaturesEstimatesController < ApplicationController
   private 
 
   def estimate_email(estimate)
-    email = "chad.m.carlson@gmail.com"
-    EstimateMailer.estimate_email(email, estimate).deliver_now
+    EstimateMailer.estimate_email(estimate).deliver_now
     # render json: "Succesfully emailed"
   end
 

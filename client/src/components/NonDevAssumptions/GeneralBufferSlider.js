@@ -35,7 +35,7 @@ const GeneralBufferSlider = (props) => {
     <>
     <Divider/>
       <div style={{width: '100%', textAlign: 'center', padding: '2em'}}>
-        <Header as={DarkText} fSize='medium'>Non Dev Assumptions Total Days: {nonDevTotal}</Header>
+        <Header as={DarkText} fSize='medium'>Non-Developer Days: {nonDevTotal}</Header>
       </div>
     <Divider />
       <div style={{backgroundColor: '#CCCACF'}}>
@@ -44,7 +44,7 @@ const GeneralBufferSlider = (props) => {
         <Grid.Row>
           <Grid.Column centered>
           <SliderInfo>
-            <Header as={DarkText} fSize='ndv'><span style={{fontSize: '0.6em'}}>**</span>General Buffer Time</Header>
+            <Header as={DarkText} fSize='ndv'>General Buffer Time<span style={{fontSize: '0.8em'}}>**</span></Header>
             <Header as={DarkText} fSize='ndv'>Days: {generalBufferValue}</Header>
           </SliderInfo>
           <br />
