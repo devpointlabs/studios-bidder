@@ -46,8 +46,8 @@ class NonDevAssumptions extends React.Component {
         projectManagement: {multiplier: projectManagement.multiplier, value: coreDevTime* projectManagement.multiplier},
         coreDevTime: dt,
       });
-      let ndv = (coreDevTime * design.multiplier) + (coreDevTime * qaTesting.multiplier) + (coreDevTime * deployment.multiplier) + (coreDevTime* postDeploymentDev.multiplier) + (coreDevTime* projectManagement.multiplier)
-      this.props.math.setNonDevTotal(ndv)
+      let ndt = (coreDevTime * design.multiplier) + (coreDevTime * qaTesting.multiplier) + (coreDevTime * deployment.multiplier) + (coreDevTime* postDeploymentDev.multiplier) + (coreDevTime* projectManagement.multiplier)
+      this.props.math.setNonDevTotal(ndt)
     };
     if (this.state.nonDevTotal !== prevState.nonDevTotal || this.state.generalBuffer !== prevState.generalBuffer){
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = this.state;

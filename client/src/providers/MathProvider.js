@@ -100,8 +100,8 @@ export class MathProvider extends React.Component {
     this.setState({renderPrices: !renderPrices});
   }
 
-  setNonDevTotal = (ndv) => {
-    this.setState({nonDevTotal: ndv})
+  setNonDevTotal = (nonDevTotal) => {
+    this.setState({nonDevTotal: nonDevTotal})
   };
   
   render() {

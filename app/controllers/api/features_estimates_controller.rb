@@ -13,6 +13,7 @@ class Api::FeaturesEstimatesController < ApplicationController
   def create
     # FeatureEstimate.post_all_features(params[:selectedFeatures], params[:estimate_id])
     estimate = params[:estimate]
+    binding.pry
     render json: FeatureEstimate.post_all_features(params[:selectedFeatures], params[:estimate_id])
     estimate_email(estimate)
     
