@@ -20,7 +20,7 @@ class TotalMath extends React.Component {
         <Header align="center" as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
           *Combined total of Web, iOS, and Android.
         </Header>
-        {this.coreDevTime() > 1 &&
+        {this.coreDevTime() > 0 &&
         <NonDevAssumptions 
           coreDevTime={this.coreDevTime()}
           getNonDevAssumptionsData={this.props.getNonDevAssumptionsData}
