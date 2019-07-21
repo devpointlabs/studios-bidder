@@ -1,16 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Grid, Divider, Header } from 'semantic-ui-react';
 import DarkText from '../../styles/DarkText';
 import MainTitle from '../../styles/MainTitle';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
+import {MathContext,} from '../../providers/MathProvider';
+
 
 const GeneralBufferSlider = (props) => {
   const [generalBufferMultiplier, setGeneralBufferMultiplier] = useState(.05);
-  const [generalBufferValue, setGeneralBufferValue] = useState(0);
-  const [nonDevTotal, setNonDevTotal] = useState(0)
-  const [total, setTotal] = useState(0);
+  // const [generalBufferValue, setGeneralBufferValue] = useState(0);
+  const [nonDevTotal, setNonDevTotal] = useState(0);
+  // const [total, setTotal] = useState(0);
 
+  const {setTotal, total, setGeneralBufferValue, generalBufferValue} = useContext(MathContext);
 
   useEffect( () => {
     let gBV = Math.round((props.nonDevTotal() * generalBufferMultiplier) * 1e1) / 1e1;
@@ -30,6 +33,7 @@ const GeneralBufferSlider = (props) => {
     setGeneralBufferValue(nonDevTime);
     setTotal(props.nonDevTotal() + props.coreDevTime + generalBufferValue);
   };
+
 
     return(
     <>

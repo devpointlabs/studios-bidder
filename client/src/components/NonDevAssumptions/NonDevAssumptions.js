@@ -50,9 +50,11 @@ class NonDevAssumptions extends React.Component {
       this.props.math.setNonDevTotal(ndt)
     };
     if (this.state.nonDevTotal !== prevState.nonDevTotal || this.state.generalBuffer !== prevState.generalBuffer){
-    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = this.state;
-    const dataToSendToMainDisplay = {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total}
-    getNonDevAssumptionsData(dataToSendToMainDisplay);
+      const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = this.state;
+      const dataToSendToMainDisplay = {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total}
+      getNonDevAssumptionsData(dataToSendToMainDisplay);
+      let ndt = (coreDevTime * design.multiplier) + (coreDevTime * qaTesting.multiplier) + (coreDevTime * deployment.multiplier) + (coreDevTime* postDeploymentDev.multiplier) + (coreDevTime* projectManagement.multiplier)
+      this.props.math.setNonDevTotal(ndt)
     }
   };
   

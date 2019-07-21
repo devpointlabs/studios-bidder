@@ -25,8 +25,8 @@ class SummaryPage extends Component {
   }
 
   render () { 
-    const { estimate, loaded } = this.state;
-    const { name, email, eID, fromHistory, nonDevTotal } = this.props;
+    const {  loaded } = this.state;
+    const { estimate,name, email, eID, fromHistory, nonDevTotal } = this.props;
 
     if (loaded)
       return (
