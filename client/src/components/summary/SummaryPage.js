@@ -18,6 +18,7 @@ class SummaryPage extends Component {
     .then(res => 
       this.setState({estimate: res.data}, this.setLoaded()),
     )
+    // DEPENDING ON WHERE WE RENDER THIS COMPONENT, WE NEED TO PASS IN ESTIMATE PROPS FROM MAIN DISPLAY
   }
 
   setLoaded = () => {

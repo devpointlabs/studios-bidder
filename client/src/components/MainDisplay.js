@@ -73,6 +73,7 @@ const MainDisplay = () => {
 
   const handleSubmit = async () => {
     const estimate = await buildEstimate()
+    // debugger
     setNotFirstSubmit(true)
     
     axios.post(`/api/estimates`, estimate)
@@ -133,6 +134,7 @@ const MainDisplay = () => {
       setErrorPopup(true)
     }
   }
+
 
   const updateEstimate = () => {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer,} = nonDevAssumptions;
