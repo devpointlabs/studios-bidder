@@ -14,6 +14,8 @@ export class MathProvider extends React.Component {
     webPrice: 0, 
     androidPrice: 0,
     nonDevTotal: 0,
+    total: 0, 
+    generalBufferValue: 0, 
     renderPrices: true, 
   };  
 
@@ -100,9 +102,17 @@ export class MathProvider extends React.Component {
     this.setState({renderPrices: !renderPrices});
   }
 
-  setNonDevTotal = (ndv) => {
-    this.setState({nonDevTotal: ndv})
+  setNonDevTotal = (nonDevTotal) => {
+    this.setState({nonDevTotal: nonDevTotal})
   };
+
+  setTotal = (total) => {
+    this.setState({total: total})
+  }
+
+  setGeneralBufferValue = (total) => {
+    this.setState({generalBufferValue: total})
+  }
   
   render() {
     
@@ -114,6 +124,8 @@ export class MathProvider extends React.Component {
        handleExclusiveDaysByFeature: this.handleExclusiveDaysByFeature,
        resetMath: this.resetMath,
        setNonDevTotal: this.setNonDevTotal,
+       setTotal: this.setTotal,
+       setGeneralBufferValue: this.setGeneralBufferValue,
       }}>
         {this.props.children}
       </MathContext.Provider>
