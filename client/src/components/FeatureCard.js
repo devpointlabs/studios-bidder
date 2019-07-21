@@ -17,20 +17,15 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
     setIsSelectedState(isSelected(f.id)) 
   },[isSelected])
 
-  // <Popup
-  //         trigger={<Icon name='heart' color='red' size='large' circular />}
-  //         content='I am positioned to the top center'
-  //         position='top center'
-  //       />
-
   return (
     <Card 
       key={f.id} value={f.id}
     >
       <h3>{f.name}</h3>
-      {/* <p>Base Days: {f.base_days}</p> */}
+      {/* {/* <p>Base Days: {f.base_days}</p> */}
       <Popup 
         trigger={<Image 
+                    style={{backgroundImage: `url(${f.image_url})`}}
                     as={isSelectedState ? CardSelectBorder : CardUnselectBorder} 
                     onClick={() => handleSubmit(f.category_id, f.id)} />}
         content={f.description}
@@ -56,8 +51,9 @@ const CardUnselectBorder = styled.div`
 `;
 
 const Card = styled.div`
-  width:  15em;
-  height: 15em;
+  width:  15.5em;
+  height: 15.5em;
+  margin: 2em;
   display: flex;
   justify-content: space-beween;
   flex-direction: column;
@@ -74,7 +70,7 @@ const Card = styled.div`
 
 const Image = styled.div`
   
-  background: url(${picture});
+  /* background: url(${picture}); */
   width: 13em;
   height: 13em;
   border-radius: 50%;

@@ -8,41 +8,7 @@ import DarkText from "../styles/DarkText";
 import styled from "styled-components"
 
 const Features = (props) => {
-  const [platforms, setPlatforms] = useState([])
-  const [categories, setCategories] = useState([]);
-  const [features, setFeatures] = useState([]);
-  const [hover, setHover] = useState([]);
-  // const [radioButtons, setRadioButtons] = useState([])
-  const [radioButtons, setRadioButtons] = useState([])
-
-
   const { handleSetDays, handleExclusiveDaysByFeature} = useContext(MathContext);
-
-  useEffect( () => {
-    // axios.get(`/api/platforms`)
-    //   .then(res=>setPlatforms(res.data))
-    var os = '';
-    if (props.OS === 'web') os = 3;
-    else if (props.OS === 'ios') os = 1;
-    else if (props.OS === 'android') os = 2;
-
-    axios.get(`/api/platforms/${os}/categories`)
-      .then( res  => setCategories(res.data));
-
-    axios.get(`/api/features_by_platform`, {params: {platform_id: os}})
-      .then(res => setFeatures(res.data));
-  },[props.OS]);
-
-  const hoverOn = () => {
-
-
-  }
-  
-  const hoverOff = () => {
-    this.setState({ hover: true });
-
-  }
-  
   
   const handleCheckbox = (catID, value) => {
     // debugger
@@ -75,14 +41,23 @@ const Features = (props) => {
     return selected.includes(id);
   };
 
-  const exclusiveRendering = (catID, is_exclusive) => {
+  // const getCorrectFeatures = (catID) => {
+  //   return new Promise((resolve, ) => {
+  //     console.log(catID)
+  //     resolve([correctF])
+  //     const correctF = props.osFeatures.filter( f => catID === f.category_id);
+  //   })
+  // }
+  
+  const exclusiveRendering =  (catID, is_exclusive) => {
     const correctF = props.osFeatures.filter( f => catID === f.category_id);
-    
+    // const correctF = await getCorrectFeatures(catID)
+
     if (is_exclusive === true) {
       return (
         // <Spacing>
           <Grid columns={3} centered stackable>
-            <Grid.Row columns={3}>
+            <Grid.Row columns={3} textAlign="center">
               {correctF.map( f => (
                 <>
                 <RowSpacing>

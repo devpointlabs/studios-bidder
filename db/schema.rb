@@ -76,7 +76,9 @@ ActiveRecord::Schema.define(version: 2019_07_17_231056) do
     t.boolean "is_web"
     t.integer "list_location"
     t.bigint "platform_id"
+    t.string "image_url"
     t.boolean "is_active", default: true
+    t.string "image_url"
     t.index ["category_id"], name: "index_features_on_category_id"
     t.index ["platform_id"], name: "index_features_on_platform_id"
   end

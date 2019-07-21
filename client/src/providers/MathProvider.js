@@ -13,6 +13,7 @@ export class MathProvider extends React.Component {
     iOSPrice: 0, 
     webPrice: 0, 
     androidPrice: 0,
+    nonDevTotal: 0,
     renderPrices: true, 
   };  
 
@@ -98,6 +99,10 @@ export class MathProvider extends React.Component {
       };
     this.setState({renderPrices: !renderPrices});
   }
+
+  setNonDevTotal = (ndv) => {
+    this.setState({nonDevTotal: ndv})
+  };
   
   render() {
     
@@ -108,6 +113,7 @@ export class MathProvider extends React.Component {
        handleSetDays: this.handleSetDays,
        handleExclusiveDaysByFeature: this.handleExclusiveDaysByFeature,
        resetMath: this.resetMath,
+       setNonDevTotal: this.setNonDevTotal,
       }}>
         {this.props.children}
       </MathContext.Provider>

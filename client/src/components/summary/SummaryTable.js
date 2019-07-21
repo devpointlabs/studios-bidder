@@ -3,15 +3,17 @@ import { Segment, Header, Table} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
 import styled from "styled-components";
 import { FeatureContext,} from '../../providers/FeatureProvider';
-
+import { HistoryContext,} from '../../providers/HistoryProvider';
 
 const SummaryTable = ({ platform, platformByNum, estimateID, features, catagories, fromHistory}) => {
   const [catagoriesEstimates, setCatagoriesEstimates] = useState([]);
   const [featuresEstimates, setFeaturesEstimates] = useState([]);
-  const { featuresFromHistory, categoriesFromHistory, categoriesFromEstimate, featuresFromEstimate } = useContext(FeatureContext);
+  const { categoriesFromEstimate, featuresFromEstimate } = useContext(FeatureContext);
+  const { handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
 
   useEffect( () => {
     if (fromHistory === true) {
+      handleEstimate(estimateID)
       setCatagoriesEstimates(categoriesFromHistory)
       setFeaturesEstimates(featuresFromHistory)
     }
@@ -21,9 +23,9 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
       }
   }, [categoriesFromEstimate])
   
-      if (fromHistory === false) {
+      // if (fromHistory === false) {
     
-      }
+      // }
 
   const platformRendering = (platformByNum) => {
     if ((catagoriesEstimates.filter( f => platformByNum == f.platform_id)) != 0) {

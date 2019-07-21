@@ -12,6 +12,7 @@ before_action :set_feature, only: [:update, :destroy]
 
   def all_features
     render json: Feature.all
+    # render json: Feature.get_all_features
   end
 
   def all_active_features

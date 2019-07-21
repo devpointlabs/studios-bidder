@@ -13,11 +13,12 @@ class SummaryPage extends Component {
   };
 
   componentDidMount = () => {
-    console.log(this.props.eID)
+    // console.log(this.props.eID)
     axios.get(`/api/estimates/${this.props.eID}`)
     .then(res => 
       this.setState({estimate: res.data}, this.setLoaded()),
     )
+    // DEPENDING ON WHERE WE RENDER THIS COMPONENT, WE NEED TO PASS IN ESTIMATE PROPS FROM MAIN DISPLAY
   }
 
   setLoaded = () => {
@@ -26,7 +27,7 @@ class SummaryPage extends Component {
 
   render () { 
     const { estimate, loaded } = this.state;
-    const { name, email, eID, fromHistory } = this.props;
+    const { name, email, eID, fromHistory, nonDevTotal } = this.props;
 
     if (loaded)
       return (
@@ -68,8 +69,12 @@ class SummaryPage extends Component {
                   <Table.Cell textAlign='right'>{estimate.postDeploymentDev_value} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
+                  <Table.Cell>Project Management</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.projectManagement_value} Days</Table.Cell>
+                </Table.Row>
+                <Table.Row> 
                   <Table.Cell>Non Dev Assumptions Total Days</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.nonDevTotal} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{nonDevTotal} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>General Buffer Time</Table.Cell>

@@ -5,6 +5,8 @@ import MainTitle from '../../styles/MainTitle';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
 import GeneralBufferSlider from './GeneralBufferSlider';
+import { MathConsumer } from "../../providers/MathProvider";
+
 
 class NonDevAssumptions extends React.Component {
   state = {
@@ -44,14 +46,16 @@ class NonDevAssumptions extends React.Component {
         projectManagement: {multiplier: projectManagement.multiplier, value: coreDevTime* projectManagement.multiplier},
         coreDevTime: dt,
       });
-      this.updateNonDevTotal();
+      let ndv = (coreDevTime * design.multiplier) + (coreDevTime * qaTesting.multiplier) + (coreDevTime * deployment.multiplier) + (coreDevTime* postDeploymentDev.multiplier) + (coreDevTime* projectManagement.multiplier)
+      this.props.math.setNonDevTotal(ndv)
     };
     if (this.state.nonDevTotal !== prevState.nonDevTotal || this.state.generalBuffer !== prevState.generalBuffer){
-    const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = this.state;
+      const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total} = this.state;
     const dataToSendToMainDisplay = {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer, nonDevTotal, total}
     getNonDevAssumptionsData(dataToSendToMainDisplay);
-    }
-  };
+    this.props.math.setNonDevTotal(Math.round((design.value + qaTesting.value + deployment.value + postDeploymentDev.value + projectManagement.value)* 1e1) / 1e1)
+  }
+};
   
   updateNonDevTotal = () => {
     const {design, qaTesting, deployment, postDeploymentDev,projectManagement} = this.state;
@@ -151,17 +155,17 @@ const SliderInfo = styled.div`
   margin-top: -1vh !important;
 `
 
-export default NonDevAssumptions;
+export default class ConnectedNonDevAssumptions extends React.Component {
+  render() {
+    return(
+      <MathConsumer>
+        {mathObject => 
+          // mathObject.MathProvider.state
+          <NonDevAssumptions {...this.props} math={mathObject} />
 
-// *2. Non-Dev Assumptions -* Admin control of assumptions for non-dev related tasks, which are added to final quote, and are calculated from core dev time
-//   1. Design: 10% (of core dev time)
-//   1. QA Testing: 10%
-//   2. Deployment: 3%
-//   3. Post-Deployment Development & Bug Fixes: 15%
-//   4. Project Management: 10%
-//   *5. Subtotal: total # of days and costs*
-//   6. General Buffer Time: 5%
-//   *7. Total: total # of days and costs*
+        }
+      </MathConsumer>
+    );
+  };
+};
 
-//   1. Each of these items Includes a +/- feature for admin to easily change assumptions on each project.
-//   2. Each item also displays the calculated number of days based on the percentage.
