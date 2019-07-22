@@ -121,7 +121,7 @@ const EstimateHistory = () => {
 
   const searchForm = (
     <>
-    <Dropdown inline placeholder='Field' options={searchOptions} defaultValue={searchOptions[0].value} onChange={(e)=>setSearchColumn(e.value)}/>
+    {/* <Dropdown inline placeholder='Field' options={searchOptions} defaultValue={searchOptions[0].value} onChange={(e)=>setSearchColumn(e.value)}/> */}
     <Search
       loading={isLoading}
       onResultSelect={handleResultSelect}
@@ -161,7 +161,7 @@ const EstimateHistory = () => {
       :
       <Dimmer inactive><Loader>Loading</Loader></Dimmer>
       }
-        Search: {searchForm}
+        Search by customer name: {searchForm}
           <Table sortable striped stackable compact>
           <Table.Header>
               <Table.Row>

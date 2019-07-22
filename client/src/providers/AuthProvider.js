@@ -25,7 +25,7 @@ export class AuthProvider extends React.Component {
         history.push('/');
       })
       .catch( res => {
-        console.log(res)
+        alert('Username or Password is incorrect')
       })
   };
 
