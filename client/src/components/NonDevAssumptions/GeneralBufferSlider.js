@@ -31,7 +31,7 @@ const GeneralBufferSlider = (props) => {
   const handleChange = (nonDevTime, multiplier, name) => {
     setGeneralBufferMultiplier(multiplier/100);
     setGeneralBufferValue(nonDevTime);
-    setTotal(props.nonDevTotal() + props.coreDevTime + generalBufferValue);
+    setTotal(Math.round(props.nonDevTotal() + props.coreDevTime + generalBufferValue) * 1e1 / 1e1);
   };
 
 
