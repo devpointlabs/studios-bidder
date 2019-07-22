@@ -38,7 +38,7 @@ const FeatureForm = (props) => {
         onChange={(e)=> setBase_days(e.target.value)}
         required
       />
-      <Form.Input
+      {/* <Form.Input
         label="Multiplier"
         type="number"
         placeholder="1"
@@ -46,7 +46,7 @@ const FeatureForm = (props) => {
         name="multiplier"
         onChange={(e)=> setMultiplier((e.target.value))}
         required
-      />
+      /> */}
     </Form.Group>
 
     <Form.TextArea

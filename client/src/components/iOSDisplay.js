@@ -29,6 +29,11 @@ const IOSDisplay = (props) => {
 
 const FeaturesContainer = styled.div`
   padding: 20px;
+  @media (max-width: 500px){
+    padding: 2px !important;;
+    margin-left: .1em !important;
+    margin-right: .1em !important;
+  }
 `;
 
 const NoLine = styled.div`

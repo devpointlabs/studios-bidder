@@ -54,23 +54,23 @@ class SummaryPage extends Component {
               <Table singleLine>
                 <Table.Row> 
                   <Table.Cell>Design</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.design_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.design_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Deployment</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.deployment_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.deployment_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Quality Assurance Testing</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.qaTesting_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.qaTesting_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Post Deployment Development</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.postDeploymentDev_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.postDeploymentDev_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Project Management</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.projectManagement_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.projectManagement_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Non Dev Assumptions Total Days</Table.Cell>
@@ -78,7 +78,7 @@ class SummaryPage extends Component {
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>General Buffer Time</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.generalBuffer_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.generalBuffer_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Total Days</Table.Cell>
