@@ -5,7 +5,7 @@ import WhiteText from "../styles/WhiteText";
 import Colors from "../styles/Colors";
 
 const PlatformTabs = (props) => {
-  const {handleWeb, handleiOS, handleAndroid} = props
+  const {handleWeb, handleiOS, handleAndroid, position} = props
   const [windowWidth, setWindowWidth] =useState('')
 
   useEffect( () => {
@@ -26,7 +26,9 @@ return (
         A web app or a 
         <br/>back-end to a mobile app
       </Header>
-      <OSMath OS='web'/>
+      { position === 'bottom' ?
+      <OSMath OS='web'/> : null
+      }
       <br/>
       </>
   : 
@@ -38,7 +40,9 @@ return (
         <Header align="center" as={WhiteText} fSize="small">
         Web App
       </Header>
-      <OSMath OS='web'/>
+      { position === 'bottom' ?
+      <OSMath OS='web'/> : null
+      }
     </>
 }
 </Segment>
@@ -53,7 +57,9 @@ return (
         An iPhone/ iPad app 
         <br/>(Excluding back-end)
     </Header>
-    <OSMath OS='ios'/>
+    { position === 'bottom' ?
+    <OSMath OS='ios'/> : null
+    }
   </>
   :
   <>
@@ -65,7 +71,9 @@ return (
         iOS App
         <br/>
     </Header>
-    <OSMath OS='ios'/>
+    { position === 'bottom' ?
+    <OSMath OS='ios'/> : null
+    }
   </>
 }
 </Segment>
@@ -80,7 +88,9 @@ return (
         An Android/ Tablet App
         <br/>(Excluding back-end)
     </Header>
-    <OSMath OS='android'/>
+    { position === 'bottom' ?
+    <OSMath OS='android'/> : null
+    }
   </> 
   :
   <>
@@ -92,8 +102,9 @@ return (
       Android App
       <br/>
   </Header>
-  <OSMath OS='android'/>
-
+  { position === 'bottom' ?
+  <OSMath OS='android'/> : null
+  }
 </> 
 }
 </Segment>

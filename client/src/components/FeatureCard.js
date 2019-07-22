@@ -18,15 +18,14 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
   },[isSelected])
 
   return (
+    <>
+    <h3 style={{marginBottom: '-1em'}}>{f.name}</h3>
     <Card 
       key={f.id} value={f.id}
     >
-    
-      <h3>{f.name}</h3>
-      <p>Base Days: {f.base_days}</p>
+       <p style={{marginTop: '-1em'}}>Base Days: {f.base_days}</p>
       <Popup 
         trigger={<Image 
-         
                     style={{backgroundImage: `url(${f.image_url})`}}
                     as={isSelectedState ? CardSelectBorder : CardUnselectBorder} 
                     onClick={() => handleSubmit(f.category_id, f.id)} />}
@@ -34,6 +33,7 @@ const FeatureCard = ({onClickFunction, isSelected, f}) => {
         position='bottom center'
       />
     </Card>
+    </>
   )
 };
 
@@ -53,8 +53,9 @@ const CardUnselectBorder = styled.div`
 `;
 
 const Card = styled.div`
-  width:  15em;
-  height: 15em;
+  width:  15.5em;
+  height: 15.5em;
+  margin: 2em;
   display: flex;
   justify-content: space-beween;
   flex-direction: column;
@@ -80,7 +81,6 @@ const Image = styled.div`
     border-color: 3px rgb(76, 175, 80);
     color:#000;
     opacity:0.7;
-    transistion: background 0.3s ease;
   }
   @media (max-width: 500px) {
     width: 8.5em;

@@ -1,16 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Grid, Divider, Header } from 'semantic-ui-react';
 import DarkText from '../../styles/DarkText';
 import MainTitle from '../../styles/MainTitle';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
+import {MathContext,} from '../../providers/MathProvider';
+
 
 const GeneralBufferSlider = (props) => {
   const [generalBufferMultiplier, setGeneralBufferMultiplier] = useState(.05);
-  const [generalBufferValue, setGeneralBufferValue] = useState(0);
-  const [nonDevTotal, setNonDevTotal] = useState(0)
-  const [total, setTotal] = useState(0);
+  // const [generalBufferValue, setGeneralBufferValue] = useState(0);
+  const [nonDevTotal, setNonDevTotal] = useState(0);
+  // const [total, setTotal] = useState(0);
 
+  const {setTotal, total, setGeneralBufferValue, generalBufferValue} = useContext(MathContext);
 
   useEffect( () => {
     let gBV = Math.round((props.nonDevTotal() * generalBufferMultiplier) * 1e1) / 1e1;
@@ -31,11 +34,12 @@ const GeneralBufferSlider = (props) => {
     setTotal(props.nonDevTotal() + props.coreDevTime + generalBufferValue);
   };
 
+
     return(
     <>
     <Divider/>
       <div style={{width: '100%', textAlign: 'center', padding: '2em'}}>
-        <Header as={DarkText} fSize='medium'>Non Dev Assumptions Total Days: {nonDevTotal}</Header>
+        <Header as={DarkText} fSize='medium'>Non-Developer Days: {nonDevTotal}</Header>
       </div>
     <Divider />
       <div style={{backgroundColor: '#CCCACF'}}>
@@ -44,7 +48,7 @@ const GeneralBufferSlider = (props) => {
         <Grid.Row>
           <Grid.Column centered>
           <SliderInfo>
-            <Header as={DarkText} fSize='ndv'><span style={{fontSize: '0.6em'}}>**</span>General Buffer Time</Header>
+            <Header as={DarkText} fSize='ndv'>General Buffer Time<span style={{fontSize: '0.8em'}}>**</span></Header>
             <Header as={DarkText} fSize='ndv'>Days: {generalBufferValue}</Header>
           </SliderInfo>
           <br />
