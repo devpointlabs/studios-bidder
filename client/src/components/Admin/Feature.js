@@ -52,13 +52,13 @@ const Feature = (props) => {
                 props.description
               }
             </Table.Cell>
-            <Table.Cell collapsing textAlign='right'>
+            {/* <Table.Cell collapsing textAlign='right'>
               {editing?
                 <Form.Input label='Multiplier' value={multiplier} name="multiplier" onChange={(e)=> setMultiplier((e.target.value))} required/> 
                 :
                 props.multiplier
               }
-            </Table.Cell>
+            </Table.Cell> */}
             <Table.Cell collapsing textAlign='right'>
               {editing?
                 <Form.Input label='Developer Days' value={base_days} name="base_days" onChange={(e)=> setBase_Days((e.target.value))} required/> 

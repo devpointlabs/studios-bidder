@@ -15,7 +15,7 @@ export class HistoryProvider extends React.Component {
   }
 
   handleHistoryIDs = () => {
-    debugger
+    // debugger
     const {featuresWArchive, catagoriesWArchive, featureIDsFromHistory, featuresFromHistory, categoriesFromHistory} = this.state;
     axios.get(`/api/all_categories`)
       .then( res  => 

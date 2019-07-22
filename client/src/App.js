@@ -24,8 +24,8 @@ const App = () => (
           {/* REMOVE ROUTES BELOW BEFORE PRODUCTION */}
           {/*  */}
           {/*  */}
-          <Route exact path ='/Admin' component={AdminDisplay} />
-          <Route exact path ='/History' component={EstimateHistory} />
+          {/* <Route exact path ='/Admin' component={AdminDisplay} /> */}
+          {/* <Route exact path ='/History' component={EstimateHistory} /> */}
           {/*  */}
           {/*  */}
           {/* REMOVE ABOVE ROUTES BEFORE PRODUCTION */}
@@ -35,7 +35,7 @@ const App = () => (
           <Route exact path ='/Web' component={WebDisplay} />
           <Route exact path="/api/features" component={Features} />
           <Route exact path ='/login' component={Login} />
-          <ProtectedRoute exact path ='/History' component={EstimateHistory} />
+          <ProtectedRoute exact path ='/history' component={EstimateHistory} />
           <ProtectedRoute exact path ='/admin' component={AdminDisplay} />
           <Route component={NoMatch} />
         </Switch>

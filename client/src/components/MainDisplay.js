@@ -19,8 +19,8 @@ import {FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
-  const [name, setName] = useState('a');
-  const [email, setEmail] = useState('a@a');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [estimate_id, setEstimate_id] = useState('');
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
@@ -227,7 +227,7 @@ const MainDisplay = () => {
       <TotalMath 
         getNonDevAssumptionsData={getNonDevAssumptionsData}
       />
-      {/* {authenticated && */}
+      {authenticated &&
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
           Client's name and email to save estimate
@@ -288,7 +288,7 @@ const MainDisplay = () => {
           </Modal.Actions>
         </Modal> 
       </Segment>
-       {/* }  */}
+       } 
     </Segment.Group>
     </>
   )
