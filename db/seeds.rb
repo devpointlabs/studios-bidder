@@ -14,14 +14,14 @@ category_list = [
 
 
 ios_feature_list = [
-  ["Small", "Your app probably has around 2-3 key feature screens (excluding any static content, sign in, sign up etc.)", 10, 1, 1, true, false, false,  "https://res.cloudinary.com/df0yjgbnf/image/upload/c_thumb,w_200,g_face/v1563816533/EstimateMyApp/Category%201/img_554080_cokb3w.png"],
+  ["Small", "Your app probably has around 2-3 key feature screens (excluding any static content, sign in, sign up etc.)", 10, 1, 1, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/small@2x-d58c5d533621f5fe7ffd8f4cbdd556ebdb723639c371de1570405064fd0ade61.png"],
 
-  ["Medium", "Your app probably has around 4-7 key feature screens (excluding any static content, sign in, sign up etc.)", 30, 1, 1, true, false, false,  "https://res.cloudinary.com/df0yjgbnf/image/upload/v1563815711/EstimateMyApp/Category%201/group_icon_png_614925_qmpepl.jpg"],
+  ["Medium", "Your app probably has around 4-7 key feature screens (excluding any static content, sign in, sign up etc.)", 30, 1, 1, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/medium@2x-3f73284910e08d5750e163b0a57ba1e2950428883a8b4e7e9b0a84222769046e.png"],
 
-  ["Large", "Your app probably has around 8-12 key feature screens (excluding any static content, sign in, sign up etc.)", 50, 1, 1, true, false, false,  "https://res.cloudinary.com/df0yjgbnf/image/upload/v1563816470/EstimateMyApp/Category%201/33887_wp8x0w.png"],
-  ["MVP", "Minimum Viable Product. Very raw but functional.", 15, 2, 1, true, false, false,  "https://res.cloudinary.com/df0yjgbnf/image/upload/v1563814303/EstimateMyApp/Category%202/kegrpydphs5pwkjot2it.png"],
-  ["Basic", "Still quite basic but pleasing to the eye.", 25, 2, 1, true, false, false,  "https://res.cloudinary.com/df0yjgbnf/image/upload/v1563814255/EstimateMyApp/Category%202/25694_mhetws.svg"],
-  ["Polished", "Professional bespoke UI design. May also have some animations and transitions etc.", 40, 2, 2, true, false, false,  "https://res.cloudinary.com/df0yjgbnf/image/upload/v1563814433/EstimateMyApp/Category%202/d3bd73477873ff05a127e686ee688f65-black-and-white-house-icon-by-vexels_runsfz.png"],
+  ["Large", "Your app probably has around 8-12 key feature screens (excluding any static content, sign in, sign up etc.)", 50, 1, 1, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/large@2x-c7fc2c376674be4b7afabc7292144218c991c7c2e1b7a126d0040e607db43da5.png"],
+  ["MVP", "Minimum Viable Product. Very raw but functional.", 15, 2, 1, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/mvp@2x-9434764c1bc0fbfb2a3eff18f45ceb107951a46993b4cd446d6702078a1bcb89.png"],
+  ["Basic", "Still quite basic but pleasing to the eye.", 25, 2, 1, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/basic@2x-1b2b2488069b31b0f0dbc2a74f2e9db36e60f47009473bdcb42001c369e4549c.png"],
+  ["Polished", "Professional bespoke UI design. May also have some animations and transitions etc.", 40, 2, 2, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/basic@2x-1b2b2488069b31b0f0dbc2a74f2e9db36e60f47009473bdcb42001c369e4549c.png"],
   ["Email / Password Sign Up", "Classic sign up with an email and password.", 1, 3, 1, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/email_password_sign_up@2x-a5cf07d56027a867ce801374a02948cc4ea3067ca6d857c7a4a6ffe1682c90ca.png"],
   ["Facebook Sign Up", "Sign up and sign in with a Facebook account.", 2, 3, 1, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/facebook_sign_up@2x-46a0d49da8179794cc9297cd0a4fb6290578a27b4109aa99718508c38736bdda.png"],
   ["Twitter Sign Up", "Sign up and sign in with a Twitter account.", 2, 3, 1, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/twitter_sign_up@2x-b4c574ccb07b8044b63042c1733df3948b4394d2cb477cda54e6b3702ca0de06.png"],
@@ -164,34 +164,6 @@ web_feature_list = [
   ["Two Factor Authentication", "More common for financial or highly sensitive information based apps, this requires your user supplies additional information above a simple password.", 5, 33, 1, true, false, false,  "https://d3h99m5mv5zvgz.cloudfront.net/assets/two_factor_authentication@2x-ec2752e76cca0825691eadeeac3c1e56c54ace05a4cccf708f4d9fd575da556f.png"],
 ]
 
-# platforms = ['iOS', 'Android', 'Web']
-
-  a = Platform.create(name: 'iOS')
-  category_list.each do |name, is_exclusive|
-    category = Category.create(
-      name: name,
-      is_exclusive: is_exclusive,
-      platform_id: a.id,
-      list_location: nil,
-      is_active: true
-    )
-  end
-    ios_feature_list.each do |name, description, base_days, category_id, platform_id, is_android, is_ios, is_web, image_url|
-      Feature.create(
-        name: name,
-        description: description,
-        list_location: 1,
-        multiplier: 1,
-        base_days: base_days,
-        category_id: category_id,
-        platform_id: 1,
-        is_android: is_android,
-        is_ios: is_ios,
-        is_web: is_web,
-        image_url: image_url,
-        is_active: true,
-      )
-end
 
 a = Platform.create(name: 'iOS')
 category_list.each do |name, is_exclusive|
@@ -276,5 +248,28 @@ end
     )
   end
 
+
+      100.times do
+        i = Estimate.create(
+          customer_name: Faker::Name.name,
+          customer_email: Faker::Internet.email,
+          developer_day_rate: 200,
+          designer_day_rate: 200,
+          design_multiplier: rand(1..25),
+          qaTesting_multiplier: rand(1..25),
+          postDeploymentDev_multiplier: rand(1..25),
+          projectManagement_multiplier: rand(1..25),
+          generalBuffer_multiplier: rand(1..25),
+          design_value: rand(1..50),
+          qaTesting_value: rand(1..50),
+          deployment_value: rand(1..50),
+          postDeploymentDev_value: rand(1..50),
+          projectManagement_value: rand(1..50),
+          generalBuffer_value: rand(1..50),
+          total: rand(1..50),
+          nonDevTotal: rand(1..50),
+          employee_name: "Patrick Star"
+        )
+      end
 
 puts "data seeded"
