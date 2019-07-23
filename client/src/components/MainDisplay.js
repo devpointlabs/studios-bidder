@@ -131,7 +131,7 @@ const MainDisplay = () => {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer,} = nonDevAssumptions;
     const estimate = {feature_array: featureIDs, customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBufferValue, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
     axios.put(`/api/estimates/${estimate_id}`, estimate)
-      // .then(console.log(estimate))
+      .then(console.log(estimate))
     setEstimate(estimate)
   }
 
