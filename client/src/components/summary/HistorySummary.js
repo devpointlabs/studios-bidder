@@ -9,12 +9,13 @@ import { HistoryContext} from '../../providers/HistoryProvider';
 
 const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
   const [loaded, setLoaded ] = useState(false)
-  const { categoriesLoaded, resetCategoriesFromHistory, resetFeaturesFromHistory, featureIDsFromHistory, featuresLoaded, handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
+  const { categoriesLoaded, resetCategoriesFromHistory, resetFeaturesFromHistory, resetFeatureIDsFromHistory, featureIDsFromHistory, featuresLoaded, handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
 
  
   useEffect( () => {
       // handleHistoryIDs()
       // handleEstimate(eID)
+      console.log(eID)
     axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
       .then(res => {resetFeaturesFromHistory()
         featuresFromHistory.push(...res.data)})
@@ -26,7 +27,11 @@ const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
         categoriesFromHistory.push(...res.data) 
       // {categoriesFromHistory = [...new Set(res.data)] 
       // handleEstimate(eID)
-        categoriesLoaded() })
+        // categoriesLoaded() 
+        // resetFeatureIDsFromHistory()
+        setLoaded(true)
+      })
+
     // summaryAxios()
     
   }, [])
@@ -45,7 +50,7 @@ const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
 
   const loadedRendering = () => {
 
-    // if (categoriesLoaded === true ) {
+    // if (loaded === true ) {
       return (
         <Segment.Group Vertical as={NoLine} color="white">
           <InternalPadding>
@@ -58,7 +63,7 @@ const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
                 <Header.Content>
                   DevPoint Labs Estimate Summary
                   <Header.Subheader> Client:  {name},  {email}</Header.Subheader>
-                  {/* <Header.Subheader>ESTIMATE ID - check that its rendering: ID# {eID}</Header.Subheader> */}
+                  <Header.Subheader>ESTIMATE ID - check that its rendering: ID# {eID}</Header.Subheader>
                 </Header.Content>
               </Header>
             </Segment>
@@ -111,7 +116,7 @@ const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
     // ) } else {
     //   return (
     //     <Loader>
-    //       Loading estimate Page. Please Wait... 
+    //       Loading estimate Page. Please Wait...
     //     </Loader>
       )
     // }

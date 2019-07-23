@@ -12,7 +12,7 @@ import styled from "styled-components";
  
 const EstimateHistory = () => {
   const {resetEstimate, handleResetIDs } = useContext(FeatureContext)
-  const { handleHistoryIDs, handleHistoryCategories, handleEstimate, featureIDsFromHistory, dumpHistory, featuresFromHistory, categoriesFromHistory, } = useContext(HistoryContext)
+  const { handleHistoryIDs, handleHistoryCategories, handleEstimate, featureIDsFromHistory, dumpHistory, featuresFromHistory, categoriesFromHistory, resetFeatureIDsFromHistory} = useContext(HistoryContext)
   const [estimates, setEstimates] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [anyClick, setAnyClick] = useState(false)
@@ -54,7 +54,7 @@ const EstimateHistory = () => {
       //   .then(res => { 
           setEstimate(estimateFromMap) 
           // setFeatures(featureIDsFromHistory)
-
+          handleEstimate(id)
       //     // handleEstimate(id)
       //     // handleHistoryIDs()
       //   })
@@ -80,6 +80,7 @@ const EstimateHistory = () => {
     const featuresFromHistory = await buildEstimate(estimateFromMap, id)
 
     passProps(id, name, email)
+    console.log(id)
     // handleEstimate(id)
     // handleHistoryIDs()
     // axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
@@ -127,7 +128,8 @@ const EstimateHistory = () => {
   }
 
   const estimateRow = (estimateFromMap, id, name, email, employee_name, created, ) => (
-    <Table.Row onClick={() => {handleEstimate(id)
+    <Table.Row onClick={() => { //resetFeatureIDsFromHistory() 
+                               handleEstimate(id) 
                                handleOpenModal(estimateFromMap, id, name, email)}}>
       <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
       <Table.Cell textAlign='center'>{name}</Table.Cell>

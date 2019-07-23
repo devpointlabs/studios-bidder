@@ -59,6 +59,10 @@ export class HistoryProvider extends React.Component {
     this.setState({categoriesFromHistory: []})
   }
 
+  resetFeatureIDsFromHistory = () => {
+    this.setState({featureIDsFromHistory: []})
+  }
+
   render() {
       
     return (
@@ -72,6 +76,7 @@ export class HistoryProvider extends React.Component {
       handleHistoryCategories: this.handleHistoryCategories,
       resetFeaturesFromHistory: this.resetFeaturesFromHistory,
       resetCategoriesFromHistory: this.resetCategoriesFromHistory,
+      resetFeatureIDsFromHistory: this.resetFeatureIDsFromHistory,
       }}>
       {this.props.children}
     </HistoryContext.Provider>
