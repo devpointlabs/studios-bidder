@@ -4,7 +4,8 @@ import {Image, Segment, Header, Table, Loader, Dimmer} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
-import { FeatureContext} from '../../providers/FeatureProvider';
+
+// import { FeatureContext} from '../../providers/FeatureProvider';
 
 const SummaryPage = ({eID, name, email, fromHistory, nonDevTotal, estimate}) => {
   const { estimateLoaded, setEstimateLoaded, setFeaturesLoaded, handleFeatures, buildCategories, handleCategories, featuresFromEstimate, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
@@ -53,35 +54,39 @@ const SummaryPage = ({eID, name, email, fromHistory, nonDevTotal, estimate}) => 
             <Segment vertical as={NoLine}>
               <Header size="huge" as={Colors} colored="light-grey" inverted textAlign="center">Estimate Totals</Header>
               <Table singleLine>
+                <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
+                  <Table.Cell>Developer Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{(iOSPrice + webPrice + androidPrice).toFixed(1)} Days</Table.Cell>
+                </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Design</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.design_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.design_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Deployment</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.deployment_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.deployment_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Quality Assurance Testing</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.qaTesting_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.qaTesting_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Post Deployment Development</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.postDeploymentDev_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.postDeploymentDev_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Project Management</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.projectManagement_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.projectManagement_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
-                <Table.Row> 
-                  <Table.Cell>Non Dev Assumptions Total Days</Table.Cell>
+                <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
+                  <Table.Cell>Non Developer Days</Table.Cell>
                   <Table.Cell textAlign='right'>{nonDevTotal.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>General Buffer Time</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.generalBuffer_value} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.generalBuffer_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
-                <Table.Row> 
+                <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
                   <Table.Cell>Total Days</Table.Cell>
                   <Table.Cell textAlign='right'>{estimate.total} Days</Table.Cell>
                 </Table.Row>
@@ -117,5 +122,18 @@ const InternalPadding = styled.div`
   margin: 30px;
   background: white !important;
 `
-
 export default SummaryPage
+
+// export default class ConnectedSummaryPage extends React.Component {
+//   render() {
+//     return(
+//       <MathConsumer>
+//         {mathObject => 
+//           // mathObject.MathProvider.state
+//           <SummaryPage {...this.props} math={mathObject} />
+
+//         }
+//       </MathConsumer>
+//     );
+//   };
+// };

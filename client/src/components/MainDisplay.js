@@ -19,8 +19,8 @@ import {FeatureContext} from '../providers/FeatureProvider';
 
 const MainDisplay = () => {
   const [focus, setFocus] = useState("web");
-  const [name, setName] = useState('a');
-  const [email, setEmail] = useState('a@a');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [estimate_id, setEstimate_id] = useState('');
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [radioButtons, setRadioButtons] = useState([]);
@@ -32,8 +32,8 @@ const MainDisplay = () => {
   const [featuresForModal, setFeaturesForModal] = useState([])
   const [tempCategoryId, setTempCategoryId] = useState([])
 
-  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, nonDevTotal, total, generalBufferValue} = useContext(MathContext);
-  const { featuresLoaded, setFeaturesLoaded, handleFeatures, buildCategories, handleCategories, featuresFromEstimate, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
+  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, nonDevTotal, total, generalBufferValue, iOSPrice, webPrice, androidPrice} = useContext(MathContext);
+  const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
   const {authenticated} = useContext(AuthContext)
 
   const buildEstimate = () => {
@@ -54,6 +54,10 @@ const MainDisplay = () => {
   };
 
   const handleSubmit = async () => {
+    if (name === '' || email === '') {
+      alert('Name and email are required to submit an estimate')
+      return
+    }
     const estimate = await buildEstimate()
     // debugger
     setNotFirstSubmit(true)
@@ -71,7 +75,7 @@ const MainDisplay = () => {
       // .then({if (estimate_id) {setModalOpen(true)}})
       .catch(error => console.log(error));
     
-      console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
+      // console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
   };
 
 
@@ -91,7 +95,8 @@ const MainDisplay = () => {
   const handleSaveModal = async () => {
     setModalOpen(false)
     const estimate = await buildEstimate();
-    axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id, estimate})
+    const distinctFeatureIDsFromEstimate = [...new Set(featureIDsFromEstimate)]
+    axios.post(`/api/features_estimates`, {selectedFeatures: distinctFeatureIDsFromEstimate, estimate_id: estimate_id, estimate})
       .then( res => {
         setEmail('')
         setName('')
@@ -101,6 +106,7 @@ const MainDisplay = () => {
         setNotFirstSubmit(false)
         handleResetIDs()
         updateEstimate()
+        setFocus('web')
       })
   }
 
@@ -216,7 +222,7 @@ const MainDisplay = () => {
       <TotalMath 
         getNonDevAssumptionsData={getNonDevAssumptionsData}
       />
-      {/* {authenticated && */}
+      {authenticated &&
       <Segment as={Colors} colored="light-grey" style={{padding: '20px 70px 20px 70px'}}>
         <Header align="center" as={MainTitle} colored="dark-grey"  fSize="tiny">
           Client's name and email to save estimate
@@ -249,6 +255,9 @@ const MainDisplay = () => {
             fromHistory={false}
             nonDevTotal={nonDevTotal} //FROM PROVIDER, NOT ESTIMATE
             estimate={estimate}
+            iOSPrice={iOSPrice}
+            androidPrice={androidPrice}
+            webPrice={webPrice}
           />
           <Modal.Actions as={NoLine}>
             <Button onClick={handleCloseModal}>
@@ -277,7 +286,7 @@ const MainDisplay = () => {
           </Modal.Actions>
         </Modal> 
       </Segment>
-       {/* }  */}
+       } 
     </Segment.Group>
     </>
   )

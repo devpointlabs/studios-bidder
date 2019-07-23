@@ -1,4 +1,6 @@
 class Api::EstimatesController < ApplicationController
+  before_action :authenticate_user!
+
 
   def index
     render json: Estimate.all
@@ -20,9 +22,9 @@ class Api::EstimatesController < ApplicationController
 
   def create
     # UNCOMMENT THESE TO ADD EMPLOYEE WITH ESTIMATE
-    # employee = current_user.first_name
-    # estimate = Estimate.new(estimates_params.merge(:employee_name => employee))
-    estimate = Estimate.new(estimates_params)
+    employee = current_user.first_name
+    estimate = Estimate.new(estimates_params.merge(:employee_name => employee))
+    # estimate = Estimate.new(estimates_params)
     if estimate.save
       # FeatureEstimate.post_all_features(params[:selectedFeatures], estimate.id )
       render json: estimate.id

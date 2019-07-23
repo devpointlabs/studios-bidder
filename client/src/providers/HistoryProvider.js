@@ -12,12 +12,13 @@ export class HistoryProvider extends React.Component {
     categoryIDsFromHistory: [],
     // fullEstimates: [],
   }
-  // handleHistoryIDs = () => {
-  //   debugger
-  //   const {featuresWArchive, catagoriesWArchive, featureIDsFromHistory, featuresFromHistory, categoriesFromHistory} = this.state;
-  //   axios.get(`/api/all_categories`)
-  //     .then( res  => 
-  //       this.setState({catagoriesWArchive: [...res.data]}))
+
+  handleHistoryIDs = () => {
+    // debugger
+    const {featuresWArchive, catagoriesWArchive, featureIDsFromHistory, featuresFromHistory, categoriesFromHistory} = this.state;
+    axios.get(`/api/all_categories`)
+      .then( res  => 
+        this.setState({catagoriesWArchive: [...res.data]}))
     
   //   axios.get(`/api/all_features`)
   //     .then(res => this.setState({featuresWArchive: [...res.data]}))
