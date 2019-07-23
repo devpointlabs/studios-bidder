@@ -274,4 +274,10 @@ end
         )
       end
 
+      User.create(
+        email: 'test@test.com',
+        password: 'password',
+        first_name: 'Jerry',
+        last_name: 'Seinfield',
+      )
 puts "data seeded"
