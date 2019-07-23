@@ -76,57 +76,47 @@ export class FeatureProvider extends React.Component {
     this.setState({featureIDsFromEstimate: [], featuresFromEstimate: [], categoriesFromEstimate: []})
   }
 
-  handleResetIDs = () => {
-    this.setState({featureIDsFromEstimate: [], featuresFromEstimate: [], categoriesFromEstimate: []})
-  }
-
   
   ResetEstimate = () => {
     this.setState({fullEstimates: []})
   }
 
-  // handleSelectedIDs = () => {
-  //   const {featureIDsFromEstimate, featuresFromEstimate, tempCategoryId, categoriesFromEstimate} = this.state;
-  //   console.log(featureIDsFromEstimate)
-  //   axios.get(`/api/features_by_id/${featureIDsFromEstimate}`)
-  //     .then(res =>  buildFeatures(res.data))//this.setState({featuresFromEstimate: [...res.data]}))
-  // }
+  handleSelectedIDs = () => {
+    const {featureIDsFromEstimate, featuresFromEstimate, categoriesFromEstimate} = this.state;
+    axios.get(`/api/features_by_id/${featureIDsFromEstimate}`)
+      .then(res => this.setState({featuresFromEstimate: [...res.data]}))
 
-  buildCategories = (data) => {
-    const { tempCategoryId, featuresFromEstimate } = this.state
-    this.setState({featuresFromEstimate: [...data]})
+    axios.get(`/api/categories_by_feature_id/${featureIDsFromEstimate}`)
+      .then(res => this.setState({categoriesFromEstimate: [...res.data]}))
   }
 
-
-  handleCatagories =() => {
-
-  }
   render() {
   
     return (
       <FeatureContext.Provider value={{
       ...this.state,
-      handleFeatures: this.handleFeatures,
-      handleCategories: this.handleCategories,
+      // handleFeatures: this.handleFeatures,
+      // handleCategories: this.handleCategories,
       handleSelectedIDs: this.handleSelectedIDs,
-      toPlatformItems: this.toPlatformItems,
-      handleCatIDs: this.handleCatIDs,
+      // toPlatformItems: this.toPlatformItems,
+      // handleCatIDs: this.handleCatIDs,
       //  handleEstimate: this.handleEstimate,
       handleResetIDs: this.handleResetIDs,
-      handleHistoryClick: this.handleHistoryClick,
-      handleEstimates: this.handleEstimates,
+      // handleHistoryClick: this.handleHistoryClick,
+      // handleEstimates: this.handleEstimates,
       ResetEstimate: this.ResetEstimate,
-      setFeaturesLoaded: this.setFeaturesLoaded,
+      // setFeaturesLoaded: this.setFeaturesLoaded,
       setEstimateLoaded: this.setEstimateLoaded,
       setWebLoaded: this.setWebLoaded,
       setIosLoaded: this.setIosLoaded,
+      setAndroidLoaded: this.setAndroidLoaded,
       handleAndroidFeatures: this.handleAndroidFeatures,
       handleAndroidCategories: this.handleAndroidCategories,
       handleIosFeatures: this.handleIosFeatures,
       handleIosCategories: this.handleIosCategories,
       handleWebFeatures: this.handleWebFeatures,
       handleWebCategories: this.handleWebCategories,
-      buildCategories: this.buildCategories,
+      // buildCategories: this.buildCategories,
       }}>
         {this.props.children}
       </FeatureContext.Provider>

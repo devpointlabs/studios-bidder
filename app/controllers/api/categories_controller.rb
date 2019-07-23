@@ -28,6 +28,11 @@ class Api::CategoriesController < ApplicationController
     render json: Catagory.where(:id => (params[:arr].scan(/\d+/).map(&:to_s)))
   end
 
+  def categories_by_feature_id
+    # binding.pry
+    render json: Category.includes(:features).where(:features => {:id => (params[:arr].scan(/\d+/).map(&:to_s))}).uniq
+  end
+
   def create
     category = @platform.categories.new(category_params)
     if category.save

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     get 'all_active_categories', to: 'categories#all_active_categories'
     put 'update_active_category/:id', to: 'categories#update_active_category'
     get 'categories_by_id/:arr', to: 'categories#categories_by_id'
+    get 'categories_by_feature_id/:arr', to: 'categories#categories_by_feature_id'
     get 'all_active_features', to: 'features#all_active_features'
     put 'update_active_feature/:id', to: 'features#update_active_feature'
     get 'all_features', to: 'features#all_features'
@@ -40,7 +41,6 @@ Rails.application.routes.draw do
     get 'features_by_id/:arr', to: 'features#features_by_id'
     # post 'estimate_email', to: 'estimates#estimate_email'
 
-    
   end
   get '*other', to: 'static#index'
 
