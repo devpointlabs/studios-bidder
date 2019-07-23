@@ -43,6 +43,8 @@ const CardSelectBorder = styled.div`
   height: 8.33em;
   border-radius: 50%;  border: 5px solid !important; 
   border-color: rgb(76, 175, 80) !important;
+  transition: all 0.5s ease-in-out;
+
 `;
 
 const CardUnselectBorder = styled.div`
@@ -50,6 +52,7 @@ const CardUnselectBorder = styled.div`
   height: 8.33em;
   border-radius: 50%;  border: 5px solid !important; 
   border-color: #FFFFFF !important;
+  transition: all 0.2s ease-in-out;
 `;
 
 const Card = styled.div`
@@ -81,6 +84,7 @@ const Image = styled.div`
     border-color: 3px rgb(76, 175, 80);
     color:#000;
     opacity:0.7;
+    transition: all 0.5s ease-in-out;
   }
   @media (max-width: 500px) {
     width: 8.5em;
