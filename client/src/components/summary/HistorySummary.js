@@ -63,7 +63,7 @@ const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
                 <Header.Content>
                   DevPoint Labs Estimate Summary
                   <Header.Subheader> Client:  {name},  {email}</Header.Subheader>
-                  <Header.Subheader>ESTIMATE ID - check that its rendering: ID# {eID}</Header.Subheader>
+                  {/* <Header.Subheader>ESTIMATE ID - check that its rendering: ID# {eID}</Header.Subheader> */}
                 </Header.Content>
               </Header>
             </Segment>
