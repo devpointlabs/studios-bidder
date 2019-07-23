@@ -12,11 +12,7 @@ import styled from "styled-components";
  
 const EstimateHistory = () => {
   const {resetEstimate, handleResetIDs } = useContext(FeatureContext)
-<<<<<<< HEAD
-  const { handleHistoryIDs, handleHistoryCategories, handleEstimate, featureIDsFromHistory, dumpHistory, featuresFromHistory, categoriesFromHistory, resetFeatureIDsFromHistory} = useContext(HistoryContext)
-=======
   const { handleHistoryIDs, handleHistoryCategories, handleEstimate, featureIDsFromHistory, resetFeatureIDsFromHistory, dumpHistory, featuresFromHistory, categoriesFromHistory, } = useContext(HistoryContext)
->>>>>>> 5f88238c8d3da07b83a590479bd3d41a7a3c23d3
   const [estimates, setEstimates] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [anyClick, setAnyClick] = useState(false)

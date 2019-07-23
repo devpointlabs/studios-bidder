@@ -13,10 +13,15 @@ class Api::EstimatesController < ApplicationController
 
   def update 
     @estimate = Estimate.find(params[:id])
+    @estimate.update(feature_array: [])
+    params[:feature_array].each do |a| 
+      @estimate.feature_array << a
+    end
     if @estimate.update(estimates_params)
-        render json: @estimate
+      # binding.pry
+      render json: @estimate
     else
-        render json: @estimate.errors, status: 422
+      render json: @estimate.errors, status: 422
     end
   end
 
