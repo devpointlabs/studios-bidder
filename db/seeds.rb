@@ -270,9 +270,17 @@ end
           generalBuffer_value: rand(1..50),
           total: rand(1..50),
           nonDevTotal: rand(1..50),
+          coreDevTime: rand(15..100),
           employee_name: employees.sample,
         )
+        rand(4..75).times do(
+          FeatureEstimate.create(
+            estimate_id: i.id,
+            feature_id: (1..136).to_a.sample.to_i
+          )
+        )
       end
+    end
 
       User.create(
         email: 'test@test.com',

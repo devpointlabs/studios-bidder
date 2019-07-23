@@ -42,12 +42,13 @@ const MainDisplay = () => {
         const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer,} = nonDevAssumptions;
         
         let newArray = []
+        let coreDevTime = iOSPrice + androidPrice + webPrice
         
         newArray.push(...selectedFeatures,...exclusiveWebDays.map( ewd => ewd.id), ...exclusiveiOSDays.map( eid => eid.id),...exclusiveAndroidDays.map( ead => ead.id), )
         
         featureIDsFromEstimate.push(...newArray)
         
-        const estimate = {feature_array: featureIDsFromEstimate, customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBufferValue,  design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+        const estimate = {feature_array: featureIDsFromEstimate, customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBufferValue,  design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total, coreDevTime};
         setEstimate(estimate)
         resolve (estimate)
     });

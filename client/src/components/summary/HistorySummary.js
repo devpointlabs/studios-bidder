@@ -70,7 +70,7 @@ const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
               <Table singleLine>
                 <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
                   <Table.Cell>Developer Days</Table.Cell>
-                  <Table.Cell textAlign='right'> Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.coreDevTime} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Design</Table.Cell>
