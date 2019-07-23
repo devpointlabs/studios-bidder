@@ -9,7 +9,7 @@ import HistorySummary from './summary/HistorySummary';
 import styled from "styled-components";
 
 // import { FeatureContext} from '../providers/FeatureProvider';
-
+ 
 const EstimateHistory = () => {
   const {resetEstimate, handleResetIDs } = useContext(FeatureContext)
   const { handleHistoryIDs, handleHistoryCategories, handleEstimate, featureIDsFromHistory, dumpHistory, featuresFromHistory, categoriesFromHistory, } = useContext(HistoryContext)
@@ -63,8 +63,8 @@ const EstimateHistory = () => {
       //   .then(res => {featureIDsFromHistory.push(...res.data)
         
       //   })
-      axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
-      .then(res => featuresFromHistory.push(...res.data))
+      // axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
+      // .then(res => featuresFromHistory.push(...res.data))
       
       ///////////////////////////////////
         
@@ -82,9 +82,9 @@ const EstimateHistory = () => {
     passProps(id, name, email)
     // handleEstimate(id)
     // handleHistoryIDs()
-    axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
-      .then(res => categoriesFromHistory.push(...res.data))
-    // handleHistoryCategories()
+    // axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
+    //   .then(res => categoriesFromHistory.push(...res.data))
+    // // handleHistoryCategories()
     setModalOpen(true)
 
 
@@ -115,8 +115,9 @@ const EstimateHistory = () => {
 
   const handleCloseModal = () => {
     setModalOpen(false)
-    handleResetIDs()
-    dumpHistory()
+    // debugger
+    // handleResetIDs()
+    // dumpHistory()
   }
 
   const passProps = (id, name, email) => {

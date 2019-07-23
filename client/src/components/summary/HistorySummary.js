@@ -9,27 +9,39 @@ import { HistoryContext} from '../../providers/HistoryProvider';
 
 const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
   const [loaded, setLoaded ] = useState(false)
-  const { categoriesLoaded, featureIDsFromHistory, featuresLoaded, handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
+  const { categoriesLoaded, resetCategoriesFromHistory, resetFeaturesFromHistory, featureIDsFromHistory, featuresLoaded, handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
 
-
+ 
   useEffect( () => {
       // handleHistoryIDs()
-    handleEstimate(eID)
-    summaryAxios()
-    
-  }, [categoriesFromHistory])
-
-  const summaryAxios = () => {
-    handleEstimate(eID)
+      // handleEstimate(eID)
     axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
-      .then(res => featuresFromHistory.push(...res.data))
+      .then(res => {resetFeaturesFromHistory()
+        featuresFromHistory.push(...res.data)})
+      // featuresFromHistory = [...new Set(res.data)])
       // .then(this.featuresLoaded())
       // console.log(featuresFromHistory)
     axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
-      .then(res => {categoriesFromHistory.push(...res.data) 
+      .then(res =>  {resetCategoriesFromHistory()
+        categoriesFromHistory.push(...res.data) 
+      // {categoriesFromHistory = [...new Set(res.data)] 
+      // handleEstimate(eID)
         categoriesLoaded() })
-    // handleHistoryIDs()
-  }
+    // summaryAxios()
+    
+  }, [])
+
+  // const summaryAxios = () => {
+  //   handleEstimate(eID)
+  //   axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
+  //     .then(res => featuresFromHistory.push(...res.data))
+  //     // .then(this.featuresLoaded())
+  //     // console.log(featuresFromHistory)
+  //   axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
+  //     .then(res => {categoriesFromHistory.push(...res.data) 
+  //       categoriesLoaded() })
+  //   // handleHistoryIDs()
+  // }
 
   const loadedRendering = () => {
 

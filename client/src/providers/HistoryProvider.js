@@ -46,9 +46,17 @@ export class HistoryProvider extends React.Component {
       featuresWArchive: [],
       catagoriesWArchive: [],
       featureIDsFromHistory: [],
-      featuresLoaded: false,
-      categoriesLoaded: false,
+      // featuresLoaded: false,
+      // categoriesLoaded: false,
     })
+  }
+
+  resetFeaturesFromHistory = () => {
+    this.setState({featuresFromHistory: []})
+  }
+
+  resetCategoriesFromHistory = () => {
+    this.setState({categoriesFromHistory: []})
   }
 
   render() {
@@ -62,6 +70,8 @@ export class HistoryProvider extends React.Component {
       featuresLoaded: this.featuresLoaded,
       categoriesLoaded: this.categoriesLoaded,
       handleHistoryCategories: this.handleHistoryCategories,
+      resetFeaturesFromHistory: this.resetFeaturesFromHistory,
+      resetCategoriesFromHistory: this.resetCategoriesFromHistory,
       }}>
       {this.props.children}
     </HistoryContext.Provider>
