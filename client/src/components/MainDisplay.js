@@ -72,6 +72,10 @@ const MainDisplay = () => {
 
 
   const handleSubmit = async () => {
+    if (name === '' || email === '') {
+      alert('Name and email are required to submit an estimate')
+      return
+    }
     const estimate = await buildEstimate()
     // debugger
     setNotFirstSubmit(true)
