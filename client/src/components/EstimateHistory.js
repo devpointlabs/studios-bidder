@@ -45,7 +45,7 @@ const EstimateHistory = () => {
 
   }, [])
 
-
+ 
 
   const buildEstimate = ((estimateFromMap, id) => {
     return new Promise((resolve,) => {
