@@ -4,32 +4,33 @@ import {Image, Segment, Header, Table, Loader, Dimmer} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
-// import { FeatureContext} from '../../providers/FeatureProvider';
+import { FeatureContext} from '../../providers/FeatureProvider';
 
-class SummaryPage extends Component {
-  state = {
-    loaded: false,
-    estimate: {},
-  };
+const SummaryPage = ({eID, name, email, fromHistory, nonDevTotal, estimate}) => {
+  const { estimateLoaded, setEstimateLoaded, setFeaturesLoaded, handleFeatures, buildCategories, handleCategories, featuresFromEstimate, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
+  // const [estimate, setEstimate] = useState([]);
+  // const [loaded, setLoaded] = useState(false)
 
-  componentDidMount = () => {
-    // console.log(this.props.eID)
-    axios.get(`/api/estimates/${this.props.eID}`)
-    .then(res => 
-      this.setState({estimate: res.data}, this.setLoaded()),
-    )
-    // DEPENDING ON WHERE WE RENDER THIS COMPONENT, WE NEED TO PASS IN ESTIMATE PROPS FROM MAIN DISPLAY
-  }
+  // useEffect( () => {
+    // axios.get(`/api/features_estimates/${eID}`)
+    //   .then( res  => //{debugger})
+    //     setFeatureEstimates(res.data));
+    // axios.get(`/api/estimates/${eID}`)
+    //   .then(res => 
+    //     setEstimate(res.data)
+    //     );
 
-  setLoaded = () => {
-    this.setState({loaded: true})
-  }
+    // setLoaded(true)
 
-  render () { 
-    const {  loaded } = this.state;
-    const { estimate,name, email, eID, fromHistory, nonDevTotal } = this.props;
+  // },[eID]);
 
-    if (loaded)
+  // const setIfLoaded = () => {
+  //   setLoaded(true)
+  // }
+
+  return (
+  <>
+    {{ if (estimateLoaded) {
       return (
         <Segment.Group Vertical as={NoLine} color="white">
           <InternalPadding>
@@ -89,13 +90,18 @@ class SummaryPage extends Component {
           </InternalPadding>
         </Segment.Group>
       )
-    else 
+      if (estimateLoaded === false) {
       return (
         <Loader>
+          <Dimmer>
           Loading estimate Page. Please Wait... 
+          </Dimmer>
         </Loader>
-      )
-  }
+      )}
+    }}
+    }
+  </>
+  )
 }
 
 

@@ -1,11 +1,28 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
+import axios from 'axios';
 import Features from './Features';
 import {Container, Segment, } from 'semantic-ui-react';
 import styled from "styled-components";
 import { FeatureContext} from '../providers/FeatureProvider';
 
 const WebDisplay = (props) => {
-  const {webCategories, webFeatures} = useContext(FeatureContext);
+  // const {webCategories, webFeatures} = useContext(FeatureContext);
+  const {webLoaded, webCategories, webFeatures, handleWebCategories, handleWebFeatures} = useContext(FeatureContext);
+  
+  useEffect( () => {
+    originalAxios()
+  },[]);
+
+  const originalAxios = () => {
+    if (webLoaded === false) {
+      axios.get(`/api/active_web_categories`)
+      .then( res  => {
+        handleWebCategories(res.data)});
+    
+      axios.get(`/api/active_web_features`)
+        .then(res => handleWebFeatures(res.data))
+    }
+  }
   
   return (
     <>

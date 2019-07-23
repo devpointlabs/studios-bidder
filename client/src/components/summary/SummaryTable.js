@@ -8,24 +8,26 @@ import { HistoryContext,} from '../../providers/HistoryProvider';
 const SummaryTable = ({ platform, platformByNum, estimateID, features, catagories, fromHistory}) => {
   const [catagoriesEstimates, setCatagoriesEstimates] = useState([]);
   const [featuresEstimates, setFeaturesEstimates] = useState([]);
-  const { categoriesFromEstimate, featuresFromEstimate } = useContext(FeatureContext);
+  const { categoriesFromEstimate, setEstimateLoaded, featuresFromEstimate } = useContext(FeatureContext);
   const { handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
 
+
   useEffect( () => {
-    if (fromHistory === true) {
-      handleEstimate(estimateID)
-      setCatagoriesEstimates(categoriesFromHistory)
-      setFeaturesEstimates(featuresFromHistory)
-    }
-    if (fromHistory === false) {
-        setCatagoriesEstimates(categoriesFromEstimate)
-        setFeaturesEstimates(featuresFromEstimate)
-      }
-  }, [categoriesFromEstimate])
+    // if (fromHistory === true) {
+    //   handleEstimate(estimateID)
+    //   setCatagoriesEstimates(categoriesFromHistory)
+    //   setFeaturesEstimates(featuresFromHistory)
+    // }
+    // if (fromHistory === false) {
+      catagoriesAxios()
+    // setCatagoriesEstimates(categoriesFromEstimate)
+    // setFeaturesEstimates(featuresFromEstimate)
+    }, [])
   
-      // if (fromHistory === false) {
-    
-      // }
+  const catagoriesAxios = () => {
+    featuresFromEstimate.map(fe => console.log(fe.category_id))
+    setEstimateLoaded()
+  }
 
   const platformRendering = (platformByNum) => {
     if ((catagoriesEstimates.filter( f => platformByNum == f.platform_id)) != 0) {
