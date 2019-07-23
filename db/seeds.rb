@@ -248,6 +248,7 @@ end
     )
   end
 
+    employees = ["Aaron Krishnan", "Stephanie Jones", "Chad Carlson"]
 
       100.times do
         i = Estimate.create(
@@ -255,6 +256,7 @@ end
           customer_email: Faker::Internet.email,
           developer_day_rate: 200,
           designer_day_rate: 200,
+          created_at: (rand*90).days.ago,
           design_multiplier: rand(1..25),
           qaTesting_multiplier: rand(1..25),
           postDeploymentDev_multiplier: rand(1..25),
@@ -268,7 +270,7 @@ end
           generalBuffer_value: rand(1..50),
           total: rand(1..50),
           nonDevTotal: rand(1..50),
-          employee_name: "Patrick Star"
+          employee_name: employees.sample,
         )
       end
 
