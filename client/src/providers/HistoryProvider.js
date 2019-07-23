@@ -23,7 +23,7 @@ export class HistoryProvider extends React.Component {
 
   ///// this takes the estimate ID and gets the list of Feature IDs
   handleEstimate = (ID) => {
-    this.
+    // this.resetFeatureIDsFromHistory()
     const {featureIDsFromHistory} = this.state;
     axios.get(`/api/featureIDs_from_estimate/${ID}`)
       .then( res  => this.setState({featureIDsFromHistory: [...res.data]}))
@@ -60,6 +60,10 @@ export class HistoryProvider extends React.Component {
     this.setState({categoriesFromHistory: []})
   }
 
+  resetFeatureIDsFromHistory = () => {
+    this.setState({featureIDsFromHistory: []})
+  }
+
   render() {
       
     return (
@@ -73,6 +77,7 @@ export class HistoryProvider extends React.Component {
       handleHistoryCategories: this.handleHistoryCategories,
       resetFeaturesFromHistory: this.resetFeaturesFromHistory,
       resetCategoriesFromHistory: this.resetCategoriesFromHistory,
+      resetFeatureIDsFromHistory: this.resetFeatureIDsFromHistory,
       }}>
       {this.props.children}
     </HistoryContext.Provider>
