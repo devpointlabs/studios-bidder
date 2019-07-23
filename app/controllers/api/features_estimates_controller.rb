@@ -14,7 +14,7 @@ class Api::FeaturesEstimatesController < ApplicationController
     # FeatureEstimate.post_all_features(params[:selectedFeatures], params[:estimate_id])
     estimate = params[:estimate]
     render json: FeatureEstimate.post_all_features(params[:selectedFeatures], params[:estimate_id])
-    estimate_email(estimate)
+    # estimate_email(estimate)
     
   end
 
