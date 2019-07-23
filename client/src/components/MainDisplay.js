@@ -30,7 +30,7 @@ const MainDisplay = () => {
   const [errorPopup, setErrorPopup] = useState(false)
   const [estimate, setEstimate] = useState({})
 
-  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, nonDevTotal, total, generalBufferValue} = useContext(MathContext);
+  const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, nonDevTotal, total, generalBufferValue, iOSPrice, webPrice, androidPrice} = useContext(MathContext);
   const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
   const {authenticated} = useContext(AuthContext)
 
@@ -266,6 +266,9 @@ const MainDisplay = () => {
             fromHistory={false}
             nonDevTotal={nonDevTotal} //FROM PROVIDER, NOT ESTIMATE
             estimate={estimate}
+            iOSPrice={iOSPrice}
+            androidPrice={androidPrice}
+            webPrice={webPrice}
           />
           <Modal.Actions as={NoLine}>
             <Button onClick={handleCloseModal}>
