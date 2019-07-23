@@ -13,7 +13,7 @@ class SummaryPage extends Component {
   };
 
   componentDidMount = () => {
-    // console.log(this.props.eID)
+    // (this.props.eID)
     axios.get(`/api/estimates/${this.props.eID}`)
     .then(res => 
       this.setState({estimate: res.data}, this.setLoaded()),
@@ -72,15 +72,15 @@ class SummaryPage extends Component {
                   <Table.Cell>Project Management</Table.Cell>
                   <Table.Cell textAlign='right'>{estimate.projectManagement_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
-                <Table.Row> 
-                  <Table.Cell>Non Dev Assumptions Total Days</Table.Cell>
+                <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
+                  <Table.Cell>Non Developer Days</Table.Cell>
                   <Table.Cell textAlign='right'>{nonDevTotal.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>General Buffer Time</Table.Cell>
                   <Table.Cell textAlign='right'>{estimate.generalBuffer_value.toFixed(1)} Days</Table.Cell>
                 </Table.Row>
-                <Table.Row> 
+                <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
                   <Table.Cell>Total Days</Table.Cell>
                   <Table.Cell textAlign='right'>{estimate.total} Days</Table.Cell>
                 </Table.Row>

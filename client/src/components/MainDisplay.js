@@ -89,7 +89,7 @@ const MainDisplay = () => {
       // .then({if (estimate_id) {setModalOpen(true)}})
       .catch(error => console.log(error));
     
-      console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
+      // console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
   };
 
   const handleResubmit = () => {
@@ -106,9 +106,9 @@ const MainDisplay = () => {
   const handleSaveModal = async () => {
     setModalOpen(false)
     const estimate = await buildEstimate();
-    axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id, estimate})
+    const distinctFeatureIDsFromEstimate = [...new Set(featureIDsFromEstimate)]
+    axios.post(`/api/features_estimates`, {selectedFeatures: distinctFeatureIDsFromEstimate, estimate_id: estimate_id, estimate})
       .then( res => {
-        debugger
         setEmail('')
         setName('')
         setSelectedFeatures([])
@@ -117,6 +117,7 @@ const MainDisplay = () => {
         setNotFirstSubmit(false)
         handleResetIDs()
         updateEstimate()
+        setFocus('web')
       })
   }
 
@@ -145,7 +146,7 @@ const MainDisplay = () => {
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer,} = nonDevAssumptions;
     const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBufferValue, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
     axios.put(`/api/estimates/${estimate_id}`, estimate)
-      .then(console.log(estimate))
+      // .then(console.log(estimate))
     setEstimate(estimate)
   }
 

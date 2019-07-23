@@ -52,8 +52,8 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
                     </Table.Row>
                   <Table.Row>
                     <Table.HeaderCell colSpan='2'> Feature Name</Table.HeaderCell>
-                    <Table.HeaderCell textAlign='right'> Developer Days </Table.HeaderCell>
-                    <Table.HeaderCell textAlign='right'> Multiplier</Table.HeaderCell>
+                    <Table.HeaderCell textAlign='right' colSpan='2'> Developer Days </Table.HeaderCell>
+                    {/* <Table.HeaderCell textAlign='right'> Multiplier</Table.HeaderCell> */}
                   </Table.Row>
                 </Table.Header>
                 {featuresEstimates.map( f => {
@@ -62,8 +62,8 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
                     <>
                       <Table.Row>
                         <Table.Cell colSpan='2'>{f.name}</Table.Cell>
-                        <Table.Cell textAlign='right'>{f.base_days}</Table.Cell>
-                        <Table.Cell textAlign='right'>{f.multiplier}</Table.Cell>
+                        <Table.Cell textAlign='right' colSpan='2'>{f.base_days}</Table.Cell>
+                        {/* <Table.Cell textAlign='right'>{f.multiplier}</Table.Cell> */}
                       </Table.Row>
                     </>
                     )
