@@ -23,7 +23,7 @@ class FeatureEstimate < ApplicationRecord
       FROM feature_estimates
       where estimate_id=(:estimate_id)",
       {estimate_id: estimate_id}])
-  end
+  end 
 
 
 end

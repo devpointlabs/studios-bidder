@@ -3,7 +3,6 @@ class Category < ApplicationRecord
   
   belongs_to :platform
   has_many :features, dependent: :destroy
-
   # def self.find_by_os(os)
   #   case os
   #   when 'ios'
@@ -30,6 +29,31 @@ class Category < ApplicationRecord
       FROM categories
       WHERE is_active = true
     ")
+  end
+  
+  def self.active_ios_c
+    Category.find_by_sql("
+      SELECT *
+      FROM categories
+      WHERE (is_active = true AND platform_id = 1)
+      ")
+  end
+
+  def self.active_android_c
+    Category.find_by_sql("
+      SELECT *
+      FROM categories
+      WHERE (is_active = true AND platform_id = 2)
+      ")
+    
+  end
+
+  def self.active_web_c
+    Category.find_by_sql("
+      SELECT *
+      FROM categories
+      WHERE (is_active = true AND platform_id = 3)
+      ")
   end
 
 end

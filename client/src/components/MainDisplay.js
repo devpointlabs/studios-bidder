@@ -29,29 +29,12 @@ const MainDisplay = () => {
   const [notFirstSubmit, setNotFirstSubmit] = useState(false)
   const [errorPopup, setErrorPopup] = useState(false)
   const [estimate, setEstimate] = useState({})
+  const [featuresForModal, setFeaturesForModal] = useState([])
+  const [tempCategoryId, setTempCategoryId] = useState([])
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, nonDevTotal, total, generalBufferValue, iOSPrice, webPrice, androidPrice} = useContext(MathContext);
   const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
   const {authenticated} = useContext(AuthContext)
-
-  useEffect( () => {
-    originalAxios()
-    return () => {
-      resetMath();
-    }
-  },[]);
-
-  const originalAxios = () => {
-    if (featuresLoaded === false) {
-      axios.get(`/api/all_active_categories`)
-      .then( res  => {
-        setFeaturesLoaded()
-        handleCategories(res.data)});
-    
-      axios.get(`/api/all_active_features`)
-        .then(res => handleFeatures(res.data))
-    }
-  }
 
   const buildEstimate = () => {
     return new Promise((resolve,) => {
@@ -64,7 +47,7 @@ const MainDisplay = () => {
         
         featureIDsFromEstimate.push(...newArray)
         
-        const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBufferValue,  design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+        const estimate = {feature_array: featureIDsFromEstimate, customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBufferValue,  design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
         setEstimate(estimate)
         resolve (estimate)
     });
@@ -143,8 +126,9 @@ const MainDisplay = () => {
 
 
   const updateEstimate = () => {
+    const featureIDs = [...new Set(featureIDsFromEstimate)]
     const {design, qaTesting, deployment, postDeploymentDev, projectManagement, generalBuffer,} = nonDevAssumptions;
-    const estimate = {customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBufferValue, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
+    const estimate = {feature_array: featureIDs, customer_name: name, customer_email: email, design_value: design.value, qaTesting_value: qaTesting.value, deployment_value: deployment.value, postDeploymentDev_value: postDeploymentDev.value, projectManagement_value: projectManagement.value, generalBuffer_value: generalBufferValue, design_multiplier: design.multiplier, qaTesting_multiplier: qaTesting.multiplier, deployment_multiplier: deployment.multiplier, postDeploymentDev_multiplier: postDeploymentDev.multiplier, projectManagement_multiplier: projectManagement.multiplier, generalBuffer_multiplier: generalBuffer.multiplier, nonDevTotal, total};
     axios.put(`/api/estimates/${estimate_id}`, estimate)
       // .then(console.log(estimate))
     setEstimate(estimate)

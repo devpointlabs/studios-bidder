@@ -19,7 +19,8 @@ class Api::FeaturesEstimatesController < ApplicationController
   end
 
   def featureIDs_from_estimate
-    render json: FeatureEstimate.get_feature_IDs(params[:estimate_id])
+    # render json: FeatureEstimate.get_feature_IDs(params[:estimate_id])
+    render json: FeatureEstimate.where(:estimate_id => params[:estimate_id]).pluck(:feature_id)
   end
 
 

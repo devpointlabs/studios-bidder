@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_17_231056) do
+ActiveRecord::Schema.define(version: 2019_07_23_093141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 2019_07_17_231056) do
     t.float "total"
     t.float "nonDevTotal"
     t.string "employee_name"
+    t.text "category_array", default: [], array: true
+    t.text "feature_array", default: [], array: true
   end
 
   create_table "feature_estimates", force: :cascade do |t|

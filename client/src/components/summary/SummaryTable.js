@@ -8,24 +8,20 @@ import { HistoryContext,} from '../../providers/HistoryProvider';
 const SummaryTable = ({ platform, platformByNum, estimateID, features, catagories, fromHistory}) => {
   const [catagoriesEstimates, setCatagoriesEstimates] = useState([]);
   const [featuresEstimates, setFeaturesEstimates] = useState([]);
-  const { categoriesFromEstimate, featuresFromEstimate } = useContext(FeatureContext);
+  const { categoriesFromEstimate, setEstimateLoaded, featuresFromEstimate } = useContext(FeatureContext);
   const { handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
+
 
   useEffect( () => {
     if (fromHistory === true) {
-      handleEstimate(estimateID)
       setCatagoriesEstimates(categoriesFromHistory)
       setFeaturesEstimates(featuresFromHistory)
     }
     if (fromHistory === false) {
-        setCatagoriesEstimates(categoriesFromEstimate)
-        setFeaturesEstimates(featuresFromEstimate)
-      }
-  }, [categoriesFromEstimate])
+      setCatagoriesEstimates(categoriesFromEstimate)
+      setFeaturesEstimates(featuresFromEstimate)
+    }}, [])
   
-      // if (fromHistory === false) {
-    
-      // }
 
   const platformRendering = (platformByNum) => {
     if ((catagoriesEstimates.filter( f => platformByNum == f.platform_id)) != 0) {
@@ -42,37 +38,40 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
     const pCatagories = [ ...new Set(catagoriesEstimates.filter( f => platformByNum == f.platform_id)) ]
 
       return (
-        pCatagories.map( c => {
-          return (
+        <>
             <Segment vertical as={NoLine}>
-              <Table singleLine fixed stackable>
-                <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell colSpan='4' textAlign="center"> {c.name}</Table.HeaderCell>
-                    </Table.Row>
-                  <Table.Row>
-                    <Table.HeaderCell colSpan='2'> Feature Name</Table.HeaderCell>
-                    <Table.HeaderCell textAlign='right' colSpan='2'> Developer Days </Table.HeaderCell>
-                    {/* <Table.HeaderCell textAlign='right'> Multiplier</Table.HeaderCell> */}
-                  </Table.Row>
-                </Table.Header>
-                {featuresEstimates.map( f => {
-                  if (f.category_id === c.id) {
-                    return (
+            <Table singleLine fixed stackable>
+              <Table.Header>
+                  {/* <Table.Row style={{fontWeight: '900', backgroundColor: '#e5e1eb'}}>
+                    <Table.Cell colSpan='4' textAlign="center"> {c.name}</Table.Cell>
+                  </Table.Row> */}
+                <Table.Row style={{fontWeight: '900', backgroundColor: '#e5e1eb'}}>
+                  <Table.Cell colSpan='2'> Category Name </Table.Cell>
+                  <Table.Cell textAlign='center' colSpan='2' style={{fontWeight: '900', backgroundColor: '#e5e1eb'}}> Feature Name</Table.Cell>
+                  <Table.Cell textAlign='right' colSpan='2' style={{fontWeight: '900', backgroundColor: '#e5e1eb'}}> Developer Days </Table.Cell>
+                  {/* <Table.HeaderCell textAlign='right'> Multiplier</Table.HeaderCell> */}
+                </Table.Row>
+              </Table.Header>
+              { pCatagories.map( c => {
+            return (
+              featuresEstimates.map( f => {
+                if (f.category_id === c.id) {
+                  return (
                     <>
-                      <Table.Row>
-                        <Table.Cell colSpan='2'>{f.name}</Table.Cell>
-                        <Table.Cell textAlign='right' colSpan='2'>{f.base_days}</Table.Cell>
-                        {/* <Table.Cell textAlign='right'>{f.multiplier}</Table.Cell> */}
-                      </Table.Row>
-                    </>
-                    )
-                  }
-                })}
-              </Table>
-            </Segment>
-          )
-        })
+                    <Table.Row>
+                      <Table.Cell colSpan='2'> {c.name} </Table.Cell>
+                      <Table.Cell colSpan='2'>{f.name}</Table.Cell>
+                      <Table.Cell textAlign='right' colSpan='2'>{f.base_days}</Table.Cell>
+                      {/* <Table.Cell textAlign='right'>{f.multiplier}</Table.Cell> */}
+                    </Table.Row>
+                    <Table.Row style={{fontWeight: '900', backgroundColor: '#e5e1eb'}}> </Table.Row>
+                  </>
+                  )
+                }
+              }))})}
+            </Table>
+          </Segment>
+        </>
       )
     }
 

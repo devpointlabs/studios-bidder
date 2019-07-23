@@ -5,14 +5,14 @@ import { Table, Dropdown, Segment, Search, Label, Modal, Icon, Header, Menu, But
 import Navbar from './Navbar'
 import { FeatureContext} from '../providers/FeatureProvider';
 import { HistoryContext} from '../providers/HistoryProvider';
-import SummaryPage from './summary/SummaryPage';
+import HistorySummary from './summary/HistorySummary';
 import styled from "styled-components";
 
 // import { FeatureContext} from '../providers/FeatureProvider';
 
 const EstimateHistory = () => {
   const {resetEstimate, handleResetIDs } = useContext(FeatureContext)
-  const { handleHistoryIDs, handleEstimate, dumpHistory, featuresFromHistory, categoriesFromHistory, } = useContext(HistoryContext)
+  const { handleHistoryIDs, handleHistoryCategories, handleEstimate, featureIDsFromHistory, dumpHistory, featuresFromHistory, categoriesFromHistory, } = useContext(HistoryContext)
   const [estimates, setEstimates] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [anyClick, setAnyClick] = useState(false)
@@ -21,6 +21,8 @@ const EstimateHistory = () => {
   const [startNum, setStartNum] = useState(0)
   const [endNum, setEndNum] = useState(15)
   const [pageItemCount, setPageItemCount] = useState(15)
+  const [estimate, setEstimate] = useState({})
+  const [features, setFeatures] = useState([])
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [id, setId] = useState('')
@@ -35,28 +37,86 @@ const EstimateHistory = () => {
     {key:'employee', text:'Employee', value:'Employee'}
   ])
   
-
   useEffect(() => {
-    // resetEstimate()
     axios.get(`/api/estimates`)
       .then(res => setEstimates(res.data))
-    // handleEstimates()
-      // .then(fullEstimates.push(...estimates))
+
     setIsLoading(false)
 
-    //////////////////////////////////////// COMPONENT UNMOUNT: dumpHistory()
   }, [])
+
+
+
+  const buildEstimate = ((estimateFromMap, id) => {
+    return new Promise((resolve,) => {
+
+      // axios.get(`/api/estimates/${id}`)
+      //   .then(res => { 
+          setEstimate(estimateFromMap) 
+          // setFeatures(featureIDsFromHistory)
+
+      //     // handleEstimate(id)
+      //     // handleHistoryIDs()
+      //   })
+///////////////////////
+      // axios.get(`/api/featureIDs_from_estimate/${id}`)
+      //   .then(res => {featureIDsFromHistory.push(...res.data)
+        
+      //   })
+      axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
+      .then(res => featuresFromHistory.push(...res.data))
+      
+      ///////////////////////////////////
+        
+      // setEstimate(estimate)
+
+      resolve (featuresFromHistory)
+    });
+  });
+
+
+  const handleOpenModal = async (estimateFromMap, id, name, email) => {
+
+    const featuresFromHistory = await buildEstimate(estimateFromMap, id)
+
+    passProps(id, name, email)
+    // handleEstimate(id)
+    // handleHistoryIDs()
+    axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
+      .then(res => categoriesFromHistory.push(...res.data))
+    // handleHistoryCategories()
+    setModalOpen(true)
+
+
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // const handleOpenModal = (id, name, email) => {
+  //   // debugger
+  //   handleEstimate(id)
+  //   handleHistoryIDs()
+  //   passProps(id, name, email)
+  //   setModalOpen(true)
+  // }
+
 
   const handleCloseModal = () => {
     setModalOpen(false)
     handleResetIDs()
-  }
-  const handleOpenModal = (id, name, email) => {
-    // debugger
-    handleEstimate(id)
-    // handleHistoryIDs()
-    passProps(id, name, email)
-    setModalOpen(true)
+    dumpHistory()
   }
 
   const passProps = (id, name, email) => {
@@ -65,8 +125,9 @@ const EstimateHistory = () => {
     setEmail(email)
   }
 
-  const estimate = (id, name, email, employee_name, created, ) => (
-    <Table.Row onClick={() => handleOpenModal(id, name, email)}>
+  const estimateRow = (estimateFromMap, id, name, email, employee_name, created, ) => (
+    <Table.Row onClick={() => {handleEstimate(id)
+                               handleOpenModal(estimateFromMap, id, name, email)}}>
       <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
       <Table.Cell textAlign='center'>{name}</Table.Cell>
       <Table.Cell textAlign='center'>{email}</Table.Cell>
@@ -206,7 +267,7 @@ const EstimateHistory = () => {
             </Table.Header>
             <Table.Body>
               {
-                estimates.slice(startNum,endNum).map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at.slice(0, 10)))
+                estimates.slice(startNum,endNum).map((e) =>  estimateRow(e, e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at.slice(0, 10)))
                 // displayedEstimates.map((e) =>  estimate(e.id, e.customer_name, e.customer_email, e.employee_name, e.created_at))
               }
             </Table.Body>
@@ -226,7 +287,7 @@ const EstimateHistory = () => {
               </Table.Footer>
           </Table>
         <Modal open={modalOpen} onClose={handleCloseModal}>
-        <SummaryPage as={NoLine} eID={id} name={name} email={email} fromHistory={true}/>
+        <HistorySummary estimate={estimate} as={NoLine} eID={id} name={name} email={email} fromHistory={true}/>
           {/* <Modal.Actions as={NoLine}> 
             <Button
               onClick={handleCloseModal}

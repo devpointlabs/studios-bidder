@@ -6,8 +6,8 @@ export const FeatureConsumer = FeatureContext.Consumer;
 
 export class FeatureProvider extends React.Component {
   state = { 
-    allFeatures: [],
-    allCategories: [],
+    // allFeatures: [],
+    // allCategories: [],
     featureIDsFromEstimate: [],
     featuresFromEstimate: [],
     categoriesFromEstimate: [],
@@ -20,116 +20,103 @@ export class FeatureProvider extends React.Component {
     selectedEstimate: [],
     // platformFeatures: [],
     // platformCategories: [],
-    featuresLoaded: false,
+    androidLoaded: false,
+    iosLoaded: false,
+    webLoaded: false,
     estimateLoaded: false,
+    tempCategoryId: [],
     };
-    
-      // toPlatformItems = (platformByNum) => {
-      //   // debugger
-      //   const {platformFeatures, platformCategories, featuresFromEstimate, categoriesFromEstimate} = this.state;
-      //   const pFeatures = featuresFromEstimate.filter(f => f.platform_id === platformByNum);
-      //   this.setState({platformFeatures: [...pFeatures]})
-      //   const pCategories = categoriesFromEstimate.filter(c => c.platform_id === platformByNum);
-      //   this.setState({platformCategories: [...pCategories]})
-      //   // platformCategories.push(...pCategories)
-      // };
 
-  setFeaturesLoaded = () => {
-    this.setState({featuresLoaded: true})
+
+  setAndroidLoaded = () => {
+    this.setState({androidLoaded: true})
+  }
+
+  setIosLoaded = () => {
+    this.setState({iosLoaded: true})
+  }
+
+  setWebLoaded = () => {
+    this.setState({webLoaded: true})
   }
 
   setEstimateLoaded = () => {
     this.setState({estimateLoaded: true})
   }
 
-  handleFeatures = (features) => {
-    const {allFeatures} = this.state;
-    this.setState({allFeatures: [...features]});
-    features.map( f => { 
-      const {iosFeatures, webFeatures, androidFeatures} = this.state;
-      if (f.platform_id === 1) {
-        this.setState({iosFeatures: [...iosFeatures, f]})};
-      if (f.platform_id === 2) {
-        this.setState({androidFeatures: [...androidFeatures, f]})};
-      if (f.platform_id === 3) {
-        this.setState({webFeatures: [...webFeatures, f]})};
-    });
+  handleAndroidCategories = (categories) => {
+    this.setState({androidCategories: [...categories]})
+    this.setAndroidLoaded()
   }
 
-  handleCategories = (categories) => {
-    const {allCategories} = this.state;
-    this.setState({allCategories: [...categories]});
-    categories.map( c => { 
-      const {iosCategories, webCategories, androidCategories} = this.state;
-      if (c.platform_id === 1) {
-        this.setState({iosCategories: [...iosCategories, c]})};
-      if (c.platform_id === 2) {
-        this.setState({androidCategories: [...androidCategories, c]})};
-      if (c.platform_id === 3) {
-        this.setState({webCategories: [...webCategories, c]})};
-    }) 
-  };
-
-
-  handleSelectedIDs = () => {
-    const {allFeatures, allCategories, featureIDsFromEstimate, featuresFromEstimate, categoriesFromEstimate} = this.state;
-    featureIDsFromEstimate.map(fe => {
-      const finalFeatures = allFeatures.filter(f => f.id === fe)
-      featuresFromEstimate.push(...finalFeatures)
-      this.setState({featuresFromEstimate})
-    })
-    featuresFromEstimate.map(f => {
-      const finalCategories = allCategories.filter(c => c.id === f.category_id)
-      categoriesFromEstimate.push(...finalCategories)
-      this.setState({categoriesFromEstimate})
-    })
+  handleAndroidFeatures = (features) => {
+    this.setState({androidFeatures: [...features]})
   }
+
+  handleIosCategories = (categories) => {
+    this.setState({iosCategories: [...categories]})
+    this.setIosLoaded()
+  }
+
+  handleIosFeatures = (features) => {
+    this.setState({iosFeatures: [...features]})
+  }
+
+  handleWebCategories = (categories) => {
+    this.setState({webCategories: [...categories]})
+    this.setWebLoaded()
+  }
+
+  handleWebFeatures = (features) => {
+    this.setState({webFeatures: [...features]})
+  }
+
 
   handleResetIDs = () => {
     this.setState({featureIDsFromEstimate: [], featuresFromEstimate: [], categoriesFromEstimate: []})
   }
 
-  // handleHistoryClick = (estimate_id) => {
-  //   const {featureIDsFromHistory} = this.state;
-  //   axios.get(`/api/features_estimates`, {estimate_id: estimate_id})
-  //     .then( res => featureIDsFromHistory.push(...res.data)) 
-  // }
-
-  // handleHistoryIDs = () => {
-  //   const {allFeatures, allCategories, featureIDsFromHistory, featuresFromHistory, categoriesFromHistory} = this.state;
-  //   featureIDsFromHistory.map(fe => {
-  //     const finalFeatures = allFeatures.filter(f => f.id === fe)
-  //     featuresFromHistory.push(...finalFeatures)
-  //     this.setState({featuresFromHistory})
-  //   })
-  //   featureIDsFromHistory.map(f => {
-  //     const finalCategories = allCategories.filter(c => c.id === f.category_id)
-  //     categoriesFromHistory.push(...finalCategories)
-  //     this.setState({categoriesFromHistory})
-  //   })
-  // }
-
+  
   ResetEstimate = () => {
     this.setState({fullEstimates: []})
   }
-  
+
+  handleSelectedIDs = () => {
+    const {featureIDsFromEstimate, featuresFromEstimate, categoriesFromEstimate} = this.state;
+    axios.get(`/api/features_by_id/${featureIDsFromEstimate}`)
+      .then(res => this.setState({featuresFromEstimate: [...res.data]}))
+
+    axios.get(`/api/categories_by_feature_id/${featureIDsFromEstimate}`)
+      .then(res => this.setState({categoriesFromEstimate: [...res.data]}))
+  }
 
   render() {
-    
+  
     return (
       <FeatureContext.Provider value={{
-       ...this.state,
-       handleFeatures: this.handleFeatures,
-       handleCategories: this.handleCategories,
-       handleSelectedIDs: this.handleSelectedIDs,
-       toPlatformItems: this.toPlatformItems,
+      ...this.state,
+      // handleFeatures: this.handleFeatures,
+      // handleCategories: this.handleCategories,
+      handleSelectedIDs: this.handleSelectedIDs,
+      // toPlatformItems: this.toPlatformItems,
+      // handleCatIDs: this.handleCatIDs,
       //  handleEstimate: this.handleEstimate,
-       handleResetIDs: this.handleResetIDs,
-       setFeaturesLoaded: this.setFeaturesLoaded,
-       handleHistoryClick: this.handleHistoryClick,
-       setEstimateLoaded: this.setEstimateLoaded,
-       handleEstimates: this.handleEstimates,
-       ResetEstimate: this.ResetEstimate,
+      handleResetIDs: this.handleResetIDs,
+      // handleHistoryClick: this.handleHistoryClick,
+      // handleEstimates: this.handleEstimates,
+      ResetEstimate: this.ResetEstimate,
+      // setFeaturesLoaded: this.setFeaturesLoaded,
+      setEstimateLoaded: this.setEstimateLoaded,
+      setWebLoaded: this.setWebLoaded,
+      setIosLoaded: this.setIosLoaded,
+      setAndroidLoaded: this.setAndroidLoaded,
+      handleAndroidFeatures: this.handleAndroidFeatures,
+      handleAndroidCategories: this.handleAndroidCategories,
+      handleIosFeatures: this.handleIosFeatures,
+      handleIosCategories: this.handleIosCategories,
+      handleWebFeatures: this.handleWebFeatures,
+      handleWebCategories: this.handleWebCategories,
+      // buildCategories: this.buildCategories,
       }}>
         {this.props.children}
       </FeatureContext.Provider>

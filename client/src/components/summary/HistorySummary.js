@@ -4,33 +4,36 @@ import {Image, Segment, Header, Table, Loader, Dimmer} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
+import { HistoryContext} from '../../providers/HistoryProvider';
 
-// import { FeatureContext} from '../../providers/FeatureProvider';
 
-class SummaryPage extends Component {
-  state = {
-    loaded: false,
-    estimate: {},
-  };
+const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
+  const [loaded, setLoaded ] = useState(false)
+  const { categoriesLoaded, featureIDsFromHistory, featuresLoaded, handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
 
-  componentDidMount = () => {
-    // (this.props.eID)
-    axios.get(`/api/estimates/${this.props.eID}`)
-    .then(res => 
-      this.setState({estimate: res.data}, this.setLoaded()),
-    )
-    // DEPENDING ON WHERE WE RENDER THIS COMPONENT, WE NEED TO PASS IN ESTIMATE PROPS FROM MAIN DISPLAY
+
+  useEffect( () => {
+      // handleHistoryIDs()
+    handleEstimate(eID)
+    summaryAxios()
+    
+  }, [categoriesFromHistory])
+
+  const summaryAxios = () => {
+    handleEstimate(eID)
+    axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
+      .then(res => featuresFromHistory.push(...res.data))
+      // .then(this.featuresLoaded())
+      // console.log(featuresFromHistory)
+    axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
+      .then(res => {categoriesFromHistory.push(...res.data) 
+        categoriesLoaded() })
+    // handleHistoryIDs()
   }
 
-  setLoaded = () => {
-    this.setState({loaded: true})
-  }
+  const loadedRendering = () => {
 
-  render () { 
-    const {  loaded } = this.state;
-    const { estimate, name, email, eID, fromHistory, nonDevTotal, iOSPrice, androidPrice, webPrice} = this.props;
-
-    if (loaded)
+    // if (categoriesLoaded === true ) {
       return (
         <Segment.Group Vertical as={NoLine} color="white">
           <InternalPadding>
@@ -55,35 +58,35 @@ class SummaryPage extends Component {
               <Table singleLine>
                 <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
                   <Table.Cell>Developer Days</Table.Cell>
-                  <Table.Cell textAlign='right'>{(iOSPrice + webPrice + androidPrice).toFixed(1)} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>## GET THIS FROM CHAD - WHERE STORED IN ESTIMATE? Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Design</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.design_value.toFixed(1)} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.design_value} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Deployment</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.deployment_value.toFixed(1)} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.deployment_value} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Quality Assurance Testing</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.qaTesting_value.toFixed(1)} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.qaTesting_value} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Post Deployment Development</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.postDeploymentDev_value.toFixed(1)} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.postDeploymentDev_value} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Project Management</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.projectManagement_value.toFixed(1)} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.projectManagement_value} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
                   <Table.Cell>Non Developer Days</Table.Cell>
-                  <Table.Cell textAlign='right'>{nonDevTotal.toFixed(1)} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.nonDevTotal} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row> 
                   <Table.Cell>General Buffer Time</Table.Cell>
-                  <Table.Cell textAlign='right'>{estimate.generalBuffer_value.toFixed(1)} Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{estimate.generalBuffer_value} Days</Table.Cell>
                 </Table.Row>
                 <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
                   <Table.Cell>Total Days</Table.Cell>
@@ -93,14 +96,20 @@ class SummaryPage extends Component {
             </Segment>
           </InternalPadding>
         </Segment.Group>
+    // ) } else {
+    //   return (
+    //     <Loader>
+    //       Loading estimate Page. Please Wait... 
+    //     </Loader>
       )
-    else 
-      return (
-        <Loader>
-          Loading estimate Page. Please Wait... 
-        </Loader>
-      )
+    // }
   }
+
+  return (
+    <>
+      {loadedRendering()}
+    </>
+  );
 }
 
 
@@ -116,18 +125,4 @@ const InternalPadding = styled.div`
   margin: 30px;
   background: white !important;
 `
-export default SummaryPage
-
-// export default class ConnectedSummaryPage extends React.Component {
-//   render() {
-//     return(
-//       <MathConsumer>
-//         {mathObject => 
-//           // mathObject.MathProvider.state
-//           <SummaryPage {...this.props} math={mathObject} />
-
-//         }
-//       </MathConsumer>
-//     );
-//   };
-// };
+export default HistorySummary
