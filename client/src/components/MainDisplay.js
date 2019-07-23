@@ -104,6 +104,7 @@ const MainDisplay = () => {
     const estimate = await buildEstimate();
     axios.post(`/api/features_estimates`, {selectedFeatures: featureIDsFromEstimate, estimate_id: estimate_id, estimate})
       .then( res => {
+        debugger
         setEmail('')
         setName('')
         setSelectedFeatures([])
