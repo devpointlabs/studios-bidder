@@ -12,7 +12,11 @@ import styled from "styled-components";
  
 const EstimateHistory = () => {
   const {resetEstimate, handleResetIDs } = useContext(FeatureContext)
+<<<<<<< HEAD
   const { handleHistoryIDs, handleHistoryCategories, handleEstimate, featureIDsFromHistory, dumpHistory, featuresFromHistory, categoriesFromHistory, resetFeatureIDsFromHistory} = useContext(HistoryContext)
+=======
+  const { handleHistoryIDs, handleHistoryCategories, handleEstimate, featureIDsFromHistory, resetFeatureIDsFromHistory, dumpHistory, featuresFromHistory, categoriesFromHistory, } = useContext(HistoryContext)
+>>>>>>> 5f88238c8d3da07b83a590479bd3d41a7a3c23d3
   const [estimates, setEstimates] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [anyClick, setAnyClick] = useState(false)
@@ -45,7 +49,7 @@ const EstimateHistory = () => {
 
   }, [])
 
-
+ 
 
   const buildEstimate = ((estimateFromMap, id) => {
     return new Promise((resolve,) => {
@@ -53,6 +57,8 @@ const EstimateHistory = () => {
       // axios.get(`/api/estimates/${id}`)
       //   .then(res => { 
           setEstimate(estimateFromMap) 
+          // resetFeatureIDsFromHistory()
+          // featureIDsFromHistory.push(...estimateFromMap.feature_array)
           // setFeatures(featureIDsFromHistory)
           handleEstimate(id)
       //     // handleEstimate(id)
@@ -116,6 +122,7 @@ const EstimateHistory = () => {
 
   const handleCloseModal = () => {
     setModalOpen(false)
+    resetFeatureIDsFromHistory()
     // debugger
     // handleResetIDs()
     // dumpHistory()
@@ -128,8 +135,8 @@ const EstimateHistory = () => {
   }
 
   const estimateRow = (estimateFromMap, id, name, email, employee_name, created, ) => (
-    <Table.Row onClick={() => { //resetFeatureIDsFromHistory() 
-                               handleEstimate(id) 
+    <Table.Row onClick={() => {//handleEstimate(id)
+                               featureIDsFromHistory.push(...estimateFromMap.feature_array)
                                handleOpenModal(estimateFromMap, id, name, email)}}>
       <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
       <Table.Cell textAlign='center'>{name}</Table.Cell>

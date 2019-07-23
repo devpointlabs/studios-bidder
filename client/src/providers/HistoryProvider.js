@@ -23,6 +23,7 @@ export class HistoryProvider extends React.Component {
 
   ///// this takes the estimate ID and gets the list of Feature IDs
   handleEstimate = (ID) => {
+    // this.resetFeatureIDsFromHistory()
     const {featureIDsFromHistory} = this.state;
     axios.get(`/api/featureIDs_from_estimate/${ID}`)
       .then( res  => this.setState({featureIDsFromHistory: [...res.data]}))

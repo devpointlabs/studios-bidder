@@ -272,13 +272,20 @@ end
           nonDevTotal: rand(1..50),
           coreDevTime: rand(15..100),
           employee_name: employees.sample,
+          feature_array: [rand(1..100), rand(1..100), rand(1..100), rand(1..100), rand(1..100), rand(1..100)]
         )
-        rand(4..75).times do(
-          FeatureEstimate.create(
-            estimate_id: i.id,
-            feature_id: (1..136).to_a.sample.to_i
-          )
+        i.feature_array.each do |a|
+        FeatureEstimate.create(
+          estimate_id: i.id,
+          feature_id: a
         )
+      2
+        # rand(4..75).times do(
+        #   FeatureEstimate.create(
+        #     estimate_id: i.id,
+        #     feature_id: (1..136).to_a.sample.to_i
+        #   )
+        # )
       end
     end
 
