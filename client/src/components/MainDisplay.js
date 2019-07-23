@@ -156,7 +156,7 @@ const MainDisplay = () => {
   }
       
   const getNonDevAssumptionsData = (data) => {
-    console.log(data)
+    // console.log(data)
     setNonDevAssumptions(data)
   }
 

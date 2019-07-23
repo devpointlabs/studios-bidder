@@ -13,6 +13,7 @@ export class MathProvider extends React.Component {
     iOSPrice: 0, 
     webPrice: 0, 
     androidPrice: 0,
+    coreDevTime: 0,
     nonDevTotal: 0,
     total: 0, 
     generalBufferValue: 0, 
@@ -113,6 +114,7 @@ export class MathProvider extends React.Component {
   setGeneralBufferValue = (total) => {
     this.setState({generalBufferValue: total})
   }
+
   
   render() {
     

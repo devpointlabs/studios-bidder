@@ -4,6 +4,8 @@ import {Image, Segment, Header, Table, Loader, Dimmer} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
+import { MathConsumer } from "../../providers/MathProvider";
+
 // import { FeatureContext} from '../../providers/FeatureProvider';
 
 class SummaryPage extends Component {
@@ -27,7 +29,8 @@ class SummaryPage extends Component {
 
   render () { 
     const {  loaded } = this.state;
-    const { estimate,name, email, eID, fromHistory, nonDevTotal } = this.props;
+    const { estimate,name, email, eID, fromHistory, nonDevTotal, } = this.props;
+    const {math: {iOSPrice, webPrice, androidPrice}} = this.props;
 
     if (loaded)
       return (
@@ -52,6 +55,10 @@ class SummaryPage extends Component {
             <Segment vertical as={NoLine}>
               <Header size="huge" as={Colors} colored="light-grey" inverted textAlign="center">Estimate Totals</Header>
               <Table singleLine>
+                <Table.Row style={{fontWeight: '900', backgroundColor: '#CCCACF'}}> 
+                  <Table.Cell>Developer Days</Table.Cell>
+                  <Table.Cell textAlign='right'>{(iOSPrice + webPrice + androidPrice).toFixed(1)} Days</Table.Cell>
+                </Table.Row>
                 <Table.Row> 
                   <Table.Cell>Design</Table.Cell>
                   <Table.Cell textAlign='right'>{estimate.design_value.toFixed(1)} Days</Table.Cell>
@@ -112,4 +119,17 @@ const InternalPadding = styled.div`
   background: white !important;
 `
 
-export default SummaryPage
+
+export default class ConnectedSummaryPage extends React.Component {
+  render() {
+    return(
+      <MathConsumer>
+        {mathObject => 
+          // mathObject.MathProvider.state
+          <SummaryPage {...this.props} math={mathObject} />
+
+        }
+      </MathConsumer>
+    );
+  };
+};
