@@ -15,7 +15,9 @@ const SummaryTable = ({ platform, platformByNum, estimateID, features, catagorie
   useEffect( () => {
     if (fromHistory === true) {
       setCatagoriesEstimates(categoriesFromHistory)
+      console.log(catagoriesEstimates)
       setFeaturesEstimates(featuresFromHistory)
+      console.log(featuresEstimates)
     }
     if (fromHistory === false) {
       setCatagoriesEstimates(categoriesFromEstimate)
