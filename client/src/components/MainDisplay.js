@@ -1,13 +1,11 @@
-import React,{useState, useContext, useEffect, useReducer} from 'react';
+import React,{useState, useContext } from 'react';
 import Navbar from './Navbar';
-import OSMath from './OSMath';
 import TotalMath from './TotalMath';
 import WebDisplay from './WebDisplay';
 import IOSDisplay from './iOSDisplay';
 import AndroidDisplay from './AndroidDisplay';
 import SummaryPage from './summary/SummaryPage';
 import PlatformTabs from './PlatformTabs';
-import WhiteText from "../styles/WhiteText";
 import MainTitle from '../styles/MainTitle';
 import {Icon, Segment, Header, Form, Modal, Button} from 'semantic-ui-react';
 import Colors from "../styles/Colors";
@@ -29,11 +27,9 @@ const MainDisplay = () => {
   const [notFirstSubmit, setNotFirstSubmit] = useState(false)
   const [errorPopup, setErrorPopup] = useState(false)
   const [estimate, setEstimate] = useState({})
-  const [featuresForModal, setFeaturesForModal] = useState([])
-  const [tempCategoryId, setTempCategoryId] = useState([])
 
   const {resetMath, exclusiveWebDays, exclusiveiOSDays, exclusiveAndroidDays, nonDevTotal, total, generalBufferValue, iOSPrice, webPrice, androidPrice} = useContext(MathContext);
-  const { featuresLoaded, setFeaturesLoaded, handleFeatures, handleCategories, featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
+  const { featureIDsFromEstimate, handleSelectedIDs, handleResetIDs} = useContext(FeatureContext);
   const {authenticated} = useContext(AuthContext)
 
   const buildEstimate = () => {
@@ -61,7 +57,6 @@ const MainDisplay = () => {
       return
     }
     const estimate = await buildEstimate()
-    // debugger
     setNotFirstSubmit(true)
     
     axios.post(`/api/estimates`, estimate)
@@ -70,10 +65,8 @@ const MainDisplay = () => {
         handleSelectedIDs()
         setModalOpen(true)
       })
-      // .then({if (estimate_id) {setModalOpen(true)}})
       .catch(error => console.log(error));
     
-      // console.log("handle submit", selectedFeatures, featureIDsFromEstimate, estimate_id)
   };
 
   const handleResubmit = () => {
@@ -113,7 +106,6 @@ const MainDisplay = () => {
     if (selectedFeatures.length > 0 || radioButtons.length > 0) {
       if (notFirstSubmit === false) {
         handleSubmit()
-        // setModalOpen(true)
       } 
       if (notFirstSubmit === true) {
         handleResubmit()
@@ -141,7 +133,6 @@ const MainDisplay = () => {
   }
       
   const getNonDevAssumptionsData = (data) => {
-    // console.log(data)
     setNonDevAssumptions(data)
   }
 
@@ -187,8 +178,6 @@ const MainDisplay = () => {
     <>
     <Segment.Group Vertical as={Colors} colored="white">
       <Navbar />
-      {/* <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"></link> */}
-      {/* <style>@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');</style> */}
       <Header align="center" as={MainTitle} colored="dark-grey" fSize="large">
         Estimate Your App
       </Header>

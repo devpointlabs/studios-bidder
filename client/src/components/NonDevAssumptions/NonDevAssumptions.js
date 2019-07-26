@@ -1,7 +1,6 @@
 import React from 'react';
 import {Grid, Header} from 'semantic-ui-react';
 import DarkText from '../../styles/DarkText';
-import MainTitle from '../../styles/MainTitle';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
 import GeneralBufferSlider from './GeneralBufferSlider';

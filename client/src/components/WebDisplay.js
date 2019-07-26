@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { FeatureContext} from '../providers/FeatureProvider';
 
 const WebDisplay = (props) => {
-  // const {webCategories, webFeatures} = useContext(FeatureContext);
   const {webLoaded, webCategories, webFeatures, handleWebCategories, handleWebFeatures} = useContext(FeatureContext);
   
   useEffect( () => {

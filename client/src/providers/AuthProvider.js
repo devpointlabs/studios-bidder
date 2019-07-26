@@ -14,7 +14,7 @@ export class AuthProvider extends React.Component {
         history.push('/');
       })
       .catch( res => {
-        console.log(res);
+        // console.log(res);
       });
   };
 
@@ -36,7 +36,7 @@ export class AuthProvider extends React.Component {
         history.push(`/`)
       })
       .catch( res => {
-        console.log(res);
+        // console.log(res);
       })
   };
 

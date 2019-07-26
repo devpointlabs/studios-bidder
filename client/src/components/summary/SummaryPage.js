@@ -1,4 +1,4 @@
-import React, { Component, useState, useContext, useEffect, useCallback } from 'react';
+import React, { Component } from 'react';
 import SummaryTable from './SummaryTable';
 import {Image, Segment, Header, Table, Loader, Dimmer} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
