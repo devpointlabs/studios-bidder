@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
-import {Button, Icon, Form, Table, Container, Segment} from 'semantic-ui-react'
+import {Button, Icon, Form, Table, Container, } from 'semantic-ui-react'
 import Feature from './Feature'
 import FeatureForm from './FeatureForm'
 

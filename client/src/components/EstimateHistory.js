@@ -1,32 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
 import _ from 'lodash'
 import axios from 'axios'
-import { Table, Dropdown, Segment, Search, Label, Modal, Icon, Header, Menu, Button, Dimmer, Loader, Pagination } from 'semantic-ui-react'
+import { Table, Segment, Search, Label, Modal, Icon, Menu, Dimmer, Loader } from 'semantic-ui-react'
 import Navbar from './Navbar'
-import { FeatureContext} from '../providers/FeatureProvider';
 import { HistoryContext} from '../providers/HistoryProvider';
 import HistorySummary from './summary/HistorySummary';
 import styled from "styled-components";
 
-// import { FeatureContext} from '../providers/FeatureProvider';
  
 const EstimateHistory = () => {
-  const {resetEstimate, handleResetIDs } = useContext(FeatureContext)
-  const { handleHistoryIDs, handleHistoryCategories, handleEstimate, featureIDsFromHistory, resetFeatureIDsFromHistory, dumpHistory, featuresFromHistory, categoriesFromHistory, } = useContext(HistoryContext)
+  const { handleEstimate, featureIDsFromHistory, resetFeatureIDsFromHistory, featuresFromHistory, } = useContext(HistoryContext)
   const [estimates, setEstimates] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [anyClick, setAnyClick] = useState(false)
   const [modalOpen, setModalOpen] = useState(false);
-  const [displayedEstimates, setDisplayedEstimates] = useState([]);
   const [startNum, setStartNum] = useState(0)
   const [endNum, setEndNum] = useState(15)
   const [pageItemCount, setPageItemCount] = useState(15)
   const [estimate, setEstimate] = useState({})
-  const [features, setFeatures] = useState([])
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [id, setId] = useState('')
-  const [searchColumn, setSearchColumn] = useState(['customer_name', 'customer_email'])
+  // const [searchColumn, setSearchColumn] = useState(['customer_name', 'customer_email'])
   const [searchResults, setSearchResults] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [column, setColumn] = useState(null)
@@ -50,27 +44,8 @@ const EstimateHistory = () => {
   const buildEstimate = ((estimateFromMap, id) => {
     return new Promise((resolve,) => {
 
-      // axios.get(`/api/estimates/${id}`)
-      //   .then(res => { 
           setEstimate(estimateFromMap) 
-          // resetFeatureIDsFromHistory()
-          // featureIDsFromHistory.push(...estimateFromMap.feature_array)
-          // setFeatures(featureIDsFromHistory)
           handleEstimate(id)
-      //     // handleEstimate(id)
-      //     // handleHistoryIDs()
-      //   })
-///////////////////////
-      // axios.get(`/api/featureIDs_from_estimate/${id}`)
-      //   .then(res => {featureIDsFromHistory.push(...res.data)
-        
-      //   })
-      // axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
-      // .then(res => featuresFromHistory.push(...res.data))
-      
-      ///////////////////////////////////
-        
-      // setEstimate(estimate)
 
       resolve (featuresFromHistory)
     });
@@ -82,46 +57,15 @@ const EstimateHistory = () => {
     const featuresFromHistory = await buildEstimate(estimateFromMap, id)
 
     passProps(id, name, email)
-    console.log(id)
-    // handleEstimate(id)
-    // handleHistoryIDs()
-    // axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
-    //   .then(res => categoriesFromHistory.push(...res.data))
-    // // handleHistoryCategories()
     setModalOpen(true)
-
 
   };
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-  // const handleOpenModal = (id, name, email) => {
-  //   // debugger
-  //   handleEstimate(id)
-  //   handleHistoryIDs()
-  //   passProps(id, name, email)
-  //   setModalOpen(true)
-  // }
-
-
   const handleCloseModal = () => {
     setModalOpen(false)
     resetFeatureIDsFromHistory()
-    // debugger
-    // handleResetIDs()
-    // dumpHistory()
   }
 
   const passProps = (id, name, email) => {
@@ -131,7 +75,7 @@ const EstimateHistory = () => {
   }
 
   const estimateRow = (estimateFromMap, id, name, email, employee_name, created, ) => (
-    <Table.Row onClick={() => {//handleEstimate(id)
+    <Table.Row onClick={() => {
                                featureIDsFromHistory.push(...estimateFromMap.feature_array)
                                handleOpenModal(estimateFromMap, id, name, email)}}>
       <Table.Cell collapsing textAlign='center'>{id}</Table.Cell>
@@ -162,7 +106,10 @@ const EstimateHistory = () => {
 
   const handleResultSelect = (e, { result }) => {
     setSearchValue(result.customer_name)
-    handleOpenModal()
+    featureIDsFromHistory.push(...result.feature_array)
+    // console.log(result)
+    handleOpenModal(result, result.id, result.customer_name, result.customer_email)
+    // handleOpenModal()
   }
 
   const resultRenderer = ({ customer_name }) => <Label content={customer_name} />
@@ -172,7 +119,7 @@ const EstimateHistory = () => {
     setSearchValue(value)
     setTimeout(() => {
       if (value.length < 1) {
-        console.log('reset')
+        // console.log('reset')
         setIsLoading(false)
         setSearchResults([])
         return

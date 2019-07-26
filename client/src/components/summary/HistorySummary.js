@@ -1,6 +1,6 @@
-import React, { Component, useState, useContext, useEffect, useCallback } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import SummaryTable from './SummaryTable';
-import {Image, Segment, Header, Table, Loader, Dimmer} from 'semantic-ui-react';
+import {Image, Segment, Header, Table} from 'semantic-ui-react';
 import Colors from "../../styles/Colors";
 import styled from "styled-components";
 import axios from 'axios';
@@ -9,44 +9,22 @@ import { HistoryContext} from '../../providers/HistoryProvider';
 
 const HistorySummary = ({ estimate, name, email, eID, fromHistory }) => {
   const [loaded, setLoaded ] = useState(false)
-  const { categoriesLoaded, resetCategoriesFromHistory, resetFeaturesFromHistory, resetFeatureIDsFromHistory, featureIDsFromHistory, featuresLoaded, handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
+  const { resetCategoriesFromHistory, resetFeaturesFromHistory, featureIDsFromHistory, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
 
  
   useEffect( () => {
-      // handleHistoryIDs()
-      // handleEstimate(eID)
-      console.log(eID)
     axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
       .then(res => {resetFeaturesFromHistory()
         featuresFromHistory.push(...res.data)})
-      // featuresFromHistory = [...new Set(res.data)])
-      // .then(this.featuresLoaded())
-      // console.log(featuresFromHistory)
+
     axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
       .then(res =>  {resetCategoriesFromHistory()
         categoriesFromHistory.push(...res.data) 
-      // {categoriesFromHistory = [...new Set(res.data)] 
-      // handleEstimate(eID)
-        // categoriesLoaded() 
-        // resetFeatureIDsFromHistory()
         setLoaded(true)
       })
-
-    // summaryAxios()
     
   }, [])
 
-  // const summaryAxios = () => {
-  //   handleEstimate(eID)
-  //   axios.get(`/api/features_by_id/${featureIDsFromHistory}`)
-  //     .then(res => featuresFromHistory.push(...res.data))
-  //     // .then(this.featuresLoaded())
-  //     // console.log(featuresFromHistory)
-  //   axios.get(`/api/categories_by_feature_id/${featureIDsFromHistory}`)
-  //     .then(res => {categoriesFromHistory.push(...res.data) 
-  //       categoriesLoaded() })
-  //   // handleHistoryIDs()
-  // }
 
   const loadedRendering = () => {
 

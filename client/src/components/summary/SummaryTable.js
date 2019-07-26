@@ -8,16 +8,14 @@ import { HistoryContext,} from '../../providers/HistoryProvider';
 const SummaryTable = ({ platform, platformByNum, estimateID, features, catagories, fromHistory}) => {
   const [catagoriesEstimates, setCatagoriesEstimates] = useState([]);
   const [featuresEstimates, setFeaturesEstimates] = useState([]);
-  const { categoriesFromEstimate, setEstimateLoaded, featuresFromEstimate } = useContext(FeatureContext);
-  const { handleHistoryIDs, handleEstimate, categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
+  const { categoriesFromEstimate, featuresFromEstimate } = useContext(FeatureContext);
+  const { categoriesFromHistory, featuresFromHistory } = useContext(HistoryContext);
 
 
   useEffect( () => {
     if (fromHistory === true) {
       setCatagoriesEstimates(categoriesFromHistory)
-      console.log(catagoriesEstimates)
       setFeaturesEstimates(featuresFromHistory)
-      console.log(featuresEstimates)
     }
     if (fromHistory === false) {
       setCatagoriesEstimates(categoriesFromEstimate)
