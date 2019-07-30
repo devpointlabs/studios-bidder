@@ -5,12 +5,15 @@ import AdminDisplay from './components/AdminDisplay';
 import EstimateHistory from './components/EstimateHistory';
 import iOSDisplay from './components/iOSDisplay';
 import AndroidDisplay from './components/AndroidDisplay';
+import SummaryPage from './components/summary/SummaryPage';
 import Features from './components/Features';
 import Login from './components/Login';
 import NoMatch from './components/NoMatch';
 import ProtectedRoute from './components/ProtectedRoute';
 import {Switch, Route, } from 'react-router-dom';
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
+
+import HistoryPaginated from './components/HistoryPaginated';
 
 
 const App = () => (
@@ -21,8 +24,8 @@ const App = () => (
           {/* REMOVE ROUTES BELOW BEFORE PRODUCTION */}
           {/*  */}
           {/*  */}
-          <Route exact path ='/Admin' component={AdminDisplay} />
-          <Route exact path ='/History' component={EstimateHistory} />
+          {/* <Route exact path ='/Admin' component={AdminDisplay} /> */}
+          {/* <Route exact path ='/History' component={EstimateHistory} /> */}
           {/*  */}
           {/*  */}
           {/* REMOVE ABOVE ROUTES BEFORE PRODUCTION */}
@@ -32,7 +35,7 @@ const App = () => (
           <Route exact path ='/Web' component={WebDisplay} />
           <Route exact path="/api/features" component={Features} />
           <Route exact path ='/login' component={Login} />
-          <ProtectedRoute exact path ='/History' component={EstimateHistory} />
+          <ProtectedRoute exact path ='/history' component={EstimateHistory} />
           <ProtectedRoute exact path ='/admin' component={AdminDisplay} />
           <Route component={NoMatch} />
         </Switch>
@@ -46,8 +49,13 @@ const AppContainer = styled.div`
 `;
 
 const MidContainer = styled.div`
-  margin-right: 80px;
-  margin-left: 80px;
+  margin-right: 8vw;
+  margin-left: 8vw;
+
+  @media only screen and (max-width: 500px){
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 `;
 
 export default App;

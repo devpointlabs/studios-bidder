@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_12_065651) do
+ActiveRecord::Schema.define(version: 2019_07_23_183522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_07_12_065651) do
     t.integer "list_location"
     t.boolean "is_exclusive"
     t.bigint "platform_id"
+    t.boolean "is_active", default: true
     t.index ["platform_id"], name: "index_categories_on_platform_id"
   end
 
@@ -35,12 +36,24 @@ ActiveRecord::Schema.define(version: 2019_07_12_065651) do
     t.integer "designer_day_rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "design"
-    t.float "qaTesting"
-    t.float "deployment"
-    t.float "postDeploymentDev"
-    t.float "projectManagement"
-    t.float "generalBuffer"
+    t.float "design_multiplier"
+    t.float "qaTesting_multiplier"
+    t.float "deployment_multiplier"
+    t.float "postDeploymentDev_multiplier"
+    t.float "projectManagement_multiplier"
+    t.float "generalBuffer_multiplier"
+    t.float "design_value"
+    t.float "qaTesting_value"
+    t.float "deployment_value"
+    t.float "postDeploymentDev_value"
+    t.float "projectManagement_value"
+    t.float "generalBuffer_value"
+    t.float "total"
+    t.float "nonDevTotal"
+    t.string "employee_name"
+    t.text "category_array", default: [], array: true
+    t.text "feature_array", default: [], array: true
+    t.float "coreDevTime"
   end
 
   create_table "feature_estimates", force: :cascade do |t|
@@ -66,6 +79,8 @@ ActiveRecord::Schema.define(version: 2019_07_12_065651) do
     t.boolean "is_web"
     t.integer "list_location"
     t.bigint "platform_id"
+    t.string "image_url"
+    t.boolean "is_active", default: true
     t.index ["category_id"], name: "index_features_on_category_id"
     t.index ["platform_id"], name: "index_features_on_platform_id"
   end
@@ -108,11 +123,12 @@ ActiveRecord::Schema.define(version: 2019_07_12_065651) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.string "name"
     t.string "email"
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

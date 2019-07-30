@@ -11,6 +11,8 @@ const fontSize = (size) => {
         return '25px';
       case 'tiny':
         return '14px';
+      case 'ndv':
+        return '1em';
       default:
         return '20px';
     }

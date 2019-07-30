@@ -14,7 +14,7 @@ export class AuthProvider extends React.Component {
         history.push('/');
       })
       .catch( res => {
-        console.log(res);
+        // console.log(res);
       });
   };
 
@@ -22,10 +22,10 @@ export class AuthProvider extends React.Component {
     axios.post(`/api/auth/sign_in`, user)
       .then( res => {
         this.setState({user: res.data.data, });
-        history.push('/admin');
+        history.push('/');
       })
       .catch( res => {
-        console.log(res)
+        alert('Username or Password is incorrect')
       })
   };
 
@@ -36,7 +36,7 @@ export class AuthProvider extends React.Component {
         history.push(`/`)
       })
       .catch( res => {
-        console.log(res);
+        // console.log(res);
       })
   };
 

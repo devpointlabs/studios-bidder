@@ -15,11 +15,16 @@ gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 # User authentication
 gem 'devise_token_auth', '~>1.0.0'
+gem 'faker'
+
+#
+gem 'figaro'
 
 group :development, :test do
   gem 'pry-rails'
   gem 'awesome_print'
   gem 'table_print'
+  gem 'letter_opener'
 end
 
 group :development do

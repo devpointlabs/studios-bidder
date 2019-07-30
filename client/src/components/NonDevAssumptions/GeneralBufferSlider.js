@@ -1,41 +1,45 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Grid, Divider, Header } from 'semantic-ui-react';
-import DarkText from '../styles/DarkText';
-import MainTitle from '../styles/MainTitle';
+import DarkText from '../../styles/DarkText';
+import MainTitle from '../../styles/MainTitle';
 import SliderBar from './SliderBar';
 import styled from 'styled-components';
+import {MathContext,} from '../../providers/MathProvider';
+
 
 const GeneralBufferSlider = (props) => {
   const [generalBufferMultiplier, setGeneralBufferMultiplier] = useState(.05);
-  const [generalBufferValue, setGeneralBufferValue] = useState(0);
-  const [nonDevTotal, setNonDevTotal] = useState(0)
-  const [total, setTotal] = useState(0);
+  // const [generalBufferValue, setGeneralBufferValue] = useState(0);
+  const [nonDevTotal, setNonDevTotal] = useState(0);
+  // const [total, setTotal] = useState(0);
 
+  const {setTotal, total, setGeneralBufferValue, generalBufferValue} = useContext(MathContext);
 
   useEffect( () => {
-    let gBV = props.nonDevTotal() * generalBufferMultiplier;
-    let subTotal = parseFloat(props.nonDevTotal()) + props.coreDevTime;
-    setGeneralBufferValue(gBV.toFixed(1));
+    let gBV = Math.round((props.nonDevTotal() * generalBufferMultiplier) * 1e1) / 1e1;
+    let subTotal = props.nonDevTotal() + props.coreDevTime;
+    setGeneralBufferValue(gBV);
     setNonDevTotal(props.nonDevTotal());
-    setTotal(subTotal + gBV);
+    setTotal(Math.round((subTotal + gBV) * 1e1) / 1e1);
   },[props.nonDevTotal(), props.coreDevTime]);
   
   useEffect( () => {
-    props.getGeneralBufferData(generalBufferMultiplier)
-  },[generalBufferMultiplier])
+    props.getGeneralBufferData(total, {generalBuffer: {multiplier: generalBufferMultiplier, value: generalBufferValue}})
+  },[generalBufferMultiplier, generalBufferValue])
 
 
   const handleChange = (nonDevTime, multiplier, name) => {
     setGeneralBufferMultiplier(multiplier/100);
-    setGeneralBufferValue(nonDevTime.toFixed(1));
-    setTotal(parseFloat(props.nonDevTotal()) + props.coreDevTime + parseFloat(generalBufferValue));
+    setGeneralBufferValue(nonDevTime);
+    setTotal(Math.round(props.nonDevTotal() + props.coreDevTime + generalBufferValue) * 1e1 / 1e1);
   };
+
 
     return(
     <>
     <Divider/>
       <div style={{width: '100%', textAlign: 'center', padding: '2em'}}>
-        <Header as={DarkText} fSize='medium'>Non Dev Assumptions Total Days: {nonDevTotal}</Header>
+        <Header as={DarkText} fSize='medium'>Non-Developer Days: {nonDevTotal}</Header>
       </div>
     <Divider />
       <div style={{backgroundColor: '#CCCACF'}}>
@@ -44,8 +48,8 @@ const GeneralBufferSlider = (props) => {
         <Grid.Row>
           <Grid.Column centered>
           <SliderInfo>
-            <Header as={DarkText} fSize='small'><span style={{fontSize: '0.6em'}}>**</span>General Buffer Time</Header>
-            <Header as={DarkText} fSize='small'>Days: {generalBufferValue}</Header>
+            <Header as={DarkText} fSize='ndv'>General Buffer Time<span style={{fontSize: '0.8em'}}>**</span></Header>
+            <Header as={DarkText} fSize='ndv'>Days: {generalBufferValue}</Header>
           </SliderInfo>
           <br />
           <SliderBar 
@@ -54,7 +58,7 @@ const GeneralBufferSlider = (props) => {
             coreDevTime={props.nonDevTotal()}
             handleChange={handleChange}
             />
-          <Header as={MainTitle} colored="light-grey" padding="tiny" fSize="tiny">
+          <Header as={MainTitle} colored="light-grey" padding="tiny" fSize="micro">
             **Percentage of non dev asumptions total days
           </Header>
           </Grid.Column>
